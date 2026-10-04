@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mikaël Valot">
+
+<title>CM3 - Le mécanisme d’attention – 2627 XTI306 Introduction à l'ingénierie IA</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-88e8eab2b9e74ff2b2dcb2dc0227e102.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-35673c1328022ec05f8a1bab69fe76b7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-88e8eab2b9e74ff2b2dcb2dc0227e102.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-626bc743731229bd8adb76e0f8fa352c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-626bc743731229bd8adb76e0f8fa352c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-626bc743731229bd8adb76e0f8fa352c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating collapsed-by-default quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">CM3 - Le mécanisme d’attention</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/logo-noir.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./figures/logo-noir.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">XTI306 Introduction à l’ingénierie IA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Cours</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM1 - Introduction à l’apprentissage automatique (<em>machine learning</em>)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossaire</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Activités</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours1_linear_fit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM1 - Ajuster une droite</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours1_gradient_descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM1 - Descente de Gradient</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">TPs</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tp1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TP1 - Introduction à l’apprentissage automatique (<em>machine learning</em>)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sur cette page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#lire-la-matrice-dattention" id="toc-lire-la-matrice-dattention" class="nav-link" data-scroll-target="#lire-la-matrice-dattention"><span class="header-section-number">2</span> Lire la matrice d’attention</a></li>
+  <li><a href="#loutil" id="toc-loutil" class="nav-link" data-scroll-target="#loutil"><span class="header-section-number">3</span> L’outil</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions"><span class="header-section-number">4</span> Questions</a></li>
+  <li><a href="#simplifications" id="toc-simplifications" class="nav-link" data-scroll-target="#simplifications"><span class="header-section-number">5</span> Simplifications</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">CM3 - Le mécanisme d’attention</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Auteur·rice</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mikaël Valot </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>Dans un vrai LLM, les matrices <span class="math inline">\(\mathbf{W}_Q\)</span>, <span class="math inline">\(\mathbf{W}_K\)</span> et <span class="math inline">\(\mathbf{W}_V\)</span> de chaque head sont <strong>apprises</strong> : personne ne décide à l’avance quelle relation une head va repérer. Mais afin d’illustrer le mécanisme, nous avons attribué à chaque head un rôle particulier. Dans un véritable LLM, on pourrait retrouver des rôles semblables, mais de manière moins nette.</p>
+<p>L’objectif est de savoir <strong>lire</strong> une matrice d’attention.</p>
+<p>Nous allons observer comment nos heads vont traiter la phrase suivante :</p>
+<blockquote class="blockquote">
+<p><strong>le chat gris boit du lait froid</strong></p>
+</blockquote>
+</section>
+<section id="lire-la-matrice-dattention" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="lire-la-matrice-dattention"><span class="header-section-number">2</span> Lire la matrice d’attention</h2>
+<p>La phrase donne <span class="math inline">\(T = 7\)</span> tokens, donc une matrice d’attention <span class="math inline">\(\mathbf{A}\)</span> de dimensions <span class="math inline">\(7 \times 7\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+\mathbf{A} = \mathrm{softmax}_{\text{colonne}}\!\left(\frac{\mathbf{K}^\top \mathbf{Q}}{\sqrt{d_h}} + \mathbf{M}\right)
+\]</span></p>
+<ul>
+<li>une <strong>colonne</strong> par token qui cherche : c’est sa <strong>query</strong></li>
+<li>une <strong>ligne</strong> par token regardé : c’est sa <strong>key</strong></li>
+<li><span class="math inline">\(\mathbf{M}\)</span> est le <strong>masque causal</strong> : il met <span class="math inline">\(-\infty\)</span> dans les cases où la key est <strong>après</strong> la query</li>
+<li>chaque <strong>colonne</strong> somme à <strong>1</strong> : le softmax est appliqué colonne par colonne</li>
+</ul>
+</div>
+</div>
+<p>On garde donc la convention du cours : <strong>un token de la phrase par colonne</strong>, comme pour <span class="math inline">\(\mathbf{X}\)</span> et <span class="math inline">\(\mathbf{E}\)</span>.</p>
+<p>La case en ligne <span class="math inline">\(i\)</span>, colonne <span class="math inline">\(j\)</span> répond à la question :</p>
+<blockquote class="blockquote">
+<p><em>Quelle part de son attention le token <span class="math inline">\(j\)</span> accorde-t-il au token <span class="math inline">\(i\)</span> ?</em> Plus le point est <strong>foncé</strong>, plus le poids est proche de 1.</p>
+</blockquote>
+</section>
+<section id="loutil" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="loutil"><span class="header-section-number">3</span> L’outil</h2>
+<p>Cliquez sur un onglet pour changer de head, et sur une colonne pour voir le détail.</p>
+<p>Boutons :</p>
+<ul>
+<li><strong>poids A / scores</strong> : les scores sont les valeurs <em>avant</em> le softmax, celles qu’un vrai modèle calcule avec <span class="math inline">\(\mathbf{K}^\top \mathbf{Q} / \sqrt{d_h}\)</span>. Passez de l’un à l’autre pour voir ce que le softmax fabrique : des scores quelconques deviennent des poids positifs dont la colonne somme à 1.</li>
+<li><strong>masque causal</strong> : le désactiver revient à laisser chaque token voir toute la phrase, comme dans un <strong>encodeur</strong> (BERT). Un LLM décodeur, lui, garde toujours le masque.</li>
+</ul>
+<div class="attn" id="attn">
+  <div class="attn-tabs" id="attn-tabs" role="tablist"></div>
+  <p class="attn-role" id="attn-role"></p>
+
+  <div class="attn-controls">
+    <span class="attn-ctl-label">Affichage</span>
+    <button class="attn-btn is-on" data-view="weights">poids A</button>
+    <button class="attn-btn" data-view="scores">scores</button>
+    <button class="attn-btn is-on attn-mask" id="attn-mask">masque causal</button>
+  </div>
+
+  <svg viewbox="0 0 480 462" class="attn-grid" role="img" aria-label="Matrice d'attention : une colonne par token qui cherche, une ligne par token regardé.">
+    <g id="attn-layer"></g>
+  </svg>
+
+  <div class="attn-detail" id="attn-detail"></div>
+</div>
+
+<style>
+.attn {
+  --attn-ink: #2c2c2a;
+  --attn-soft: #6d6c66;
+  --attn-rule: #d8d6cd;
+  --attn-bg: #ffffff;
+  --attn-dot: #5b52c4;
+  --attn-mask-fill: #eceae4;
+  --attn-chip: #f3f1ec;
+  --attn-chip-on: #e7e3f7;
+  --attn-sel: #c4562c;
+  margin: 1.5rem 0 2rem;
+  max-width: 44rem;
+  color: var(--attn-ink);
+}
+[data-bs-theme="dark"] .attn {
+  --attn-ink: #ddddd7;
+  --attn-soft: #9c9a92;
+  --attn-rule: #45443f;
+  --attn-bg: #1f1e1c;
+  --attn-dot: #a79fee;
+  --attn-mask-fill: #2b2a27;
+  --attn-chip: #2b2a27;
+  --attn-chip-on: #3a3560;
+  --attn-sel: #e8825a;
+}
+.attn-tabs { display: flex; gap: .4rem; flex-wrap: wrap; }
+.attn-controls { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin: .9rem 0 .4rem; }
+.attn-ctl-label { font-size: .8rem; color: var(--attn-soft); width: 5.5rem; }
+.attn-btn {
+  font: inherit; font-size: .82rem; padding: .28rem .7rem;
+  border: 1px solid var(--attn-rule); background: var(--attn-chip);
+  color: var(--attn-soft); border-radius: 6px; cursor: pointer;
+}
+.attn-btn:hover { color: var(--attn-ink); }
+.attn-btn.is-on { background: var(--attn-chip-on); border-color: var(--attn-dot); color: var(--attn-dot); }
+.attn-tab { font-size: .85rem; padding: .35rem .8rem; }
+.attn-mask { margin-left: auto; }
+.attn-role {
+  font-size: .88rem; color: var(--attn-soft); margin: .7rem 0 0;
+  border-left: 3px solid var(--attn-dot); padding: .1rem 0 .1rem .7rem;
+}
+.attn-grid { width: 100%; height: auto; display: block; margin-top: .6rem; }
+.attn-label { font-size: 13px; fill: var(--attn-ink); font-family: inherit; }
+.attn-label.is-sel { fill: var(--attn-sel); font-weight: 600; }
+.attn-axis { font-size: 12px; fill: var(--attn-soft); font-family: inherit; text-anchor: middle; }
+.attn-val { font-size: 11px; font-family: inherit; text-anchor: middle; pointer-events: none; }
+.attn-cell { cursor: pointer; }
+.attn-detail {
+  margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--attn-rule);
+  font-size: .88rem;
+}
+.attn-detail h4 { font-size: .95rem; margin: 0 0 .6rem; font-weight: 600; }
+.attn-bars { display: grid; grid-template-columns: 4.5rem 1fr 3rem; gap: .25rem .6rem; align-items: center; }
+.attn-bars span { font-size: .82rem; color: var(--attn-soft); }
+.attn-bars .attn-key { text-align: right; color: var(--attn-ink); }
+.attn-bars .attn-num { text-align: right; font-variant-numeric: tabular-nums; }
+.attn-bar { height: .7rem; border-radius: 3px; background: var(--attn-dot); }
+.attn-mix { margin: .8rem 0 0; font-size: .85rem; color: var(--attn-soft); }
+.attn-mix code { font-size: .85rem; }
+@media (max-width: 560px) {
+  .attn-ctl-label { width: auto; }
+  .attn-mask { margin-left: 0; }
+}
+</style>
+
+<script>
+(function () {
+  var root = document.getElementById("attn");
+  if (!root) return;
+
+  var TOKENS = ["le", "chat", "gris", "boit", "du", "lait", "froid"];
+  var T = TOKENS.length;
+
+  // A head is described by the score it gives to a (key i, query j) pair,
+  // before the causal mask and the softmax. Real heads compute these scores
+  // from Q and K; here they are imposed by hand.
+  //
+  // `links` holds [key, query] pairs that the head is built to connect. A query
+  // with no link falls back on itself, which keeps every column readable.
+  var SELF_ALONE = 4, SELF_LINKED = 1, LINK = 5;
+
+  function linkScorer(links) {
+    var sources = {};
+    links.forEach(function (l) { sources[l[1]] = true; });
+    return function (i, j) {
+      for (var k = 0; k < links.length; k++) {
+        if (links[k][0] === i && links[k][1] === j) return LINK;
+      }
+      if (i === j) return sources[j] ? SELF_LINKED : SELF_ALONE;
+      return 0;
+    };
+  }
+
+  var HEADS = [
+    {
+      name: "1 · token précédent",
+      role: "Cette head ne regarde pas le sens : elle recopie la position. Chaque query donne presque toute son attention au token qui la précède. Une head purement positionnelle comme celle-ci existe bel et bien dans les vrais modèles.",
+      score: function (i, j) { return i === j - 1 ? LINK : (i === j ? SELF_LINKED : 0); }
+    },
+    {
+      name: "2 · adjectif → nom",
+      role: "Ici, un adjectif cherche le nom qu'il qualifie : « gris » regarde « chat », « froid » regarde « lait ». Les autres tokens n'ont rien à chercher, ils restent sur eux-mêmes.",
+      score: linkScorer([[1, 2], [2, 1], [5, 6], [6, 5]])
+    },
+    {
+      name: "3 · verbe et arguments",
+      role: "Cette head relie le verbe à ce qui l'entoure : « boit » cherche son sujet « chat », et « lait » cherche le verbe dont il est le complément.",
+      score: linkScorer([[1, 3], [3, 1], [3, 5], [5, 3]])
+    },
+    {
+      name: "4 · contexte global",
+      role: "Tous les scores sont égaux : chaque query répartit son attention uniformément sur tout ce qu'elle a le droit de voir. La head calcule donc la moyenne du contexte, et le masque causal devient parfaitement visible.",
+      score: function () { return 0; }
+    }
+  ];
+
+  var head = 0, view = "weights", masked = true, selected = 3;
+
+  var CELL = 52, X0 = 96, Y0 = 62;
+
+  function fr(x, digits) { return x.toFixed(digits).replace(".", ","); }
+
+  function allowed(i, j) { return masked ? i <= j : true; }
+
+  // Softmax over one column: the query j shares 1.0 between the keys it may see.
+  function column(j) {
+    var raw = [], sum = 0, i;
+    for (i = 0; i < T; i++) {
+      var e = allowed(i, j) ? Math.exp(HEADS[head].score(i, j)) : 0;
+      raw.push(e);
+      sum += e;
+    }
+    for (i = 0; i < T; i++) raw[i] /= sum;
+    return raw;
+  }
+
+  function weights() {
+    var a = [];
+    for (var j = 0; j < T; j++) a.push(column(j));
+    return a;
+  }
+
+  function cx(j) { return X0 + (j + 0.5) * CELL; }
+  function cy(i) { return Y0 + (i + 0.5) * CELL; }
+
+  function draw() {
+    var A = weights(), out = "", i, j;
+
+    out += '<text x="' + (X0 + T * CELL / 2) + '" y="20" class="attn-axis">' +
+           'query : le token qui cherche</text>';
+    out += '<text x="22" y="' + (Y0 + T * CELL / 2) + '" class="attn-axis" ' +
+           'transform="rotate(-90 22 ' + (Y0 + T * CELL / 2) + ')">key : le token regardé</text>';
+
+    for (j = 0; j < T; j++) {
+      out += '<text x="' + cx(j) + '" y="' + (Y0 - 10) + '" class="attn-label' +
+             (j === selected ? " is-sel" : "") + '" text-anchor="middle">' + TOKENS[j] + "</text>";
+    }
+    for (i = 0; i < T; i++) {
+      out += '<text x="' + (X0 - 12) + '" y="' + (cy(i) + 4) +
+             '" class="attn-label" text-anchor="end">' + TOKENS[i] + "</text>";
+    }
+
+    for (j = 0; j < T; j++) {
+      for (i = 0; i < T; i++) {
+        var x = X0 + j * CELL, y = Y0 + i * CELL;
+        var w = A[j][i];
+
+        out += '<rect class="attn-cell" data-col="' + j + '" x="' + x + '" y="' + y +
+               '" width="' + CELL + '" height="' + CELL + '" fill="' +
+               (allowed(i, j) ? "transparent" : "var(--attn-mask-fill)") +
+               '" stroke="var(--attn-rule)" stroke-width=".5"><title>' +
+               'A[' + TOKENS[i] + ', ' + TOKENS[j] + '] = ' +
+               (allowed(i, j) ? fr(w, 3) : "0 (masqué)") + '</title></rect>';
+
+        if (view === "weights") {
+          if (allowed(i, j)) {
+            // Darkness carries the weight: the opacity floor keeps a 0.02 dot visible.
+            out += '<circle cx="' + cx(j) + '" cy="' + cy(i) + '" r="20" fill="var(--attn-dot)" ' +
+                   'opacity="' + (0.06 + 0.94 * w).toFixed(3) + '" pointer-events="none"/>';
+            out += '<text x="' + cx(j) + '" y="' + (cy(i) + 4) + '" class="attn-val" fill="' +
+                   (w > 0.55 ? "var(--attn-bg)" : "var(--attn-ink)") + '">' + fr(w, 2) + "</text>";
+          }
+        } else {
+          out += '<text x="' + cx(j) + '" y="' + (cy(i) + 4) + '" class="attn-val" fill="' +
+                 (allowed(i, j) ? "var(--attn-ink)" : "var(--attn-soft)") + '">' +
+                 (allowed(i, j) ? fr(HEADS[head].score(i, j), 1) : "−∞") + "</text>";
+        }
+      }
+    }
+
+    // Selected column, drawn last so its outline stays above the cell strokes.
+    out += '<rect x="' + (X0 + selected * CELL) + '" y="' + (Y0 - 24) + '" width="' + CELL +
+           '" height="' + (T * CELL + 24) + '" fill="none" stroke="var(--attn-sel)" ' +
+           'stroke-width="1.5" rx="4" pointer-events="none"/>';
+
+    // Column sums, to make the softmax visible.
+    for (j = 0; j < T; j++) {
+      out += '<text x="' + cx(j) + '" y="' + (Y0 + T * CELL + 18) + '" class="attn-axis">' +
+             (view === "weights" ? "1,00" : "") + "</text>";
+    }
+    out += '<text x="' + (X0 - 12) + '" y="' + (Y0 + T * CELL + 18) +
+           '" class="attn-axis" text-anchor="end">' +
+           (view === "weights" ? "somme" : "") + "</text>";
+
+    document.getElementById("attn-layer").innerHTML = out;
+    document.getElementById("attn-role").textContent = HEADS[head].role;
+    detail(A[selected]);
+  }
+
+  function detail(col) {
+    var order = [], i;
+    for (i = 0; i < T; i++) order.push(i);
+    order.sort(function (a, b) { return col[b] - col[a]; });
+
+    var bars = "", terms = [];
+    for (i = 0; i < T; i++) {
+      var k = order[i];
+      if (col[k] < 0.005) continue;
+      bars += '<span class="attn-key">' + TOKENS[k] + "</span>" +
+              '<span><span class="attn-bar" style="display:block;width:' +
+              (col[k] * 100).toFixed(1) + '%"></span></span>' +
+              '<span class="attn-num">' + fr(col[k], 2) + "</span>";
+      if (col[k] >= 0.02) terms.push(fr(col[k], 2) + " · v(" + TOKENS[k] + ")");
+    }
+
+    document.getElementById("attn-detail").innerHTML =
+      "<h4>La query « " + TOKENS[selected] + " » regarde :</h4>" +
+      '<div class="attn-bars">' + bars + "</div>" +
+      '<p class="attn-mix">Sortie de la head pour ce token : <code>' +
+      terms.join(" + ") + (terms.length < T ? " + …" : "") + "</code></p>";
+  }
+
+  function buildTabs() {
+    var html = "";
+    HEADS.forEach(function (h, k) {
+      html += '<button class="attn-btn attn-tab' + (k === 0 ? " is-on" : "") +
+              '" role="tab" data-head="' + k + '">' + h.name + "</button>";
+    });
+    document.getElementById("attn-tabs").innerHTML = html;
+  }
+
+  root.addEventListener("click", function (ev) {
+    var el = ev.target.closest("[data-head], [data-view], [data-col], #attn-mask");
+    if (!el) return;
+
+    if (el.dataset.head !== undefined) {
+      head = +el.dataset.head;
+      root.querySelectorAll("[data-head]").forEach(function (b) {
+        b.classList.toggle("is-on", +b.dataset.head === head);
+      });
+    } else if (el.dataset.view !== undefined) {
+      view = el.dataset.view;
+      root.querySelectorAll("[data-view]").forEach(function (b) {
+        b.classList.toggle("is-on", b.dataset.view === view);
+      });
+    } else if (el.id === "attn-mask") {
+      masked = !masked;
+      el.classList.toggle("is-on", masked);
+    } else {
+      selected = +el.dataset.col;
+    }
+    draw();
+  });
+
+  buildTabs();
+  draw();
+})();
+</script>
+</section>
+<section id="questions" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="questions"><span class="header-section-number">4</span> Questions</h2>
+<p>Essayez de répondre aux questions suivantes en utilisant l’outil, puis dépliez pour voir la réponse.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Pourquoi la colonne « le » est-elle toujours entièrement noire sur sa case du haut ?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Le premier token n’a <strong>rien</strong> à regarder d’autre que lui-même : le masque causal annule toutes les autres cases de sa colonne. Le softmax porte alors sur une seule valeur, qui vaut forcément 1.</p>
+<p>C’est vrai pour <strong>toutes</strong> les heads, quelles que soient leurs matrices <span class="math inline">\(\mathbf{W}_Q\)</span> et <span class="math inline">\(\mathbf{W}_K\)</span>. La première colonne d’une matrice d’attention ne contient aucune information.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Head 2, masque activé : pourquoi « chat » ne regarde-t-il pas « gris » ?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La head est bien construite pour relier les deux, dans les deux sens : désactivez le masque causal et la case apparaît.</p>
+<p>Mais « gris » arrive <strong>après</strong> « chat » dans la phrase. Le masque interdit à la query « chat » de le voir, et son attention retombe sur elle-même.</p>
+<p>C’est exactement la limite d’un modèle décodeur : au moment où il traite « chat », il ne sait pas encore que le chat sera gris. Seul « gris » pourra faire le lien, dans l’autre sens.</p>
+<p>Même chose pour « lait » et « froid » : la colonne « lait » ne trouve pas ce qu’elle cherche, et son attention s’étale sur tout le passé sans rien privilégier.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Head 2 : que signifie un token qui se regarde lui-même ?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Que la relation cherchée par la head <strong>n’existe pas</strong> pour ce token : « boit » n’est pas un adjectif, la head 2 n’a rien à lui dire. Elle est pourtant obligée de répondre quelque chose, puisque le softmax impose à chaque colonne de sommer à 1. La diagonale est alors la case la plus inoffensive : le token récupère sa propre value, donc <strong>aucune information ne circule</strong>.</p>
+<p>Une diagonale marquée signifie que la head ne fait rien pour ce token.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Head 4 : pourquoi les points pâlissent-ils vers la droite ?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Tous les scores valent 0, donc chaque query partage son attention <strong>à parts égales</strong> entre les tokens visibles. La colonne du <span class="math inline">\(n\)</span>-ième token voit <span class="math inline">\(n\)</span> tokens : chaque poids vaut <span class="math inline">\(1/n\)</span>.</p>
+<p>La 1ère colonne, « le », met donc 1,00 sur une seule case, tandis que la 7ème, « froid », étale <span class="math inline">\(1/7 = 0{,}14\)</span> sur sept cases. L’escalier du masque causal se lit directement dans la teinte des points.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Que se passerait-il si on multipliait tous les scores par 10 ?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Le softmax deviendrait presque un <strong>argmax</strong> : le meilleur score raflerait toute l’attention, et les autres tomberaient à 0. L’attention deviendrait « dure », et le token ne récupérerait plus qu’une seule value au lieu d’un mélange.</p>
+<p>À l’inverse, en divisant les scores par 10, toutes les colonnes ressembleraient à celles de la head 4 : une moyenne uniforme, sans information.</p>
+<p>C’est le rôle de la division par <span class="math inline">\(\sqrt{d_h}\)</span> dans la formule : elle empêche les scores de grandir avec la dimension et de saturer le softmax.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Combien de cases contient <span class="math inline">\(\mathbf{A}\)</span> pour un texte de 1 000 tokens ?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(1\,000 \times 1\,000 = 1\)</span> million de cases, <strong>par head et par décodeur</strong>. Pour Llama 3 8B (32 heads × 32 décodeurs), cela fait environ 1 milliard de poids d’attention calculés pour un seul passage.</p>
+<p>Avec 2 000 tokens : 4 millions de cases par head. Doubler la longueur du texte <strong>quadruple</strong> le coût, alors que le nombre de paramètres du modèle, lui, ne bouge pas.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="simplifications" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="simplifications"><span class="header-section-number">5</span> Simplifications</h2>
+<p>Nos quatre heads sont très spécialisées : chacune a un rôle unique, énonçable en une phrase.</p>
+<p>Dans un vrai modèle :</p>
+<ul>
+<li>une head mélange souvent plusieurs rôles à la fois, et certaines restent inexplicables</li>
+<li>les rôles ne sont pas répartis proprement : deux heads peuvent faire presque la même chose</li>
+<li>une bonne partie des heads consacre une part importante de leur attention au <strong>premier token</strong> de la séquence, qui sert de « puits d’attention » (<em>attention sink</em>) : c’est là que la head dépose son attention quand elle n’a rien de pertinent à regarder</li>
+<li>les poids ne sont pas décidés d’avance : ils naissent de la comparaison entre les <span class="math inline">\(\mathbf{Q}\)</span> et les <span class="math inline">\(\mathbf{K}\)</span>, donc ils <strong>changent avec la phrase</strong>. Une head « adjectif → nom » n’existerait que si ce comportement a réduit la fonction de coût pendant l’entraînement</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+// Presentation mode. Turning it on:
+//   - collapses every collapsible callout, each one staying clickable so it
+//     can be opened on demand during the lecture
+//   - scales the document up for projection (see styles.css)
+//   - hides the left navigation sidebar (see styles.css)
+// Turning it off restores the reading view, with every callout expanded.
+// The choice is stored in localStorage so it survives page navigation.
+(function () {
+  const STORAGE_KEY = "xti306-presentation-mode";
+  const root = document.documentElement;
+
+  // Quarto renders a callout carrying a collapse attribute with the Bootstrap
+  // collapse markup: a .callout-header holding aria-expanded, and a
+  // .callout-collapse holding the body. The chevron is rotated by CSS from
+  // aria-expanded alone, and Bootstrap reads the "show" class back from the
+  // DOM on every click, so setting both by hand keeps later manual clicks
+  // consistent.
+  //
+  // Callouts written without a collapse attribute lack this markup and are
+  // left alone: they stay visible in both modes.
+  function setCalloutsCollapsed(collapsed) {
+    document.querySelectorAll(".callout").forEach(function (callout) {
+      const header = callout.querySelector(".callout-header[aria-expanded]");
+      const body = callout.querySelector(".callout-collapse");
+      if (!header || !body) return;
+
+      body.classList.toggle("show", !collapsed);
+      header.setAttribute("aria-expanded", String(!collapsed));
+    });
+  }
+
+  // A page opts out of the reading view by declaring
+  // `body-classes: collapsed-by-default` in its front matter. Its callouts hold
+  // answers the reader is meant to look for first, so they stay closed in both
+  // modes and open only on click.
+  function alwaysCollapsed() {
+    return document.body.classList.contains("collapsed-by-default");
+  }
+
+  function render(button, enabled) {
+    root.classList.toggle("presentation-mode", enabled);
+    setCalloutsCollapsed(enabled || alwaysCollapsed());
+
+    button.setAttribute("aria-pressed", String(enabled));
+    button.title = enabled
+      ? "Revenir à la vue complète : tous les encadrés dépliés"
+      : "Replier les encadrés et agrandir le texte pour la projection";
+  }
+
+  function init() {
+    const button = document.createElement("button");
+    button.id = "presentation-toggle";
+    button.type = "button";
+    button.innerHTML = '<span class="status-dot"></span>Mode présentation';
+
+    let enabled = localStorage.getItem(STORAGE_KEY) === "true";
+    render(button, enabled);
+
+    button.addEventListener("click", function () {
+      enabled = !enabled;
+      localStorage.setItem(STORAGE_KEY, String(enabled));
+      render(button, enabled);
+    });
+
+    document.body.appendChild(button);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/mikaelv\.github\.io\/xti306_IA_site\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
