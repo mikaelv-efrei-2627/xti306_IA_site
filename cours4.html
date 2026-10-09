@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mikaël Valot">
+
+<title>cours4 – 2627 XTI306 Introduction à l'ingénierie IA</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-88e8eab2b9e74ff2b2dcb2dc0227e102.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-35673c1328022ec05f8a1bab69fe76b7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-88e8eab2b9e74ff2b2dcb2dc0227e102.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-626bc743731229bd8adb76e0f8fa352c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-626bc743731229bd8adb76e0f8fa352c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-626bc743731229bd8adb76e0f8fa352c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/logo-noir.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./figures/logo-noir.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">XTI306 Introduction à l’ingénierie IA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Cours</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM1 - Introduction à l’apprentissage automatique (<em>machine learning</em>)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossaire</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Activités</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours1_linear_fit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM1 - Ajuster une droite</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours1_gradient_descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM1 - Descente de Gradient</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">TPs</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tp1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TP1 - Introduction à l’apprentissage automatique (<em>machine learning</em>)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sur cette page</h2>
+   
+  <ul>
+  <li><a href="#comment-un-llm-est-il-entraîné" id="toc-comment-un-llm-est-il-entraîné" class="nav-link active" data-scroll-target="#comment-un-llm-est-il-entraîné"><span class="header-section-number">1</span> Comment un LLM est-il entraîné ?</a>
+  <ul class="collapse">
+  <li><a href="#données-dentraînement" id="toc-données-dentraînement" class="nav-link" data-scroll-target="#données-dentraînement"><span class="header-section-number">1.1</span> Données d’entraînement</a>
+  <ul class="collapse">
+  <li><a href="#biais" id="toc-biais" class="nav-link" data-scroll-target="#biais"><span class="header-section-number">1.1.1</span> Biais</a></li>
+  <li><a href="#copyright" id="toc-copyright" class="nav-link" data-scroll-target="#copyright"><span class="header-section-number">1.1.2</span> Copyright</a></li>
+  <li><a href="#modèles-spécialisés" id="toc-modèles-spécialisés" class="nav-link" data-scroll-target="#modèles-spécialisés"><span class="header-section-number">1.1.3</span> Modèles spécialisés</a></li>
+  </ul></li>
+  <li><a href="#phases-dentraînement" id="toc-phases-dentraînement" class="nav-link" data-scroll-target="#phases-dentraînement"><span class="header-section-number">1.2</span> Phases d’entraînement</a>
+  <ul class="collapse">
+  <li><a href="#pré-entraînement-pre-training" id="toc-pré-entraînement-pre-training" class="nav-link" data-scroll-target="#pré-entraînement-pre-training"><span class="header-section-number">1.2.1</span> Pré-entraînement (Pre-training)</a></li>
+  <li><a href="#post-entraînement-post-training" id="toc-post-entraînement-post-training" class="nav-link" data-scroll-target="#post-entraînement-post-training"><span class="header-section-number">1.2.2</span> Post-entraînement (Post-training)</a></li>
+  <li><a href="#le-shoggoth" id="toc-le-shoggoth" class="nav-link" data-scroll-target="#le-shoggoth"><span class="header-section-number">1.2.3</span> Le shoggoth</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#développer-une-application-llm" id="toc-développer-une-application-llm" class="nav-link" data-scroll-target="#développer-une-application-llm"><span class="header-section-number">2</span> Développer une application LLM</a>
+  <ul class="collapse">
+  <li><a href="#choix-du-modèle" id="toc-choix-du-modèle" class="nav-link" data-scroll-target="#choix-du-modèle"><span class="header-section-number">2.1</span> Choix du modèle</a></li>
+  <li><a href="#echantillonage-sampling" id="toc-echantillonage-sampling" class="nav-link" data-scroll-target="#echantillonage-sampling"><span class="header-section-number">2.2</span> Echantillonage (sampling)</a></li>
+  </ul></li>
+  <li><a href="#draft" id="toc-draft" class="nav-link" data-scroll-target="#draft"><span class="header-section-number">3</span> Draft</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Auteur·rice</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mikaël Valot </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="comment-un-llm-est-il-entraîné" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Comment un LLM est-il entraîné ?</h1>
+<p>Nous avons vu lors du TP3 que l’on pouvait entraîner un modèle de langage soi-même avec un <strong>corpus</strong> et quelques GPUs. Mais le modèle résultant a peu de paramètres, n’est pas performant et est spécialisé dans un langage et un style d’écriture.</p>
+<p>En pratique, très peu de personnes ont l’occasion d’entraîner complètement un LLM. Ce chapitre permet de :</p>
+<ul>
+<li>comprendre les enjeux liés à l’entraînement : consommation électrique, origine des données, biais</li>
+<li>comprendre la différence entre un modèle <strong>pre-trained</strong> et <strong>instruction-trained</strong></li>
+</ul>
+<p>Entraîner <strong>complètement</strong> un LLM demande ressources colossales. Quelques ordres de grandeur :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 48%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modèle</th>
+<th>Année</th>
+<th>Coût estimé de l’entraînement</th>
+<th>Chiffres publiés</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPT-3 (OpenAI)</td>
+<td>2020</td>
+<td>~5 M$</td>
+<td>paramètres, données, matériel</td>
+</tr>
+<tr class="even">
+<td>Llama 3.1 405B (Meta)</td>
+<td>2024</td>
+<td>~170 M$</td>
+<td>paramètres, données, matériel</td>
+</tr>
+<tr class="odd">
+<td>Grok 4 (xAI)</td>
+<td>2025</td>
+<td>~490 M$</td>
+<td>aucun (estimation externe)</td>
+</tr>
+<tr class="even">
+<td>Claude Opus 5.5 (Anthropic)</td>
+<td>2026</td>
+<td>?</td>
+<td>aucun</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Coût :</strong> il double environ tous les 8 mois pour les plus gros modèles.</li>
+<li><strong>Électricité :</strong> l’entraînement de Grok 4 a consommé environ 310 GWh, la consommation annuelle d’environ 65 000 foyers français.</li>
+<li><strong>Opacité :</strong> les entreprises publient de moins en moins de chiffres. Les coûts récents sont des estimations externes, par exemple celles d’<a href="https://epoch.ai/">Epoch AI</a>.</li>
+</ul>
+<section id="données-dentraînement" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="données-dentraînement"><span class="header-section-number">1.1</span> Données d’entraînement</h2>
+<blockquote class="blockquote">
+<p>Un modèle ne sera pas meilleur que les données sur lesquelles il a été entraîné.</p>
+</blockquote>
+<ul>
+<li>S’il n’y a pas de Français dans le corpus, il ne sera pas capable de traduire de l’anglais vers le français.</li>
+<li>pour un modèle de classification d’images, si le modèle ne voit que des animaux, il ne saura pas identifier des plantes.</li>
+</ul>
+<p>Afin d’être performant dans des tâches variées, les LLM modernes doivent utiliser de grandes quantités de données. Utiliser plus de données évite également le sur-apprentissage.</p>
+<section id="biais" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="biais"><span class="header-section-number">1.1.1</span> Biais</h3>
+<p>Une source de données communément utilisée est <a href="https://commoncrawl.org/">Common Crawl</a>, qui contient 300 milliards de pages web. Ce genre de source pose certains problèmes :</p>
+<div class="consequences">
+<ul>
+<li>La qualité de ces données est discutable, car elles contiennent tout et n’importe quoi : clickbait, propagande, racisme, misogynie
+<ul>
+<li>les données doivent être filtrées avant entraînement</li>
+<li>les modèles doivent être contrôlés pour empêcher les réponses indésirables</li>
+</ul></li>
+<li>La langue est à <strong>45% de l’anglais</strong>, alors que seulement 18.15% de la population mondiale utilise l’anglais comme langue maternelle
+<ul>
+<li>les langues peu représentées sont mal traduites. Au lieu de traduire directement le vietnamien en farsi, il va d’abord créer une représentation interne en anglais.</li>
+<li>les modèles résolvent mieux les problèmes en anglais que dans des langues rares</li>
+<li>un modèle peut avoir des biais plus importants dans une langue, notamment sur des questions politiques. Voir <a href="https://aclanthology.org/2026.findings-eacl.122/">Bias in the East, Bias in the West</a></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="copyright" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="copyright"><span class="header-section-number">1.1.2</span> Copyright</h3>
+<p>Une fois que toutes les données publiques ont été utilisées, les compagnies d’IA utilisent des données propriétaires uniques pour rester dans la course : livres avec copyright, contrats, données médicales, génomes, etc. Ces données sont de meilleure qualité et peuvent permettre aux acteurs de l’IA de se différencier.</p>
+<p>Mais cela pose des problèmes majeurs de rétribution des droits d’auteur.</p>
+<p>Voir</p>
+<ul>
+<li><a href="https://www.rfi.fr/fr/%C3%A9conomie/20260731-anthropic-d%C3%A9truit-en-toute-l%C3%A9galit%C3%A9-les-livres-apr%C3%A8s-les-avoir-scann%C3%A9s-pour-alimenter-son-ia">Anthropic détruit en toute légalité les livres après les avoir scannés pour alimenter son IA</a></li>
+<li><a href="https://www.lesnumeriques.com/intelligence-artificielle/piratage-de-masse-chatgpt-a-ete-construit-avec-des-milliers-de-livres-telecharges-illegalement-n261559.html">“Piratage de masse” : ChatGPT a été construit avec des milliers de livres téléchargés illégalement</a></li>
+</ul>
+</section>
+<section id="modèles-spécialisés" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="modèles-spécialisés"><span class="header-section-number">1.1.3</span> Modèles spécialisés</h3>
+<p>Les modèles généralistes fonctionnent très bien sur des domaines variés, comme le code, la science, les sports, …</p>
+<p>Cependant, pour certaines tâches spécialisées comme la découverte de protéines ou le diagnostic médical, les données d’entraînement ne sont pas publiques. Pour pouvoir traiter ces tâches, un modèle spécialisé va d’abord sélectionner et filtrer un dataset spécialisé.</p>
+<p>Il y a ensuite deux approches possibles :</p>
+<ul>
+<li>Utiliser le dataset pour entraîner complètement le modèle.</li>
+<li>Utiliser un modèle de base généraliste, que l’on va ensuite post-train sur les données spécialisées.</li>
+</ul>
+<p>Voir <a href="https://github.com/NVIDIA-BioNeMo#models">NVidia BioNeMo</a>, <a href="https://deepmind.google/models/gemma/medgemma/">Google MedGemma</a></p>
+</section>
+</section>
+<section id="phases-dentraînement" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="phases-dentraînement"><span class="header-section-number">1.2</span> Phases d’entraînement</h2>
+<figure class="svg-figure figure">
+<svg viewbox="0 0 1000 410" role="img" aria-label="Schéma : le pre-training transforme un corpus de texte en modèle de base ; le post-training (SFT puis preference finetuning) transforme le modèle de base en modèle instruct" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
+  <defs>
+    <marker id="tp-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"></path>
+    </marker>
+  </defs>
+
+  <!-- Band 1: pre-training -->
+  <rect x="10" y="10" width="180" height="390" rx="14" fill="#fdf1e6" stroke="#d98032" stroke-width="1.5"></rect>
+  <text x="100" y="40" font-size="17" font-weight="700" fill="#a85d1c" text-anchor="middle">1. Pre-training</text>
+
+  <!-- Band 2: post-training -->
+  <rect x="410" y="10" width="380" height="390" rx="14" fill="#e7efe2" stroke="#93ad83" stroke-width="1.5"></rect>
+  <text x="600" y="40" font-size="17" font-weight="700" fill="#4f7a3a" text-anchor="middle">2. Post-training</text>
+
+  <!-- Training data, one box per stage -->
+  <g text-anchor="middle" fill="#2b2b2b" font-size="13">
+    <rect x="20" y="60" width="160" height="110" rx="8" fill="#fff" stroke="#c9a27d"></rect>
+    <text x="100" y="85" font-size="15" font-weight="700">Corpus de texte</text>
+    <text x="100" y="108">web, livres, code</text>
+    <text x="100" y="128">filtré</text>
+    <text x="100" y="148">milliers de milliards</text>
+    <text x="100" y="164">de tokens</text>
+
+    <rect x="420" y="60" width="160" height="110" rx="8" fill="#fff" stroke="#93ad83"></rect>
+    <text x="500" y="85" font-size="15" font-weight="700">Démonstrations</text>
+    <text x="500" y="108">exemples</text>
+    <text x="500" y="128">(prompt, réponse)</text>
+    <text x="500" y="148">écrits par des experts</text>
+
+    <rect x="620" y="60" width="160" height="110" rx="8" fill="#fff" stroke="#93ad83"></rect>
+    <text x="700" y="85" font-size="15" font-weight="700">Préférences</text>
+    <text x="700" y="108">notes humaines</text>
+    <text x="700" y="128">(RLHF)</text>
+    <text x="700" y="148">ou notes d'une IA</text>
+    <text x="700" y="164">(RLAIF)</text>
+  </g>
+
+  <g stroke="#555" stroke-width="2" marker-end="url(#tp-arrow)">
+    <line x1="100" y1="172" x2="100" y2="203"></line>
+    <line x1="500" y1="172" x2="500" y2="203"></line>
+    <line x1="700" y1="172" x2="700" y2="203"></line>
+  </g>
+
+  <!-- Training stages -->
+  <g text-anchor="middle" fill="#2b2b2b">
+    <rect x="20" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#d98032" stroke-width="1.8"></rect>
+    <text x="100" y="240" font-size="15" font-weight="700">Prédire le</text>
+    <text x="100" y="260" font-size="15" font-weight="700">token suivant</text>
+    <text x="100" y="285" font-size="13">auto-supervisé</text>
+
+    <rect x="420" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
+    <text x="500" y="240" font-size="15" font-weight="700">Supervised</text>
+    <text x="500" y="260" font-size="15" font-weight="700">finetuning (SFT)</text>
+    <text x="500" y="285" font-size="13">imiter les réponses</text>
+
+    <rect x="620" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
+    <text x="700" y="240" font-size="15" font-weight="700">Preference</text>
+    <text x="700" y="260" font-size="15" font-weight="700">finetuning</text>
+    <text x="700" y="285" font-size="13">suivre les préférences</text>
+  </g>
+
+  <!-- Resulting models -->
+  <rect x="220" y="205" width="160" height="100" rx="10" fill="#5b9bd5" stroke="#1f3864" stroke-width="2.5"></rect>
+  <rect x="820" y="205" width="160" height="100" rx="10" fill="#5b9bd5" stroke="#1f3864" stroke-width="2.5"></rect>
+  <g text-anchor="middle" fill="#fff">
+    <text x="300" y="248" font-size="17" font-weight="700">Modèle de base</text>
+    <text x="300" y="272" font-size="13">(pre-trained)</text>
+    <text x="900" y="248" font-size="17" font-weight="700">Modèle instruct</text>
+    <text x="900" y="272" font-size="13">(instruction tuned)</text>
+  </g>
+
+  <g stroke="#555" stroke-width="2" marker-end="url(#tp-arrow)">
+    <line x1="180" y1="255" x2="217" y2="255"></line>
+    <line x1="380" y1="255" x2="417" y2="255"></line>
+    <line x1="580" y1="255" x2="617" y2="255"></line>
+    <line x1="780" y1="255" x2="817" y2="255"></line>
+  </g>
+
+  <!-- Example model names on Hugging Face -->
+  <g text-anchor="middle" fill="#1f3864" font-size="12" font-family="var(--bs-font-monospace,monospace)">
+    <text x="300" y="330">gemma-3-27b-pt</text>
+    <text x="300" y="348">Llama-3.1-8B</text>
+    <text x="900" y="330">gemma-3-27b-it</text>
+    <text x="900" y="348">Llama-3.1-8B-Instruct</text>
+  </g>
+
+  <!-- What each phase brings -->
+  <g text-anchor="middle" font-size="14" font-style="italic">
+    <text x="100" y="370" fill="#a85d1c">acquiert des</text>
+    <text x="100" y="388" fill="#a85d1c">connaissances</text>
+    <text x="600" y="380" fill="#4f7a3a">apprend à les utiliser</text>
+  </g>
+</svg>
+<figcaption>Les deux phases d'entraînement d'un LLM, avec des exemples de noms de modèles</figcaption>
+</figure>
+<ul>
+<li>En pre-training, le modèle <strong>acquiert</strong> des connaissances</li>
+<li>En post-training, il apprend à <strong>utiliser</strong> ces connaissances.</li>
+</ul>
+<p>Les entreprises publient souvent les deux versions d’un même modèle. On les reconnaît à leur nom : suffixe <code>-pt</code> (pre-trained) et <code>-it</code> (instruction tuned) chez Google, suffixe <code>-Instruct</code> chez Meta.</p>
+<p>Ces phases ressemblent à la façon dont un étudiant apprend :</p>
+<figure class="svg-figure figure">
+<svg viewbox="0 0 1000 380" role="img" aria-label="Analogie : lire le cours correspond au pre-training, refaire des exercices corrigés au supervised finetuning, s'entraîner et être noté au preference finetuning, passer l'examen final à l'évaluation" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
+  <defs>
+    <marker id="st-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"></path>
+    </marker>
+  </defs>
+
+  <!-- Bands: pre-training, post-training, evaluation -->
+  <rect x="10" y="10" width="230" height="360" rx="14" fill="#fdf1e6" stroke="#d98032" stroke-width="1.5"></rect>
+  <text x="125" y="40" font-size="17" font-weight="700" fill="#a85d1c" text-anchor="middle">1. Pre-training</text>
+
+  <rect x="250" y="10" width="490" height="360" rx="14" fill="#e7efe2" stroke="#93ad83" stroke-width="1.5"></rect>
+  <text x="495" y="40" font-size="17" font-weight="700" fill="#4f7a3a" text-anchor="middle">2. Post-training</text>
+
+  <!-- Dashed: the model no longer learns during evaluation -->
+  <rect x="750" y="10" width="240" height="360" rx="14" fill="#eef1f5" stroke="#8a9bb0" stroke-width="1.5" stroke-dasharray="6 4"></rect>
+  <text x="870" y="40" font-size="17" font-weight="700" fill="#4a5d75" text-anchor="middle">3. Évaluation</text>
+
+  <!-- Student side -->
+  <g text-anchor="middle" fill="#2b2b2b">
+    <rect x="25" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#c9a27d"></rect>
+    <rect x="265" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#93ad83"></rect>
+    <rect x="525" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#93ad83"></rect>
+    <rect x="770" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#8a9bb0"></rect>
+
+    <g font-size="12" fill="#777">
+      <text x="125" y="80">Étudiant</text>
+      <text x="365" y="80">Étudiant</text>
+      <text x="625" y="80">Étudiant</text>
+      <text x="870" y="80">Étudiant</text>
+    </g>
+    <g font-size="15" font-weight="700">
+      <text x="125" y="112">Lire le cours</text>
+      <text x="365" y="105">Refaire des</text>
+      <text x="365" y="125">exercices corrigés</text>
+      <text x="625" y="105">S'entraîner, être</text>
+      <text x="625" y="125">noté par le prof</text>
+      <text x="870" y="112">Passer l'examen</text>
+    </g>
+  </g>
+
+  <!-- "Is like" links between the two sides -->
+  <g stroke="#999" stroke-width="1.5" stroke-dasharray="3 3">
+    <line x1="125" y1="147" x2="125" y2="193"></line>
+    <line x1="365" y1="147" x2="365" y2="193"></line>
+    <line x1="625" y1="147" x2="625" y2="193"></line>
+    <line x1="870" y1="147" x2="870" y2="193"></line>
+  </g>
+  <g fill="#fff" stroke="#999" stroke-width="1.5">
+    <circle cx="125" cy="170" r="12"></circle> <circle cx="365" cy="170" r="12"></circle>
+    <circle cx="625" cy="170" r="12"></circle> <circle cx="870" cy="170" r="12"></circle>
+  </g>
+  <g font-size="16" font-weight="700" fill="#555" text-anchor="middle">
+    <text x="125" y="176">≈</text> <text x="365" y="176">≈</text>
+    <text x="625" y="176">≈</text> <text x="870" y="176">≈</text>
+  </g>
+
+  <!-- LLM side -->
+  <g text-anchor="middle" fill="#2b2b2b">
+    <rect x="25" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#d98032" stroke-width="1.8"></rect>
+    <rect x="265" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
+    <rect x="525" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
+    <rect x="770" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#8a9bb0" stroke-width="1.8" stroke-dasharray="6 4"></rect>
+
+    <g font-size="12" fill="#777">
+      <text x="125" y="215">LLM</text>
+      <text x="365" y="215">LLM</text>
+      <text x="625" y="215">LLM</text>
+      <text x="870" y="215">LLM</text>
+    </g>
+    <g font-size="15" font-weight="700">
+      <text x="125" y="240">Pre-training</text>
+      <text x="365" y="240">Supervised finetuning</text>
+      <text x="625" y="240">Preference finetuning</text>
+      <text x="870" y="240">Benchmarks</text>
+    </g>
+    <g font-size="13">
+      <text x="125" y="262">lire des milliers de</text>
+      <text x="125" y="279">milliards de tokens</text>
+      <text x="365" y="262">imiter des exemples</text>
+      <text x="365" y="279">(prompt, réponse)</text>
+      <text x="625" y="262">réponses notées par</text>
+      <text x="625" y="279">un humain ou une IA</text>
+      <text x="870" y="262">paramètres figés,</text>
+      <text x="870" y="279">on mesure seulement</text>
+    </g>
+  </g>
+
+  <g stroke="#555" stroke-width="2" marker-end="url(#st-arrow)">
+    <line x1="225" y1="242" x2="262" y2="242"></line>
+    <line x1="465" y1="242" x2="522" y2="242"></line>
+    <line x1="725" y1="242" x2="767" y2="242"></line>
+  </g>
+
+  <!-- What is learnt -->
+  <g text-anchor="middle" font-size="14" font-style="italic">
+    <text x="125" y="320" fill="#a85d1c">des connaissances</text>
+    <text x="365" y="320" fill="#4f7a3a">la forme d'une</text>
+    <text x="365" y="338" fill="#4f7a3a">bonne réponse</text>
+    <text x="625" y="320" fill="#4f7a3a">le comportement</text>
+    <text x="625" y="338" fill="#4f7a3a">attendu</text>
+    <text x="870" y="320" fill="#4a5d75">rien : c'est</text>
+    <text x="870" y="338" fill="#4a5d75">une mesure</text>
+  </g>
+</svg>
+<figcaption>Analogie avec l'apprentissage d'un étudiant, inspirée d'<a href="https://x.com/karpathy/status/1885026028428681698">Andrej Karpathy (2025)</a></figcaption>
+</figure>
+<section id="pré-entraînement-pre-training" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="pré-entraînement-pre-training"><span class="header-section-number">1.2.1</span> Pré-entraînement (Pre-training)</h3>
+<p>Le <strong>pre-training</strong> est l’entraînement du modèle de <strong>base</strong> (ou foundation model), de manière auto-supervisée.</p>
+<p>En données d’entrée, on utilise un corpus de texte filtré pour éviter certains contenus. En sortie, on aura un modèle qui :</p>
+<ul>
+<li>permet de générer du texte cohérent en prédisant le mot suivant</li>
+<li>ne sait pas encore converser avec un utilisateur pour répondre à des questions</li>
+<li>n’est pas contrôlé et peut générer du contenu raciste, dangereux, injurieux</li>
+</ul>
+</section>
+<section id="post-entraînement-post-training" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="post-entraînement-post-training"><span class="header-section-number">1.2.2</span> Post-entraînement (Post-training)</h3>
+<p>Le <strong>post-training</strong> est la spécialisation du modèle de base pour lui apprendre à <strong>converser</strong> et à empêcher les comportements toxiques. On qualifie le modèle résultant comme étant <strong>“instruction tuned”</strong>.</p>
+<p>Cette phase va <strong>modifier les paramètres</strong> du modèle. C’est ce qu’on appelle le <strong>finetuning</strong>. Elle se déroule en deux temps :</p>
+<ul>
+<li><strong>supervised finetuning (SFT)</strong> :
+<ul>
+<li>utilise des données d’instruction. Ce sont des exemples de conversations.</li>
+</ul></li>
+<li><strong>preference finetuning</strong> :
+<ul>
+<li>modifie le modèle pour qu’il soit aligné avec les préférences humaines.</li>
+<li>utilise des techniques de reinforcement learning, comme le RLHF “Reinforcement Learning from Human Feedback”</li>
+</ul></li>
+</ul>
+<section id="supervised-finetuning" class="level4" data-number="1.2.2.1">
+<h4 data-number="1.2.2.1" class="anchored" data-anchor-id="supervised-finetuning"><span class="header-section-number">1.2.2.1</span> Supervised finetuning</h4>
+<p>Un modèle pre-trained est optimisé pour compléter du texte plutôt que pour converser. Si vous entrez <em>“comment faire une pizza”</em>, il va essayer de compléter la phrase, par exemple <em>“pour une famille de quatre ?”</em>. Le modèle n’a pas de concept de conversation et ne vas pas essayer de répondre à la question.</p>
+<p>Nous savons qu’un modèle imite ses données d’entraînement. Pour l’encourager à générer des réponses, nous devons lui fournir des exemples de question/réponses.</p>
+<p>Le dataset d’entraînement pour cette phase est une collection d’exemples <code>(prompt, response)</code> de grande qualité, qu’on appelle <strong>données de démonstration</strong>. On va en quelque sorte montrer au modèle comment il devrait se comporter, afin qu’il puisse cloner ce comportement.</p>
+<p>Pour construire le dataset, on pourra recruter des personnes spécialistes d’un domaine. Les données de démonstration doivent contenir des prompts dont les réponses nécessite une pensée critique et du jugement.</p>
+<p>Exemples de données de démonstration :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 24%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type de tâche</th>
+<th>Prompt</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Question</td>
+<td>Comment faire une pizza ?</td>
+<td>Pour une pizza maison, il faut : 1. préparer la pâte avec de la farine, de l’eau, de la levure et du sel…</td>
+</tr>
+<tr class="even">
+<td>Réécriture</td>
+<td>Reformule ce mail pour qu’il soit plus poli : « Envoie-moi le rapport. »</td>
+<td>Bonjour, pourrais-tu m’envoyer le rapport lorsque tu auras un moment ? Merci d’avance.</td>
+</tr>
+<tr class="odd">
+<td>Classification</td>
+<td>Ce commentaire est-il positif ou négatif ? « Livraison en retard, produit cassé. »</td>
+<td>Négatif.</td>
+</tr>
+<tr class="even">
+<td>Jugement</td>
+<td>Mon médecin m’a prescrit un antibiotique, puis-je doubler la dose pour guérir plus vite ?</td>
+<td>Non, ne doublez pas la dose sans avis médical : cela augmente le risque d’effets secondaires…</td>
+</tr>
+</tbody>
+</table>
+<p>Ces datasets contiennent quelques dizaines de milliers d’exemples, beaucoup moins que le corpus de pre-training. Par exemple, <a href="https://huggingface.co/datasets/databricks/databricks-dolly-15k">databricks-dolly-15k</a> contient 15 000 exemples écrits par des employés de Databricks.</p>
+</section>
+<section id="preference-finetuning" class="level4" data-number="1.2.2.2">
+<h4 data-number="1.2.2.2" class="anchored" data-anchor-id="preference-finetuning"><span class="header-section-number">1.2.2.2</span> Preference finetuning</h4>
+<p>Après le supervised finetuning, le modèle sait comment tenir une conversation, mais <strong>sans filtre</strong>.</p>
+<p>Si l’utilisateur demande au modèle d’écrire un essai sur l’infériorité d’une race, ou comment fabriquer une bombe, le modèle doit refuser. Ces exemples sont évidents, mais d’autres cas sont plus délicats. Comment est-ce que le modèle doit répondre à des questions sur la religion, l’avortement, sur un conflit armé, sur l’immigration ?</p>
+<ul>
+<li>si le modèle répond à une question controversée, vous risquez de choquer vos utilisateurs</li>
+<li>si le modèle est trop censuré, il devient ennuyeux</li>
+</ul>
+<p>Le but du preference finetuning est de conduire le modèle <strong>à se comporter selon une préférence humaine</strong>.</p>
+<p>Il existe plusieurs approches pour que le modèle apprenne cette préférence humaine : RLHF, RLAIF.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>RLHF (reinforcement learning from human feedback)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>On demande à des évaluateurs humains de donner un score à des réponses générées par le modèle LLM. Cela constitue un dataset <code>input=(prompt, response), output=score</code></li>
+<li>On entraîne un 2ème modèle, le <strong>reward model</strong> avec ces données. Ce modèle apprend à prédire quelle réponse un humain préfèrerait</li>
+<li>Optimisation du LLM par reinforcement learning :
+<ul>
+<li>le modèle LLM génère des réponses,</li>
+<li>le reward model note les réponses,</li>
+<li>un algorithme ajuste les paramètres du LLM</li>
+</ul></li>
+</ol>
+<p>Cette approche est efficace : c’est elle qui a rendu ChatGPT utilisable par le grand public en 2022. Elle a cependant des limites :</p>
+<ul>
+<li>les évaluations humaines sont lentes et coûteuses</li>
+<li>les évaluateurs ne sont pas toujours d’accord entre eux</li>
+<li>les humains aiment être <strong>flattés</strong> : les évaluateurs ont tendance à mieux noter les réponses qui donnent raison à l’utilisateur ou le complimentent. Le modèle apprend alors la <strong>complaisance (sycophancy)</strong>. En 2025, OpenAI a dû annuler une mise à jour de GPT-4o qui était devenue beaucoup trop flatteuse. Voir <a href="https://openai.com/index/sycophancy-in-gpt-4o/">Sycophancy in GPT-4o</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>RLAIF (reinforcment learning from AI feedback)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>C’est l’approche utilisée par Anthropic. La notation est effectuée par un modèle d’IA qui se base sur une <strong>constitution</strong>. La constitution est un document qui exprime les valeurs que doit respecter le modèle.</p>
+<p>Voir <a href="https://www.anthropic.com/constitution">Claude’s constitution</a></p>
+<p>Cette approche a plusieurs avantages :</p>
+<ul>
+<li>on peut évaluer des datasets très grands automatiquement</li>
+<li>la constitution peut être revue et mise à jour régulièrement</li>
+</ul>
+<p>Cependant, cette approche possède aussi des biais. L’IA notatrice hérite des biais humains. Elle est aussi sujette à la complaisance, à préférer des réponses longues ou qui lui ressemblent.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="le-shoggoth" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="le-shoggoth"><span class="header-section-number">1.2.3</span> Le shoggoth</h3>
+<p>Le post-training est souvent illustré par un monstre, le shoggoth :</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/shoggoth.png" class="img-fluid figure-img" style="width:70.0%" alt="Un monstre couvert d'yeux et de tentacules (unsupervised learning) tient un masque humain rose (supervised fine-tuning), sur lequel est posé un petit smiley jaune (RLHF)."></p>
+<figcaption>Le shoggoth au smiley. Dessin de <a href="https://x.com/anthrupad/status/1622349563922362368">@anthrupad</a> (2023)</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Unsupervised learning</strong> : le modèle de base, un monstre qui a lu tout internet.</li>
+<li><strong>Supervised fine-tuning</strong> : on lui met un masque humain.</li>
+<li><strong>Preference fine-tuning RLHF</strong> : c’est la perle, le modèle répond sans toxicité</li>
+</ul>
+<p>Le fine-tuning change le comportement du modèle, mais le monstre est toujours là : c’est pourquoi on peut parfois contourner les protections d’un modèle (jailbreak).</p>
+</section>
+</section>
+</section>
+<section id="développer-une-application-llm" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Développer une application LLM</h1>
+<p>Pour développer des applications utilisant un LLM, nous utiliserons la plupart du temps un modèle déjà entraîné. Exemples d’application :</p>
+<ul>
+<li>supprimer des données personnelles d’un jeu de données, pour satisfaire le RGPD</li>
+<li>Chatbot support qui répond aux questions des clients, en utilisant une base de connaissances.</li>
+<li>Chatbot interne qui utilise des données privées à l’entreprise : mails, système comptable, …
+<ul>
+<li>exemple de question : “est-ce que la dernière facture de mr dupont a été payée ?”</li>
+</ul></li>
+<li>coding agent dans une entreprise sensible (défence, banque, …)</li>
+<li>analyseur de logs pour détecter des cyberattaques</li>
+<li>TODO autres exemples</li>
+</ul>
+<p>En fonction des besoins de l’application, nous essaierons des solutions dans l’ordre suivant, du plus simple au plus complexe :</p>
+<p>TODO schéma 1. Prompter. Les LLMs modernes supportent un contexte très long. De nombreuses tâches peuvent être traitées avec un prompt suffisamment développé. TODO lien recommandation claude 2. Développer une solution RAG 3. fine-tuning d’un modèle TODO où placer l’agentique ?</p>
+<p>Pour chaque solution, vous devrez définir des critères de succès :</p>
+<ul>
+<li>est-ce qu’elle répond au besoin ?</li>
+<li>est-ce qu’elle est fiable : faux positifs, faux négatifs, hallucinations ?</li>
+<li>est-ce qu’elle permet d’éviter les propos toxiques ?</li>
+<li>est-ce qu’elle est stable : est-ce qu’on doit ré-entraîner le modèle régulièrement ? Que se passe-t-il si le fournisseur met à jour le modèle ?</li>
+<li>quel est son coût global : développement de la solution, entraînement et inference ?</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Le cours ne suit pas cet ordre, TODO expliquer raisons pédagogiques</p>
+</div>
+</div>
+</div>
+<section id="choix-du-modèle" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="choix-du-modèle"><span class="header-section-number">2.1</span> Choix du modèle</h2>
+<p>Plusieurs choix s’offrent à vous en fonction de l’application à développer, de votre budget, de vos contraintes de localisation des données. d</p>
+<p>TODO arbre de décision, avec pros/cons</p>
+<p>propriétaire / open source cloud / hébergé dans l’entreprise maîtrise des coûts “intelligence” du modèle stabilité : update contrôlés rapidité : tokens/s</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Propriétaire</th>
+<th>Open source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hébergement</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="echantillonage-sampling" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="echantillonage-sampling"><span class="header-section-number">2.2</span> Echantillonage (sampling)</h2>
+</section>
+</section>
+<section id="draft" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Draft</h1>
+<ul>
+<li>temperature, top-k etc</li>
+<li>based pre-trained / instruct post-trained</li>
+<li>fine-tune</li>
+<li>hiérarchie : context &gt; RAG &gt; finetuning Look at bookmarks in the book, copy/paste/translate/summarize</li>
+</ul>
+<p>Lab : - load a model (how to choose ?) - fp16 small range medium precision - bf16 large range low precision, but requires specific hardware - test api call: next work, yeah ! - test post-trained, see diff - prompt to extract data, see limits - fine-tune the thing</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+// Presentation mode. Turning it on:
+//   - collapses every collapsible callout, each one staying clickable so it
+//     can be opened on demand during the lecture
+//   - scales the document up for projection (see styles.css)
+//   - hides the left navigation sidebar (see styles.css)
+// Turning it off restores the reading view, with every callout expanded.
+// The choice is stored in localStorage so it survives page navigation.
+(function () {
+  const STORAGE_KEY = "xti306-presentation-mode";
+  const root = document.documentElement;
+
+  // Quarto renders a callout carrying a collapse attribute with the Bootstrap
+  // collapse markup: a .callout-header holding aria-expanded, and a
+  // .callout-collapse holding the body. The chevron is rotated by CSS from
+  // aria-expanded alone, and Bootstrap reads the "show" class back from the
+  // DOM on every click, so setting both by hand keeps later manual clicks
+  // consistent.
+  //
+  // Callouts written without a collapse attribute lack this markup and are
+  // left alone: they stay visible in both modes.
+  function setCalloutsCollapsed(collapsed) {
+    document.querySelectorAll(".callout").forEach(function (callout) {
+      const header = callout.querySelector(".callout-header[aria-expanded]");
+      const body = callout.querySelector(".callout-collapse");
+      if (!header || !body) return;
+
+      body.classList.toggle("show", !collapsed);
+      header.setAttribute("aria-expanded", String(!collapsed));
+    });
+  }
+
+  // A page opts out of the reading view by declaring
+  // `body-classes: collapsed-by-default` in its front matter. Its callouts hold
+  // answers the reader is meant to look for first, so they stay closed in both
+  // modes and open only on click.
+  function alwaysCollapsed() {
+    return document.body.classList.contains("collapsed-by-default");
+  }
+
+  function render(button, enabled) {
+    root.classList.toggle("presentation-mode", enabled);
+    setCalloutsCollapsed(enabled || alwaysCollapsed());
+
+    button.setAttribute("aria-pressed", String(enabled));
+    button.title = enabled
+      ? "Revenir à la vue complète : tous les encadrés dépliés"
+      : "Replier les encadrés et agrandir le texte pour la projection";
+  }
+
+  function init() {
+    const button = document.createElement("button");
+    button.id = "presentation-toggle";
+    button.type = "button";
+    button.innerHTML = '<span class="status-dot"></span>Mode présentation';
+
+    let enabled = localStorage.getItem(STORAGE_KEY) === "true";
+    render(button, enabled);
+
+    button.addEventListener("click", function () {
+      enabled = !enabled;
+      localStorage.setItem(STORAGE_KEY, String(enabled));
+      render(button, enabled);
+    });
+
+    document.body.appendChild(button);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/mikaelv\.github\.io\/xti306_IA_site\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

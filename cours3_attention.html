@@ -289,28 +289,28 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[
-\mathbf{A} = \mathrm{softmax}_{\text{colonne}}\!\left(\frac{\mathbf{K}^\top \mathbf{Q}}{\sqrt{d_h}} + \mathbf{M}\right)
+\mathbf{A} = \mathrm{softmax}_{\text{ligne}}\!\left(\frac{\mathbf{Q} \mathbf{K}^\top}{\sqrt{d_h}} + \mathbf{M}\right)
 \]</span></p>
 <ul>
-<li>une <strong>colonne</strong> par token qui cherche : c’est sa <strong>query</strong></li>
-<li>une <strong>ligne</strong> par token regardé : c’est sa <strong>key</strong></li>
+<li>une <strong>ligne</strong> par token qui cherche : c’est sa <strong>query</strong></li>
+<li>une <strong>colonne</strong> par token regardé : c’est sa <strong>key</strong></li>
 <li><span class="math inline">\(\mathbf{M}\)</span> est le <strong>masque causal</strong> : il met <span class="math inline">\(-\infty\)</span> dans les cases où la key est <strong>après</strong> la query</li>
-<li>chaque <strong>colonne</strong> somme à <strong>1</strong> : le softmax est appliqué colonne par colonne</li>
+<li>chaque <strong>ligne</strong> somme à <strong>1</strong> : le softmax est appliqué ligne par ligne</li>
 </ul>
 </div>
 </div>
-<p>On garde donc la convention du cours : <strong>un token de la phrase par colonne</strong>, comme pour <span class="math inline">\(\mathbf{X}\)</span> et <span class="math inline">\(\mathbf{E}\)</span>.</p>
+<p>On garde donc la convention du cours : <strong>un token de la phrase par ligne</strong>, comme pour <span class="math inline">\(\mathbf{X}\)</span> et <span class="math inline">\(\mathbf{E}\)</span>.</p>
 <p>La case en ligne <span class="math inline">\(i\)</span>, colonne <span class="math inline">\(j\)</span> répond à la question :</p>
 <blockquote class="blockquote">
-<p><em>Quelle part de son attention le token <span class="math inline">\(j\)</span> accorde-t-il au token <span class="math inline">\(i\)</span> ?</em> Plus le point est <strong>foncé</strong>, plus le poids est proche de 1.</p>
+<p><em>Quelle part de son attention le token <span class="math inline">\(i\)</span> accorde-t-il au token <span class="math inline">\(j\)</span> ?</em> Plus le point est <strong>foncé</strong>, plus le poids est proche de 1.</p>
 </blockquote>
 </section>
 <section id="loutil" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="loutil"><span class="header-section-number">3</span> L’outil</h2>
-<p>Cliquez sur un onglet pour changer de head, et sur une colonne pour voir le détail.</p>
+<p>Cliquez sur un onglet pour changer de head, et sur une ligne pour voir le détail.</p>
 <p>Boutons :</p>
 <ul>
-<li><strong>poids A / scores</strong> : les scores sont les valeurs <em>avant</em> le softmax, celles qu’un vrai modèle calcule avec <span class="math inline">\(\mathbf{K}^\top \mathbf{Q} / \sqrt{d_h}\)</span>. Passez de l’un à l’autre pour voir ce que le softmax fabrique : des scores quelconques deviennent des poids positifs dont la colonne somme à 1.</li>
+<li><strong>poids A / scores</strong> : les scores sont les valeurs <em>avant</em> le softmax, celles qu’un vrai modèle calcule avec <span class="math inline">\(\mathbf{Q} \mathbf{K}^\top / \sqrt{d_h}\)</span>. Passez de l’un à l’autre pour voir ce que le softmax fabrique : des scores quelconques deviennent des poids positifs dont la ligne somme à 1.</li>
 <li><strong>masque causal</strong> : le désactiver revient à laisser chaque token voir toute la phrase, comme dans un <strong>encodeur</strong> (BERT). Un LLM décodeur, lui, garde toujours le masque.</li>
 </ul>
 <div class="attn" id="attn">
@@ -324,7 +324,7 @@ Note
     <button class="attn-btn is-on attn-mask" id="attn-mask">masque causal</button>
   </div>
 
-  <svg viewbox="0 0 480 462" class="attn-grid" role="img" aria-label="Matrice d'attention : une colonne par token qui cherche, une ligne par token regardé.">
+  <svg viewbox="0 0 520 440" class="attn-grid" role="img" aria-label="Matrice d'attention : une ligne par token qui cherche, une colonne par token regardé.">
     <g id="attn-layer"></g>
   </svg>
 
@@ -410,7 +410,7 @@ Note
   // from Q and K; here they are imposed by hand.
   //
   // `links` holds [key, query] pairs that the head is built to connect. A query
-  // with no link falls back on itself, which keeps every column readable.
+  // with no link falls back on itself, which keeps every row readable.
   var SELF_ALONE = 4, SELF_LINKED = 1, LINK = 5;
 
   function linkScorer(links) {
@@ -456,8 +456,8 @@ Note
 
   function allowed(i, j) { return masked ? i <= j : true; }
 
-  // Softmax over one column: the query j shares 1.0 between the keys it may see.
-  function column(j) {
+  // Softmax over one row: the query j shares 1.0 between the keys it may see.
+  function row(j) {
     var raw = [], sum = 0, i;
     for (i = 0; i < T; i++) {
       var e = allowed(i, j) ? Math.exp(HEADS[head].score(i, j)) : 0;
@@ -470,70 +470,71 @@ Note
 
   function weights() {
     var a = [];
-    for (var j = 0; j < T; j++) a.push(column(j));
+    for (var j = 0; j < T; j++) a.push(row(j));
     return a;
   }
 
-  function cx(j) { return X0 + (j + 0.5) * CELL; }
-  function cy(i) { return Y0 + (i + 0.5) * CELL; }
+  // Keys run along the x axis, queries along the y axis.
+  function cx(i) { return X0 + (i + 0.5) * CELL; }
+  function cy(j) { return Y0 + (j + 0.5) * CELL; }
 
   function draw() {
     var A = weights(), out = "", i, j;
 
     out += '<text x="' + (X0 + T * CELL / 2) + '" y="20" class="attn-axis">' +
-           'query : le token qui cherche</text>';
+           'key : le token regardé</text>';
     out += '<text x="22" y="' + (Y0 + T * CELL / 2) + '" class="attn-axis" ' +
-           'transform="rotate(-90 22 ' + (Y0 + T * CELL / 2) + ')">key : le token regardé</text>';
+           'transform="rotate(-90 22 ' + (Y0 + T * CELL / 2) + ')">query : le token qui cherche</text>';
 
-    for (j = 0; j < T; j++) {
-      out += '<text x="' + cx(j) + '" y="' + (Y0 - 10) + '" class="attn-label' +
-             (j === selected ? " is-sel" : "") + '" text-anchor="middle">' + TOKENS[j] + "</text>";
-    }
     for (i = 0; i < T; i++) {
-      out += '<text x="' + (X0 - 12) + '" y="' + (cy(i) + 4) +
-             '" class="attn-label" text-anchor="end">' + TOKENS[i] + "</text>";
+      out += '<text x="' + cx(i) + '" y="' + (Y0 - 10) +
+             '" class="attn-label" text-anchor="middle">' + TOKENS[i] + "</text>";
+    }
+    for (j = 0; j < T; j++) {
+      out += '<text x="' + (X0 - 12) + '" y="' + (cy(j) + 4) + '" class="attn-label' +
+             (j === selected ? " is-sel" : "") + '" text-anchor="end">' + TOKENS[j] + "</text>";
     }
 
     for (j = 0; j < T; j++) {
       for (i = 0; i < T; i++) {
-        var x = X0 + j * CELL, y = Y0 + i * CELL;
+        var x = X0 + i * CELL, y = Y0 + j * CELL;
         var w = A[j][i];
 
-        out += '<rect class="attn-cell" data-col="' + j + '" x="' + x + '" y="' + y +
+        out += '<rect class="attn-cell" data-row="' + j + '" x="' + x + '" y="' + y +
                '" width="' + CELL + '" height="' + CELL + '" fill="' +
                (allowed(i, j) ? "transparent" : "var(--attn-mask-fill)") +
                '" stroke="var(--attn-rule)" stroke-width=".5"><title>' +
-               'A[' + TOKENS[i] + ', ' + TOKENS[j] + '] = ' +
+               'A[' + TOKENS[j] + ', ' + TOKENS[i] + '] = ' +
                (allowed(i, j) ? fr(w, 3) : "0 (masqué)") + '</title></rect>';
 
         if (view === "weights") {
           if (allowed(i, j)) {
             // Darkness carries the weight: the opacity floor keeps a 0.02 dot visible.
-            out += '<circle cx="' + cx(j) + '" cy="' + cy(i) + '" r="20" fill="var(--attn-dot)" ' +
+            out += '<circle cx="' + cx(i) + '" cy="' + cy(j) + '" r="20" fill="var(--attn-dot)" ' +
                    'opacity="' + (0.06 + 0.94 * w).toFixed(3) + '" pointer-events="none"/>';
-            out += '<text x="' + cx(j) + '" y="' + (cy(i) + 4) + '" class="attn-val" fill="' +
+            out += '<text x="' + cx(i) + '" y="' + (cy(j) + 4) + '" class="attn-val" fill="' +
                    (w > 0.55 ? "var(--attn-bg)" : "var(--attn-ink)") + '">' + fr(w, 2) + "</text>";
           }
         } else {
-          out += '<text x="' + cx(j) + '" y="' + (cy(i) + 4) + '" class="attn-val" fill="' +
+          out += '<text x="' + cx(i) + '" y="' + (cy(j) + 4) + '" class="attn-val" fill="' +
                  (allowed(i, j) ? "var(--attn-ink)" : "var(--attn-soft)") + '">' +
                  (allowed(i, j) ? fr(HEADS[head].score(i, j), 1) : "−∞") + "</text>";
         }
       }
     }
 
-    // Selected column, drawn last so its outline stays above the cell strokes.
-    out += '<rect x="' + (X0 + selected * CELL) + '" y="' + (Y0 - 24) + '" width="' + CELL +
-           '" height="' + (T * CELL + 24) + '" fill="none" stroke="var(--attn-sel)" ' +
+    // Selected row, drawn last so its outline stays above the cell strokes.
+    out += '<rect x="' + (X0 - 56) + '" y="' + (Y0 + selected * CELL) + '" width="' +
+           (T * CELL + 56) + '" height="' + CELL + '" fill="none" stroke="var(--attn-sel)" ' +
            'stroke-width="1.5" rx="4" pointer-events="none"/>';
 
-    // Column sums, to make the softmax visible.
+    // Row sums, to make the softmax visible.
+    var xSum = X0 + T * CELL + 28;
     for (j = 0; j < T; j++) {
-      out += '<text x="' + cx(j) + '" y="' + (Y0 + T * CELL + 18) + '" class="attn-axis">' +
+      out += '<text x="' + xSum + '" y="' + (cy(j) + 4) + '" class="attn-axis">' +
              (view === "weights" ? "1,00" : "") + "</text>";
     }
-    out += '<text x="' + (X0 - 12) + '" y="' + (Y0 + T * CELL + 18) +
-           '" class="attn-axis" text-anchor="end">' +
+    out += '<text x="' + xSum + '" y="' + (Y0 - 10) + '" class="attn-axis">' +
            (view === "weights" ? "somme" : "") + "</text>";
 
     document.getElementById("attn-layer").innerHTML = out;
@@ -541,20 +542,20 @@ Note
     detail(A[selected]);
   }
 
-  function detail(col) {
+  function detail(weightsRow) {
     var order = [], i;
     for (i = 0; i < T; i++) order.push(i);
-    order.sort(function (a, b) { return col[b] - col[a]; });
+    order.sort(function (a, b) { return weightsRow[b] - weightsRow[a]; });
 
     var bars = "", terms = [];
     for (i = 0; i < T; i++) {
       var k = order[i];
-      if (col[k] < 0.005) continue;
+      if (weightsRow[k] < 0.005) continue;
       bars += '<span class="attn-key">' + TOKENS[k] + "</span>" +
               '<span><span class="attn-bar" style="display:block;width:' +
-              (col[k] * 100).toFixed(1) + '%"></span></span>' +
-              '<span class="attn-num">' + fr(col[k], 2) + "</span>";
-      if (col[k] >= 0.02) terms.push(fr(col[k], 2) + " · v(" + TOKENS[k] + ")");
+              (weightsRow[k] * 100).toFixed(1) + '%"></span></span>' +
+              '<span class="attn-num">' + fr(weightsRow[k], 2) + "</span>";
+      if (weightsRow[k] >= 0.02) terms.push(fr(weightsRow[k], 2) + " · v(" + TOKENS[k] + ")");
     }
 
     document.getElementById("attn-detail").innerHTML =
@@ -574,7 +575,7 @@ Note
   }
 
   root.addEventListener("click", function (ev) {
-    var el = ev.target.closest("[data-head], [data-view], [data-col], #attn-mask");
+    var el = ev.target.closest("[data-head], [data-view], [data-row], #attn-mask");
     if (!el) return;
 
     if (el.dataset.head !== undefined) {
@@ -591,7 +592,7 @@ Note
       masked = !masked;
       el.classList.toggle("is-on", masked);
     } else {
-      selected = +el.dataset.col;
+      selected = +el.dataset.row;
     }
     draw();
   });
@@ -610,14 +611,14 @@ Note
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Pourquoi la colonne « le » est-elle toujours entièrement noire sur sa case du haut ?
+<span class="screen-reader-only">Astuce</span>Pourquoi la ligne « le » est-elle toujours entièrement noire sur sa première case ?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Le premier token n’a <strong>rien</strong> à regarder d’autre que lui-même : le masque causal annule toutes les autres cases de sa colonne. Le softmax porte alors sur une seule valeur, qui vaut forcément 1.</p>
-<p>C’est vrai pour <strong>toutes</strong> les heads, quelles que soient leurs matrices <span class="math inline">\(\mathbf{W}_Q\)</span> et <span class="math inline">\(\mathbf{W}_K\)</span>. La première colonne d’une matrice d’attention ne contient aucune information.</p>
+<p>Le premier token n’a <strong>rien</strong> à regarder d’autre que lui-même : le masque causal annule toutes les autres cases de sa ligne. Le softmax porte alors sur une seule valeur, qui vaut forcément 1.</p>
+<p>C’est vrai pour <strong>toutes</strong> les heads, quelles que soient leurs matrices <span class="math inline">\(\mathbf{W}_Q\)</span> et <span class="math inline">\(\mathbf{W}_K\)</span>. La première ligne d’une matrice d’attention ne contient aucune information.</p>
 </div>
 </div>
 </div>
@@ -636,7 +637,7 @@ Note
 <p>La head est bien construite pour relier les deux, dans les deux sens : désactivez le masque causal et la case apparaît.</p>
 <p>Mais « gris » arrive <strong>après</strong> « chat » dans la phrase. Le masque interdit à la query « chat » de le voir, et son attention retombe sur elle-même.</p>
 <p>C’est exactement la limite d’un modèle décodeur : au moment où il traite « chat », il ne sait pas encore que le chat sera gris. Seul « gris » pourra faire le lien, dans l’autre sens.</p>
-<p>Même chose pour « lait » et « froid » : la colonne « lait » ne trouve pas ce qu’elle cherche, et son attention s’étale sur tout le passé sans rien privilégier.</p>
+<p>Même chose pour « lait » et « froid » : la ligne « lait » ne trouve pas ce qu’elle cherche, et son attention s’étale sur tout le passé sans rien privilégier.</p>
 </div>
 </div>
 </div>
@@ -652,7 +653,7 @@ Note
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Que la relation cherchée par la head <strong>n’existe pas</strong> pour ce token : « boit » n’est pas un adjectif, la head 2 n’a rien à lui dire. Elle est pourtant obligée de répondre quelque chose, puisque le softmax impose à chaque colonne de sommer à 1. La diagonale est alors la case la plus inoffensive : le token récupère sa propre value, donc <strong>aucune information ne circule</strong>.</p>
+<p>Que la relation cherchée par la head <strong>n’existe pas</strong> pour ce token : « boit » n’est pas un adjectif, la head 2 n’a rien à lui dire. Elle est pourtant obligée de répondre quelque chose, puisque le softmax impose à chaque ligne de sommer à 1. La diagonale est alors la case la plus inoffensive : le token récupère sa propre value, donc <strong>aucune information ne circule</strong>.</p>
 <p>Une diagonale marquée signifie que la head ne fait rien pour ce token.</p>
 </div>
 </div>
@@ -663,14 +664,14 @@ Note
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Head 4 : pourquoi les points pâlissent-ils vers la droite ?
+<span class="screen-reader-only">Astuce</span>Head 4 : pourquoi les points pâlissent-ils vers le bas ?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Tous les scores valent 0, donc chaque query partage son attention <strong>à parts égales</strong> entre les tokens visibles. La colonne du <span class="math inline">\(n\)</span>-ième token voit <span class="math inline">\(n\)</span> tokens : chaque poids vaut <span class="math inline">\(1/n\)</span>.</p>
-<p>La 1ère colonne, « le », met donc 1,00 sur une seule case, tandis que la 7ème, « froid », étale <span class="math inline">\(1/7 = 0{,}14\)</span> sur sept cases. L’escalier du masque causal se lit directement dans la teinte des points.</p>
+<p>Tous les scores valent 0, donc chaque query partage son attention <strong>à parts égales</strong> entre les tokens visibles. La ligne du <span class="math inline">\(n\)</span>-ième token voit <span class="math inline">\(n\)</span> tokens : chaque poids vaut <span class="math inline">\(1/n\)</span>.</p>
+<p>La 1ère ligne, « le », met donc 1,00 sur une seule case, tandis que la 7ème, « froid », étale <span class="math inline">\(1/7 = 0{,}14\)</span> sur sept cases. L’escalier du masque causal se lit directement dans la teinte des points.</p>
 </div>
 </div>
 </div>
@@ -687,7 +688,7 @@ Note
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Le softmax deviendrait presque un <strong>argmax</strong> : le meilleur score raflerait toute l’attention, et les autres tomberaient à 0. L’attention deviendrait « dure », et le token ne récupérerait plus qu’une seule value au lieu d’un mélange.</p>
-<p>À l’inverse, en divisant les scores par 10, toutes les colonnes ressembleraient à celles de la head 4 : une moyenne uniforme, sans information.</p>
+<p>À l’inverse, en divisant les scores par 10, toutes les lignes ressembleraient à celles de la head 4 : une moyenne uniforme, sans information.</p>
 <p>C’est le rôle de la division par <span class="math inline">\(\sqrt{d_h}\)</span> dans la formule : elle empêche les scores de grandir avec la dimension et de saturer le softmax.</p>
 </div>
 </div>

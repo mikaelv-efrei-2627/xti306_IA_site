@@ -335,7 +335,7 @@ Important
 <li>Créez un nouveau fichier <code>requirements.txt</code></li>
 <li>Collez ce contenu dans le fichier :</li>
 </ol>
-<pre><code>matplotlib==0.4.3</code></pre>
+<pre><code>matplotlib&gt;=3.11.2</code></pre>
 <ol start="3" type="1">
 <li>Cliquez sur le bouton en haut à gauche de l’éditeur “pip update from requirements.txt”</li>
 </ol>
@@ -388,10 +388,23 @@ Ceci est une **cellule Markdown** pour expliquer mon travail.
 <section id="tp-régression-linéaire" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> TP régression linéaire</h1>
 <ol type="1">
-<li>Cliquez sur le lien GitHub classroom pour créer votre repository GitHub</li>
+<li>Cliquez sur <a href="https://classroom50.org/mikaelv-efrei-2627/xti306-ia/assignments/tp1/accept">ce lien d’invitation Classroom 50</a> pour créer votre repository GitHub</li>
+<li>Cliquez sur “Accept assignment” puis “Open repository”</li>
+<li>Copiez l’URL de votre nouveau repository GitHub <img src="figures/github_copy_url.png" class="img-fluid" alt="Copy URL to clipboard"></li>
 <li>Lancez PyCharm</li>
-<li>File -&gt; Project from version control…</li>
-<li>Collez l’URL de votre repository GitHub et choisissez un répertoire de destination.</li>
+<li>Allez dans File -&gt; Settings -&gt; Version Control -&gt; GitHub
+<ol type="a">
+<li>Si vous avez déjà un compte associé, passez à l’étape 6</li>
+<li>Sinon, cliquez sur le <code>+</code> puis <strong>Login In with token</strong> <img src="figures/github_pycharm_login.png" class="img-fluid" alt="PyCharm GitHub Login"></li>
+<li>Cliquez sur <strong>Generate…</strong>. Cela ouvre la page de création de token GitHub dans votre navigateur.</li>
+<li>Sous Note, tapez un nom quelconque, 90 jours d’expiration, laissez les droits par défaut. <img src="figures/github_create_token.png" class="img-fluid" alt="GitHub token"></li>
+<li>Scrollez tout en bas et cliquez sur <strong>Generate token</strong></li>
+<li>Copiez le token généré <img src="figures/github_generated_token.png" class="img-fluid" alt="GitHub generated token"></li>
+<li>Collez le token dans PyCharm</li>
+<li>PyCharm sait maintenant comment vous authentifier sur GitHub. Cliquez sur OK. <img src="figures/github_pycharm_authenticated.png" class="img-fluid" alt="PyCharm authenticated"></li>
+</ol></li>
+<li>Dans PyCharm File -&gt; Project from version control…</li>
+<li>Collez l’URL de votre repository GitHub et choisissez un répertoire de destination. <img src="figures/github_paste_url.png" class="img-fluid" alt="Paste URL"></li>
 <li>Ouvrez le fichier <code>tp1a_linear_regression.ipynb</code></li>
 <li>Exécutez les cellules une par une, en complétant le code qui suit les <code># TODO ...</code></li>
 </ol>

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/tp1.html</loc>
-    <lastmod>2026-09-21T13:30:41.622Z</lastmod>
+    <lastmod>2026-10-09T09:22:53.621Z</lastmod>
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/references.html</loc>
@@ -14,35 +14,39 @@
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/index.html</loc>
-    <lastmod>2026-09-29T10:20:23.573Z</lastmod>
+    <lastmod>2026-10-09T07:23:10.962Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/cours3_classification_draft.html</loc>
-    <lastmod>2026-09-17T07:57:33.148Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/cours4.html</loc>
+    <lastmod>2026-10-08T18:09:40.788Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/cours3.html</loc>
-    <lastmod>2026-10-02T10:18:45.005Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/cours1_linear_fit.html</loc>
-    <lastmod>2026-10-04T10:20:03.487Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/cours1.html</loc>
-    <lastmod>2026-10-04T20:24:59.572Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/cours1_gradient_descent.html</loc>
-    <lastmod>2026-09-21T17:04:43.907Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/cours3_attention.html</loc>
+    <lastmod>2026-10-06T10:37:54.773Z</lastmod>
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/cours2.html</loc>
     <lastmod>2026-09-19T13:03:24.611Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/cours3_attention.html</loc>
-    <lastmod>2026-09-24T19:16:05.152Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/cours1_gradient_descent.html</loc>
+    <lastmod>2026-09-21T17:04:43.907Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mikaelv.github.io/xti306_IA_site/cours1.html</loc>
+    <lastmod>2026-10-04T20:24:59.572Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mikaelv.github.io/xti306_IA_site/cours1_linear_fit.html</loc>
+    <lastmod>2026-10-04T10:20:03.487Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mikaelv.github.io/xti306_IA_site/cours3.html</loc>
+    <lastmod>2026-10-06T12:00:22.111Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mikaelv.github.io/xti306_IA_site/cours3_classification_draft.html</loc>
+    <lastmod>2026-09-17T07:57:33.148Z</lastmod>
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/glossaire.html</loc>

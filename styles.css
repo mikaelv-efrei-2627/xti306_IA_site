@@ -178,3 +178,47 @@
     display: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   5. Fact -> consequences lists
+   --------------------------------------------------------------------------
+   A nested list inside a .consequences div. Each top-level item is a fact,
+   its sub-items are the consequences, prefixed with an arrow:
+
+     ::: {.consequences}
+     - Les données contiennent tout et n'importe quoi
+       - elles doivent être filtrées
+     :::
+   -------------------------------------------------------------------------- */
+
+.consequences > ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.consequences > ul > li {
+  margin-bottom: 1rem;
+  padding-left: 0.8rem;
+  border-left: 3px solid var(--accent);
+  font-weight: 600;
+}
+
+.consequences > ul > li > ul {
+  margin-top: 0.3rem;
+  padding-left: 0;
+  list-style: none;
+  font-weight: normal;
+}
+
+.consequences > ul > li > ul > li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.consequences > ul > li > ul > li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 600;
+}

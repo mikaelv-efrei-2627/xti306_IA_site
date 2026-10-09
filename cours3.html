@@ -1264,84 +1264,82 @@ Important
 <section id="one-hot-vectors" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="one-hot-vectors"><span class="header-section-number">5.1</span> One-hot vectors</h2>
 <p>La première étape est de transformer le <code>tokenID</code> en <strong>one-hot vector</strong>, comme on l’a fait pour la sortie des tâches de classifications.</p>
-<p>Chaque tokenID devient un <strong>vecteur de <span class="math inline">\(V\)</span> dimensions</strong>, où <span class="math inline">\(V\)</span> est la taille du vocabulaire : que des 0, sauf un 1 à la ligne correspondant à l’indice du token. Pour <code>␣chat</code>, d’indice 3, dans notre vocabulaire de <span class="math inline">\(V = 10\)</span> tokens :</p>
+<p>Chaque tokenID devient un <strong>vecteur de <span class="math inline">\(V\)</span> dimensions</strong>, où <span class="math inline">\(V\)</span> est la taille du vocabulaire : que des 0, sauf un 1 à la position correspondant à l’indice du token. Pour <code>␣chat</code>, d’indice 3, dans notre vocabulaire de <span class="math inline">\(V = 10\)</span> tokens :</p>
 <p><span class="math display">\[
 \mathrm{onehot}(3) =
-\begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{pmatrix}
-\begin{matrix}
-\\ \\ \\ \leftarrow \text{indice 3} \\ \\ \\ \\ \\ \\ \\
-\end{matrix}
+\begin{pmatrix} 0 &amp; 0 &amp; 0 &amp; \underset{\substack{\uparrow \\ \text{indice 3}}}{1} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{pmatrix}
 \]</span></p>
 <p>Avec cette représentation, les tokens sont équidistants.</p>
-<p>Notre exemple de phrase devient une matrice <span class="math inline">\(\mathbf{X}\)</span> de dimensions <span class="math inline">\(V \times T\)</span>, où <span class="math inline">\(T\)</span> est le <strong>nombre de tokens de la phrase</strong> : une colonne par token.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Une ligne par token
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Jusqu’ici, un exemple était un vecteur <strong>colonne</strong> <span class="math inline">\(\mathbf{x}\)</span>, et une couche calculait <span class="math inline">\(\mathbf{W}\mathbf{x}\)</span>.</p>
+<p>À partir de maintenant, nous traitons une <strong>séquence</strong> de tokens. On les empile <strong>en lignes</strong>, comme les lignes d’un tableau de données : une ligne par token.</p>
+<p>Les multiplications s’écrivent donc dans l’autre sens : <span class="math inline">\(\mathbf{X}\mathbf{W}\)</span> au lieu de <span class="math inline">\(\mathbf{W}\mathbf{x}\)</span>. C’est la convention de PyTorch, et celle de la plupart des articles et tutoriels sur les LLMs.</p>
+</div>
+</div>
+<p>Notre exemple de phrase devient une matrice <span class="math inline">\(\mathbf{X}\)</span> de dimensions <span class="math inline">\(T \times V\)</span>, où <span class="math inline">\(T\)</span> est le <strong>nombre de tokens de la phrase</strong> : une ligne par token.</p>
 <p><span class="math display">\[
-\mathbf{X} \in \{0, 1\}^{\,V \times T}
+\mathbf{X} \in \{0, 1\}^{\,T \times V}
 \qquad\text{ici}\qquad
-V = 10 \;\text{(vocabulaire)}
-\qquad
 T = 8 \;\text{(tokens de la phrase)}
+\qquad
+V = 10 \;\text{(vocabulaire)}
 \]</span></p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
 </colgroup>
 <thead>
 <tr class="header">
-<th><span class="math inline">\(V = 10\)</span> ↓ &nbsp;<span class="math inline">\(T = 8\)</span> →</th>
-<th style="text-align: center;"><code>le</code></th>
-<th style="text-align: center;"><code>␣chat</code></th>
-<th style="text-align: center;"><code>␣dort</code></th>
-<th style="text-align: center;"><code>␣sur</code></th>
-<th style="text-align: center;"><code>␣le</code></th>
-<th style="text-align: center;"><code>␣ta</code></th>
-<th style="text-align: center;"><code>pis</code></th>
-<th style="text-align: center;"><code>.</code></th>
+<th><span class="math inline">\(T = 8\)</span> ↓ &nbsp;<span class="math inline">\(V = 10\)</span> →</th>
+<th style="text-align: center;">0 <code>.</code></th>
+<th style="text-align: center;">1 <code>le</code></th>
+<th style="text-align: center;">2 <code>␣le</code></th>
+<th style="text-align: center;">3 <code>␣chat</code></th>
+<th style="text-align: center;">4 <code>pis</code></th>
+<th style="text-align: center;">5 <code>␣dort</code></th>
+<th style="text-align: center;">6 <code>␣mange</code></th>
+<th style="text-align: center;">7 <code>␣sur</code></th>
+<th style="text-align: center;">8 <code>␣ta</code></th>
+<th style="text-align: center;">9 <code>␣chien</code></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>0 <code>.</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
+<td><code>le</code></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;"><strong>1</strong></td>
-</tr>
-<tr class="even">
-<td>1 <code>le</code></td>
-<td style="text-align: center;"><strong>1</strong></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td>2 <code>␣le</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;"><strong>1</strong></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 </tr>
 <tr class="even">
-<td>3 <code>␣chat</code></td>
+<td><code>␣chat</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;"><strong>1</strong></td>
 <td style="text-align: center;">0</td>
@@ -1352,30 +1350,36 @@ T = 8 \;\text{(tokens de la phrase)}
 <td style="text-align: center;">0</td>
 </tr>
 <tr class="odd">
-<td>4 <code>pis</code></td>
-<td style="text-align: center;">0</td>
+<td><code>␣dort</code></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 </tr>
 <tr class="even">
-<td>5 <code>␣dort</code></td>
+<td><code>␣sur</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 </tr>
 <tr class="odd">
-<td>6 <code>␣mange</code></td>
+<td><code>␣le</code></td>
 <td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><strong>1</strong></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
@@ -1385,19 +1389,20 @@ T = 8 \;\text{(tokens de la phrase)}
 <td style="text-align: center;">0</td>
 </tr>
 <tr class="even">
-<td>7 <code>␣sur</code></td>
+<td><code>␣ta</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 </tr>
 <tr class="odd">
-<td>8 <code>␣ta</code></td>
-<td style="text-align: center;">0</td>
+<td><code>pis</code></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
@@ -1405,9 +1410,14 @@ T = 8 \;\text{(tokens de la phrase)}
 <td style="text-align: center;"><strong>1</strong></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
 </tr>
 <tr class="even">
-<td>9 <code>␣chien</code></td>
+<td><code>.</code></td>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
@@ -1419,7 +1429,7 @@ T = 8 \;\text{(tokens de la phrase)}
 </tr>
 </tbody>
 </table>
-<p>Chaque colonne contient exactement <strong>un seul 1</strong> : c’est le token présent à cette position. La ligne 6 (<code>␣mange</code>) et la ligne 9 (<code>␣chien</code>) ne contiennent que des 0 : ces tokens du vocabulaire n’apparaissent pas dans la phrase.</p>
+<p>Chaque ligne contient exactement <strong>un seul 1</strong> : c’est le token présent à cette position. La colonne 6 (<code>␣mange</code>) et la colonne 9 (<code>␣chien</code>) ne contiennent que des 0 : ces tokens du vocabulaire n’apparaissent pas dans la phrase.</p>
 </section>
 <section id="matrice-dembedding" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="matrice-dembedding"><span class="header-section-number">5.2</span> Matrice d’embedding</h2>
@@ -1435,181 +1445,177 @@ Important
 </div>
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[
-\mathbf{E} = \mathbf{W}_e \mathbf{X}
+\mathbf{E} = \mathbf{X} \mathbf{W}_e
 \]</span></p>
 <ul>
 <li><span class="math inline">\(D\)</span> : <strong>dimension de l’embedding</strong> (encore un nouvel hyperparamètre !)</li>
 <li><span class="math inline">\(T\)</span> : nombre de tokens du texte</li>
-<li><span class="math inline">\(\mathbf{W}_e\)</span> : matrice d’embedding, de dimensions <span class="math inline">\(D \times V\)</span>. Une colonne par token du vocabulaire</li>
-<li><span class="math inline">\(\mathbf{E}\)</span> : embeddings de la phrase, de dimensions <span class="math inline">\(D \times T\)</span>. Une colonne par token de la phrase</li>
+<li><span class="math inline">\(\mathbf{W}_e\)</span> : matrice d’embedding, de dimensions <span class="math inline">\(V \times D\)</span>. Une ligne par token du vocabulaire</li>
+<li><span class="math inline">\(\mathbf{E}\)</span> : embeddings de la phrase, de dimensions <span class="math inline">\(T \times D\)</span>. Une ligne par token de la phrase</li>
 </ul>
 <p>Ni biais, ni fonction d’activation.</p>
 <p>La matrice d’embedding <span class="math inline">\(\mathbf{W}_e\)</span> fait partie des paramètres du modèle, ses poids sont ajustés lors de l’entraînement.</p>
 </div>
 </div>
 <p>Cette couche permet de transformer notre matrice <span class="math inline">\(X\)</span> qui est énorme et quasi-vide <strong>(sparse)</strong> en une matrice <strong>dense</strong>, et qui <strong>rapproche les tokens selon leur sémantique</strong>.</p>
-<p>On multiplie <span class="math inline">\(\mathbf{W}_e\)</span>, de dimensions <span class="math inline">\(D \times V\)</span>, par <span class="math inline">\(\mathbf{X}\)</span>, de dimensions <span class="math inline">\(V \times T\)</span> : la dimension <span class="math inline">\(V\)</span> est commune aux deux, elle disparaît du résultat.</p>
+<p>On multiplie <span class="math inline">\(\mathbf{X}\)</span>, de dimensions <span class="math inline">\(T \times V\)</span>, par <span class="math inline">\(\mathbf{W}_e\)</span>, de dimensions <span class="math inline">\(V \times D\)</span> : la dimension <span class="math inline">\(V\)</span> est commune aux deux, elle disparaît du résultat.</p>
 <p><span class="math display">\[
-\underbrace{(D \times V)}_{\mathbf{W}_e} \cdot \underbrace{(V \times T)}_{\mathbf{X}} = \underbrace{(D \times T)}_{\mathbf{E}}
+\underbrace{(T \times V)}_{\mathbf{X}} \cdot \underbrace{(V \times D)}_{\mathbf{W}_e} = \underbrace{(T \times D)}_{\mathbf{E}}
 \]</span></p>
-<p>On passe donc de <span class="math inline">\(V\)</span> lignes (une par token du <strong>vocabulaire</strong>) à <span class="math inline">\(D\)</span> lignes : le nombre de colonnes, lui, ne change pas, on a toujours un token de la <strong>phrase</strong> par colonne.</p>
+<p>On passe donc de <span class="math inline">\(V\)</span> colonnes (une par token du <strong>vocabulaire</strong>) à <span class="math inline">\(D\)</span> colonnes : le nombre de lignes, lui, ne change pas, on a toujours un token de la <strong>phrase</strong> par ligne.</p>
 </section>
 <section id="exemple" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="exemple"><span class="header-section-number">5.3</span> Exemple</h2>
-<p>Reprenons notre vocabulaire de <span class="math inline">\(V = 10\)</span> tokens, avec des embeddings de dimension <span class="math inline">\(D = 4\)</span>. Après entraînement du modèle, on pourrait obtenir la matrice <span class="math inline">\(\mathbf{W}_e\)</span> de dimensions <span class="math inline">\(4 \times 10\)</span> suivante :</p>
+<p>Reprenons notre vocabulaire de <span class="math inline">\(V = 10\)</span> tokens, avec des embeddings de dimension <span class="math inline">\(D = 4\)</span>. Après entraînement du modèle, on pourrait obtenir la matrice <span class="math inline">\(\mathbf{W}_e\)</span> de dimensions <span class="math inline">\(10 \times 4\)</span> suivante :</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-</colgroup>
 <thead>
 <tr class="header">
 <th><span class="math inline">\(\mathbf{W}_e\)</span></th>
-<th style="text-align: right;"><code>.</code></th>
-<th style="text-align: right;"><code>le</code></th>
-<th style="text-align: right;"><code>␣le</code></th>
-<th style="text-align: right;"><code>␣chat</code></th>
-<th style="text-align: right;"><code>pis</code></th>
-<th style="text-align: right;"><code>␣dort</code></th>
-<th style="text-align: right;"><code>␣mange</code></th>
-<th style="text-align: right;"><code>␣sur</code></th>
-<th style="text-align: right;"><code>␣ta</code></th>
-<th style="text-align: right;"><code>␣chien</code></th>
+<th style="text-align: right;"></th>
+<th style="text-align: right;"></th>
+<th style="text-align: right;"></th>
+<th style="text-align: right;"></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td></td>
+<td>0 <code>.</code></td>
 <td style="text-align: right;">-0,11</td>
-<td style="text-align: right;">-0,03</td>
 <td style="text-align: right;">-0,05</td>
-<td style="text-align: right;"><strong>0,82</strong></td>
-<td style="text-align: right;">0,05</td>
-<td style="text-align: right;">-0,09</td>
-<td style="text-align: right;">-0,12</td>
-<td style="text-align: right;">0,01</td>
-<td style="text-align: right;">0,09</td>
-<td style="text-align: right;"><strong>0,79</strong></td>
+<td style="text-align: right;">0,62</td>
+<td style="text-align: right;">0,08</td>
 </tr>
 <tr class="even">
-<td></td>
-<td style="text-align: right;">-0,05</td>
+<td>1 <code>le</code></td>
+<td style="text-align: right;">-0,03</td>
 <td style="text-align: right;">0,04</td>
-<td style="text-align: right;">0,02</td>
-<td style="text-align: right;"><strong>-0,14</strong></td>
-<td style="text-align: right;">-0,22</td>
-<td style="text-align: right;">0,79</td>
-<td style="text-align: right;">0,83</td>
-<td style="text-align: right;">0,07</td>
-<td style="text-align: right;">-0,18</td>
-<td style="text-align: right;"><strong>-0,11</strong></td>
+<td style="text-align: right;">0,88</td>
+<td style="text-align: right;">-0,12</td>
 </tr>
 <tr class="odd">
-<td></td>
-<td style="text-align: right;">0,62</td>
-<td style="text-align: right;">0,88</td>
-<td style="text-align: right;">0,91</td>
-<td style="text-align: right;"><strong>-0,07</strong></td>
-<td style="text-align: right;">0,11</td>
-<td style="text-align: right;">0,05</td>
+<td>2 <code>␣le</code></td>
+<td style="text-align: right;">-0,05</td>
 <td style="text-align: right;">0,02</td>
-<td style="text-align: right;">0,74</td>
-<td style="text-align: right;">0,14</td>
-<td style="text-align: right;"><strong>-0,04</strong></td>
+<td style="text-align: right;">0,91</td>
+<td style="text-align: right;">-0,09</td>
 </tr>
 <tr class="even">
-<td></td>
-<td style="text-align: right;">0,08</td>
-<td style="text-align: right;">-0,12</td>
-<td style="text-align: right;">-0,09</td>
+<td>3 <code>␣chat</code></td>
+<td style="text-align: right;"><strong>0,82</strong></td>
+<td style="text-align: right;"><strong>-0,14</strong></td>
+<td style="text-align: right;"><strong>-0,07</strong></td>
 <td style="text-align: right;"><strong>0,03</strong></td>
+</tr>
+<tr class="odd">
+<td>4 <code>pis</code></td>
+<td style="text-align: right;">0,05</td>
+<td style="text-align: right;">-0,22</td>
+<td style="text-align: right;">0,11</td>
 <td style="text-align: right;">0,76</td>
+</tr>
+<tr class="even">
+<td>5 <code>␣dort</code></td>
+<td style="text-align: right;">-0,09</td>
+<td style="text-align: right;">0,79</td>
+<td style="text-align: right;">0,05</td>
 <td style="text-align: right;">-0,02</td>
+</tr>
+<tr class="odd">
+<td>6 <code>␣mange</code></td>
+<td style="text-align: right;">-0,12</td>
+<td style="text-align: right;">0,83</td>
+<td style="text-align: right;">0,02</td>
 <td style="text-align: right;">0,06</td>
+</tr>
+<tr class="even">
+<td>7 <code>␣sur</code></td>
+<td style="text-align: right;">0,01</td>
+<td style="text-align: right;">0,07</td>
+<td style="text-align: right;">0,74</td>
 <td style="text-align: right;">0,15</td>
+</tr>
+<tr class="odd">
+<td>8 <code>␣ta</code></td>
+<td style="text-align: right;">0,09</td>
+<td style="text-align: right;">-0,18</td>
+<td style="text-align: right;">0,14</td>
 <td style="text-align: right;">0,71</td>
+</tr>
+<tr class="even">
+<td>9 <code>␣chien</code></td>
+<td style="text-align: right;"><strong>0,79</strong></td>
+<td style="text-align: right;"><strong>-0,11</strong></td>
+<td style="text-align: right;"><strong>-0,04</strong></td>
 <td style="text-align: right;"><strong>0,07</strong></td>
 </tr>
 </tbody>
 </table>
-<p>En la multipliant par <span class="math inline">\(\mathbf{X}\)</span> (<span class="math inline">\(10 \times 8\)</span>), on récupère la colonne de chaque token de la phrase, dans l’ordre. On obtient <span class="math inline">\(\mathbf{E}\)</span>, de dimensions <span class="math inline">\(4 \times 8\)</span> :</p>
+<p>En multipliant <span class="math inline">\(\mathbf{X}\)</span> (<span class="math inline">\(8 \times 10\)</span>) par cette matrice, on récupère la ligne de chaque token de la phrase, dans l’ordre. On obtient <span class="math inline">\(\mathbf{E}\)</span>, de dimensions <span class="math inline">\(8 \times 4\)</span> :</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-</colgroup>
 <thead>
 <tr class="header">
 <th><span class="math inline">\(\mathbf{E}\)</span></th>
-<th style="text-align: right;"><code>le</code></th>
-<th style="text-align: right;"><code>␣chat</code></th>
-<th style="text-align: right;"><code>␣dort</code></th>
-<th style="text-align: right;"><code>␣sur</code></th>
-<th style="text-align: right;"><code>␣le</code></th>
-<th style="text-align: right;"><code>␣ta</code></th>
-<th style="text-align: right;"><code>pis</code></th>
-<th style="text-align: right;"><code>.</code></th>
+<th style="text-align: right;"></th>
+<th style="text-align: right;"></th>
+<th style="text-align: right;"></th>
+<th style="text-align: right;"></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td></td>
+<td><code>le</code></td>
 <td style="text-align: right;">-0,03</td>
-<td style="text-align: right;">0,82</td>
-<td style="text-align: right;">-0,09</td>
-<td style="text-align: right;">0,01</td>
-<td style="text-align: right;">-0,05</td>
-<td style="text-align: right;">0,09</td>
-<td style="text-align: right;">0,05</td>
-<td style="text-align: right;">-0,11</td>
+<td style="text-align: right;">0,04</td>
+<td style="text-align: right;">0,88</td>
+<td style="text-align: right;">-0,12</td>
 </tr>
 <tr class="even">
-<td></td>
-<td style="text-align: right;">0,04</td>
+<td><code>␣chat</code></td>
+<td style="text-align: right;">0,82</td>
 <td style="text-align: right;">-0,14</td>
-<td style="text-align: right;">0,79</td>
-<td style="text-align: right;">0,07</td>
-<td style="text-align: right;">0,02</td>
-<td style="text-align: right;">-0,18</td>
-<td style="text-align: right;">-0,22</td>
-<td style="text-align: right;">-0,05</td>
+<td style="text-align: right;">-0,07</td>
+<td style="text-align: right;">0,03</td>
 </tr>
 <tr class="odd">
-<td></td>
-<td style="text-align: right;">0,88</td>
-<td style="text-align: right;">-0,07</td>
+<td><code>␣dort</code></td>
+<td style="text-align: right;">-0,09</td>
+<td style="text-align: right;">0,79</td>
 <td style="text-align: right;">0,05</td>
-<td style="text-align: right;">0,74</td>
-<td style="text-align: right;">0,91</td>
-<td style="text-align: right;">0,14</td>
-<td style="text-align: right;">0,11</td>
-<td style="text-align: right;">0,62</td>
+<td style="text-align: right;">-0,02</td>
 </tr>
 <tr class="even">
-<td></td>
-<td style="text-align: right;">-0,12</td>
-<td style="text-align: right;">0,03</td>
-<td style="text-align: right;">-0,02</td>
+<td><code>␣sur</code></td>
+<td style="text-align: right;">0,01</td>
+<td style="text-align: right;">0,07</td>
+<td style="text-align: right;">0,74</td>
 <td style="text-align: right;">0,15</td>
+</tr>
+<tr class="odd">
+<td><code>␣le</code></td>
+<td style="text-align: right;">-0,05</td>
+<td style="text-align: right;">0,02</td>
+<td style="text-align: right;">0,91</td>
 <td style="text-align: right;">-0,09</td>
+</tr>
+<tr class="even">
+<td><code>␣ta</code></td>
+<td style="text-align: right;">0,09</td>
+<td style="text-align: right;">-0,18</td>
+<td style="text-align: right;">0,14</td>
 <td style="text-align: right;">0,71</td>
+</tr>
+<tr class="odd">
+<td><code>pis</code></td>
+<td style="text-align: right;">0,05</td>
+<td style="text-align: right;">-0,22</td>
+<td style="text-align: right;">0,11</td>
 <td style="text-align: right;">0,76</td>
+</tr>
+<tr class="even">
+<td><code>.</code></td>
+<td style="text-align: right;">-0,11</td>
+<td style="text-align: right;">-0,05</td>
+<td style="text-align: right;">0,62</td>
 <td style="text-align: right;">0,08</td>
 </tr>
 </tbody>
@@ -1621,7 +1627,7 @@ Important
 <li><code>␣dort</code> et <code>␣mange</code> se ressemblent également (deux verbes), et sont loin des deux précédents.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1630,10 +1636,10 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse show">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>Ces valeurs sont inventées pour l’exemple, et <span class="math inline">\(D = 4\)</span> est minuscule : un vrai modèle utilise <span class="math inline">\(D = 4096\)</span> ou plus.</p>
-<p>Par ailleurs, les lignes de <span class="math inline">\(\mathbf{W}_e\)</span> <strong>ne sont pas interprétables</strong> une par une. On ne peut pas dire “la ligne 1 code le fait d’être un animal” : le sens est réparti sur l’ensemble des <span class="math inline">\(D\)</span> dimensions.</p>
+<p>Par ailleurs, les colonnes de <span class="math inline">\(\mathbf{W}_e\)</span> <strong>ne sont pas interprétables</strong> une par une. On ne peut pas dire “la colonne 1 code le fait d’être un animal” : le sens est réparti sur l’ensemble des <span class="math inline">\(D\)</span> dimensions.</p>
 </div>
 </div>
 </div>
@@ -1642,7 +1648,7 @@ Note
 <h2 data-number="5.4" class="anchored" data-anchor-id="similarité-sémantique"><span class="header-section-number">5.4</span> Similarité sémantique</h2>
 <p>Lorsqu’une matrice d’embeddings est entraînée sur de nombreux exemples, elle possède des propriétés intéressantes. Elle capture d’une certaine manière <strong>le sens d’un mot</strong>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1651,13 +1657,13 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse show">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>La similarité cosinus permet de comparer deux vecteurs d’embeddings.</p>
 <p><span class="math display">\[
 \mathrm{sim}(\mathbf{u}, \mathbf{v}) = \cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\lVert \mathbf{u} \rVert \; \lVert \mathbf{v} \rVert} = \frac{\sum_{i=1}^{D} u_i v_i}{\sqrt{\sum_{i=1}^{D} u_i^2} \; \sqrt{\sum_{i=1}^{D} v_i^2}}
 \]</span></p>
-<p><span class="math inline">\(\mathbf{u}\)</span> et <span class="math inline">\(\mathbf{v}\)</span> sont deux colonnes de la matrice d’embeddings, et <span class="math inline">\(\theta\)</span> l’angle entre elles. C’est le <strong>produit scalaire de u par v</strong>, qu’on divise par les <strong>normes (longueurs)</strong> pour ne mesurer que l’<strong>angle</strong> entre les deux vecteurs, et non leur longueur. Le résultat est donc toujours entre -1 et 1 :</p>
+<p><span class="math inline">\(\mathbf{u}\)</span> et <span class="math inline">\(\mathbf{v}\)</span> sont deux lignes de la matrice d’embeddings, et <span class="math inline">\(\theta\)</span> l’angle entre elles. C’est le <strong>produit scalaire de u par v</strong>, qu’on divise par les <strong>normes (longueurs)</strong> pour ne mesurer que l’<strong>angle</strong> entre les deux vecteurs, et non leur longueur. Le résultat est donc toujours entre -1 et 1 :</p>
 <ul>
 <li><strong>1</strong> : même direction, les deux tokens ont le même sens</li>
 <li><strong>0</strong> : vecteurs perpendiculaires, aucun rapport entre les deux tokens</li>
@@ -1837,13 +1843,13 @@ Note
 <div aria-describedby="fig-decoder-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <pre class="mermaid mermaid-js" data-label="fig-decoder-stack">flowchart LR
-  emb(["embeddings&lt;br/&gt;&lt;small&gt;&lt;i&gt;D × T&lt;/i&gt;&lt;/small&gt;"])
+  emb(["embeddings&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × D&lt;/i&gt;&lt;/small&gt;"])
   d1["décodeur 1"]
   d2["décodeur 2"]
   dots(["⋮"])
   dN["décodeur N"]
-  head["couche de sortie&lt;br/&gt;&lt;small&gt;&lt;i&gt;V × D&lt;/i&gt;&lt;/small&gt;"]
-  out(["logits z&lt;br/&gt;&lt;small&gt;&lt;i&gt;V × 1&lt;/i&gt;&lt;/small&gt;"])
+  head["couche de sortie&lt;br/&gt;(dernière ligne)&lt;br/&gt;&lt;small&gt;&lt;i&gt;D × V&lt;/i&gt;&lt;/small&gt;"]
+  out(["logits z&lt;br/&gt;&lt;small&gt;&lt;i&gt;1 × V&lt;/i&gt;&lt;/small&gt;"])
 
   emb --&gt; d1
   d1 --&gt; d2
@@ -1868,7 +1874,8 @@ Figure&nbsp;5: La pile de décodeurs
 </div>
 </div>
 </div>
-<p>Chaque décodeur reçoit et renvoie une matrice des mêmes dimensions <span class="math inline">\(D \times T\)</span> : on peut donc les empiler autant de fois que l’on veut. Seule la couche de sortie change les dimensions, pour produire un logit par token du vocabulaire.</p>
+<p>Chaque décodeur reçoit et renvoie une matrice des mêmes dimensions <span class="math inline">\(T \times D\)</span> : on peut donc les empiler autant de fois que l’on veut. Seule la couche de sortie change les dimensions : elle ne garde que la <strong>dernière ligne</strong>, celle du dernier token, et produit un logit par token du vocabulaire.</p>
+<p>Cette dernière ligne suffit pour prédire le token suivant : en traversant les décodeurs, elle a récupéré l’information de <strong>toute la phrase</strong>, grâce au mécanisme d’attention que nous allons voir.</p>
 </section>
 <section id="zoom-sur-un-bloc-décodeur" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="zoom-sur-un-bloc-décodeur"><span class="header-section-number">6.2</span> Zoom sur un bloc décodeur</h2>
@@ -1880,7 +1887,7 @@ Figure&nbsp;5: La pile de décodeurs
 <div aria-describedby="fig-decoder-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <pre class="mermaid mermaid-js" data-label="fig-decoder-block">flowchart LR
-  xin(["entrée H&lt;br/&gt;&lt;small&gt;&lt;i&gt;D × T&lt;/i&gt;&lt;/small&gt;"])
+  xin(["entrée H&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × D&lt;/i&gt;&lt;/small&gt;"])
   n1["RMSNorm"]
 
   subgraph heads ["multi-head attention"]
@@ -1896,7 +1903,7 @@ Figure&nbsp;5: La pile de décodeurs
   n2["RMSNorm"]
   mlp["MLP"]
   add2(("+"))
-  xout(["sortie&lt;br/&gt;&lt;small&gt;&lt;i&gt;D × T&lt;/i&gt;&lt;/small&gt;"])
+  xout(["sortie&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × D&lt;/i&gt;&lt;/small&gt;"])
 
   xin --&gt; n1
   n1 --&gt; h1
@@ -1948,7 +1955,7 @@ Figure&nbsp;6: Un bloc décodeur
 <p>Par exemple, dans la phrase <em>“le chat boit du lait”</em>, le token <code>boit</code> va avoir un lien assez fort avec <code>chat</code>, qui est le sujet du verbe. Grâce à ce lien, <code>boit</code> récupère de l’information sur <code>chat</code> : à la sortie de la couche, il ne représente plus le verbe “boire” en général, mais <em>“boire, avec un chat comme sujet”</em>.</p>
 <section id="zoom-sur-une-attention-head" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="zoom-sur-une-attention-head"><span class="header-section-number">7.1</span> Zoom sur une attention head</h2>
-<p>Notons <span class="math inline">\(\mathbf{H}\)</span> l’entrée du bloc décodeur, de dimensions <span class="math inline">\(D \times T\)</span>.</p>
+<p>Notons <span class="math inline">\(\mathbf{H}\)</span> l’entrée du bloc décodeur, de dimensions <span class="math inline">\(T \times D\)</span> : une ligne par token.</p>
 <p>Pour le <strong>premier</strong> décodeur, <span class="math inline">\(\mathbf{H} = \mathbf{E}\)</span>, notre matrice d’embeddings. Pour les suivants, c’est la sortie du décodeur précédent : ce ne sont plus les embeddings de départ, mais les dimensions restent les mêmes.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -1957,20 +1964,20 @@ Figure&nbsp;6: Un bloc décodeur
 <div aria-describedby="fig-attention-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <pre class="mermaid mermaid-js" data-label="fig-attention-head">flowchart TB
-  x(["entrée H&lt;br/&gt;&lt;small&gt;&lt;i&gt;D × T&lt;/i&gt;&lt;/small&gt;"])
+  x(["entrée H&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × D&lt;/i&gt;&lt;/small&gt;"])
 
-  q["Q = W&lt;sub&gt;Q&lt;/sub&gt; H&lt;br/&gt;&lt;small&gt;&lt;i&gt;d&lt;sub&gt;h&lt;/sub&gt; × T&lt;/i&gt;&lt;/small&gt;"]
-  k["K = W&lt;sub&gt;K&lt;/sub&gt; H&lt;br/&gt;&lt;small&gt;&lt;i&gt;d&lt;sub&gt;h&lt;/sub&gt; × T&lt;/i&gt;&lt;/small&gt;"]
-  v["V = W&lt;sub&gt;V&lt;/sub&gt; H&lt;br/&gt;&lt;small&gt;&lt;i&gt;d&lt;sub&gt;h&lt;/sub&gt; × T&lt;/i&gt;&lt;/small&gt;"]
+  q["Q = H W&lt;sub&gt;Q&lt;/sub&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × d&lt;sub&gt;h&lt;/sub&gt;&lt;/i&gt;&lt;/small&gt;"]
+  k["K = H W&lt;sub&gt;K&lt;/sub&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × d&lt;sub&gt;h&lt;/sub&gt;&lt;/i&gt;&lt;/small&gt;"]
+  v["V = H W&lt;sub&gt;V&lt;/sub&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × d&lt;sub&gt;h&lt;/sub&gt;&lt;/i&gt;&lt;/small&gt;"]
 
   rq["RoPE"]
   rk["RoPE"]
 
-  sc["scores&lt;br/&gt;K&lt;sup&gt;T&lt;/sup&gt; Q / √d&lt;sub&gt;h&lt;/sub&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × T&lt;/i&gt;&lt;/small&gt;"]
+  sc["scores&lt;br/&gt;Q K&lt;sup&gt;T&lt;/sup&gt; / √d&lt;sub&gt;h&lt;/sub&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × T&lt;/i&gt;&lt;/small&gt;"]
   msm["masque causal&lt;br/&gt;+ softmax"]
   a(["&lt;b&gt;matrice d'attention A&lt;/b&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × T&lt;/i&gt;&lt;/small&gt;"])
-  mul["V × A"]
-  o(["sortie de la head&lt;br/&gt;&lt;small&gt;&lt;i&gt;d&lt;sub&gt;h&lt;/sub&gt; × T&lt;/i&gt;&lt;/small&gt;"])
+  mul["A V"]
+  o(["sortie de la head&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × d&lt;sub&gt;h&lt;/sub&gt;&lt;/i&gt;&lt;/small&gt;"])
 
   x --&gt; q
   x --&gt; k
@@ -2016,7 +2023,7 @@ Figure&nbsp;7: Une attention head
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>key ↓ &nbsp;query →</th>
+<th>query ↓ &nbsp;key →</th>
 <th style="text-align: center;"><code>le</code></th>
 <th style="text-align: center;"><code>chat</code></th>
 <th style="text-align: center;"><code>boit</code></th>
@@ -2028,48 +2035,48 @@ Figure&nbsp;7: Une attention head
 <tr class="odd">
 <td><code>le</code></td>
 <td style="text-align: center;">1,00</td>
-<td style="text-align: center;">0,20</td>
-<td style="text-align: center;">0,05</td>
-<td style="text-align: center;">0,05</td>
-<td style="text-align: center;">0,03</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
 </tr>
 <tr class="even">
 <td><code>chat</code></td>
-<td style="text-align: center;">0</td>
+<td style="text-align: center;">0,20</td>
 <td style="text-align: center;">0,80</td>
-<td style="text-align: center;"><strong>0,85</strong></td>
-<td style="text-align: center;">0,08</td>
-<td style="text-align: center;">0,07</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
 </tr>
 <tr class="odd">
 <td><code>boit</code></td>
+<td style="text-align: center;">0,05</td>
+<td style="text-align: center;"><strong>0,85</strong></td>
+<td style="text-align: center;">0,10</td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
-<td style="text-align: center;">0,10</td>
-<td style="text-align: center;">0,12</td>
-<td style="text-align: center;">0,10</td>
 </tr>
 <tr class="even">
 <td><code>du</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0,75</td>
 <td style="text-align: center;">0,05</td>
+<td style="text-align: center;">0,08</td>
+<td style="text-align: center;">0,12</td>
+<td style="text-align: center;">0,75</td>
+<td style="text-align: center;">0</td>
 </tr>
 <tr class="odd">
 <td><code>lait</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
+<td style="text-align: center;">0,03</td>
+<td style="text-align: center;">0,07</td>
+<td style="text-align: center;">0,10</td>
+<td style="text-align: center;">0,05</td>
 <td style="text-align: center;">0,75</td>
 </tr>
 </tbody>
 </table>
-<p>On garde la convention habituelle : une colonne par token de la phrase. La colonne est le token qui <strong>cherche</strong>, la ligne le token <strong>regardé</strong>. La case <span class="math inline">\(\mathbf{A}_{ij}\)</span> répond donc à la question : <em>quelle part de son attention le token <span class="math inline">\(j\)</span> accorde-t-il au token <span class="math inline">\(i\)</span> ?</em></p>
+<p>On garde la convention habituelle : une ligne par token de la phrase. La ligne est le token qui <strong>cherche</strong>, la colonne le token <strong>regardé</strong>. La case <span class="math inline">\(\mathbf{A}_{ij}\)</span> répond donc à la question : <em>quelle part de son attention le token <span class="math inline">\(i\)</span> accorde-t-il au token <span class="math inline">\(j\)</span> ?</em></p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2078,12 +2085,12 @@ Figure&nbsp;7: Une attention head
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse show">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <ul>
-<li>la colonne <code>boit</code> place <strong>0,85</strong> sur la ligne <code>chat</code> : c’est le lien sujet / verbe de notre exemple. Les autres colonnes n’ont pas de sujet à chercher, elles restent sur leur propre diagonale</li>
-<li>chaque <strong>colonne</strong> somme à 1 : un token répartit une quantité fixe d’attention entre les tokens qu’il regarde</li>
-<li>le triangle de 0 en bas à gauche vient du <strong>masque causal</strong> : un token ne peut regarder que lui-même et ceux qui le précèdent. La première colonne n’a donc aucun choix, elle vaut toujours 1,00.</li>
+<li>la ligne <code>boit</code> place <strong>0,85</strong> sur la colonne <code>chat</code> : c’est le lien sujet / verbe de notre exemple. Les autres lignes n’ont pas de sujet à chercher, elles restent sur leur propre diagonale</li>
+<li>chaque <strong>ligne</strong> somme à 1 : un token répartit une quantité fixe d’attention entre les tokens qu’il regarde</li>
+<li>le triangle de 0 en haut à droite vient du <strong>masque causal</strong> : un token ne peut regarder que lui-même et ceux qui le précèdent. La première ligne n’a donc aucun choix, elle vaut toujours 1,00.</li>
 </ul>
 </div>
 </div>
@@ -2094,18 +2101,18 @@ Figure&nbsp;7: Une attention head
 <p>Le calcul de la matrice d’attention se fait à l’aide de 2 matrices de paramètres <span class="math inline">\(\mathbf{W}_Q\)</span>, <span class="math inline">\(\mathbf{W}_K\)</span>. Chaque head possède ses <strong>propres</strong> <span class="math inline">\(\mathbf{W}_Q\)</span>, <span class="math inline">\(\mathbf{W}_K\)</span>, apprises indépendamment.</p>
 <p>On calcule d’abord <span class="math inline">\(\mathbf{Q}\)</span> et <span class="math inline">\(\mathbf{K}\)</span> :</p>
 <ul>
-<li><span class="math inline">\(\mathbf{Q} = \mathbf{W}_Q \mathbf{H}\)</span> (<em>query</em>) : ce que le token <strong>cherche</strong> dans les autres tokens.
+<li><span class="math inline">\(\mathbf{Q} = \mathbf{H} \mathbf{W}_Q\)</span> (<em>query</em>) : ce que le token <strong>cherche</strong> dans les autres tokens.
 <ul>
 <li>Par exemple : « je cherche le token juste avant moi », ou « je suis un adjectif, je cherche le nom que je qualifie ».</li>
 </ul></li>
-<li><span class="math inline">\(\mathbf{K} = \mathbf{W}_K \mathbf{H}\)</span> (<em>key</em>) : ce que le token <strong>propose</strong>, l’étiquette qu’il présente aux autres.
+<li><span class="math inline">\(\mathbf{K} = \mathbf{H} \mathbf{W}_K\)</span> (<em>key</em>) : ce que le token <strong>propose</strong>, l’étiquette qu’il présente aux autres.
 <ul>
 <li>Par exemple : « je suis le token en position 2 », ou « je suis un nom commun, masculin singulier ».</li>
 </ul></li>
 </ul>
-<p>Une <strong>Q</strong>uery et une <strong>K</strong>ey se <strong>répondent</strong> quand leurs vecteurs pointent dans la même direction : le score du couple est leur produit scalaire <span class="math inline">\(\mathbf{k}_i \cdot \mathbf{q}_j\)</span>. Sur la phrase <em>« le chat gris boit du lait froid »</em>, la query de <code>gris</code> (« je cherche un nom ») donne un score élevé avec la key de <code>chat</code> (« je suis un nom »), et un score faible avec celle de <code>boit</code>.</p>
+<p>Une <strong>Q</strong>uery et une <strong>K</strong>ey se <strong>répondent</strong> quand leurs vecteurs pointent dans la même direction : le score du couple est leur produit scalaire <span class="math inline">\(\mathbf{q}_i \cdot \mathbf{k}_j\)</span>. Sur la phrase <em>« le chat gris boit du lait froid »</em>, la query de <code>gris</code> (« je cherche un nom ») donne un score élevé avec la key de <code>chat</code> (« je suis un nom »), et un score faible avec celle de <code>boit</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2114,14 +2121,14 @@ Figure&nbsp;7: Une attention head
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse show">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(D\)</span> est la dimension de l’embedding, c’est un hyperparamètre.</p>
 <p><span class="math inline">\(T\)</span> est le nombre de tokens du texte en entrée.</p>
 <p>Chaque head travaille sur une <strong>partie</strong> de l’embedding seulement : on note <span class="math inline">\(d_h = D / h\)</span> sa dimension. En concaténant les <span class="math inline">\(h\)</span> heads, on retrouve bien les <span class="math inline">\(D\)</span> dimensions du départ.</p>
-<p>Les trois matrices ont donc les mêmes dimensions, <span class="math inline">\(d_h \times D\)</span> : elles <strong>réduisent</strong> chaque vecteur de <span class="math inline">\(D\)</span> à <span class="math inline">\(d_h\)</span> dimensions.</p>
+<p>Les trois matrices ont donc les mêmes dimensions, <span class="math inline">\(D \times d_h\)</span> : elles <strong>réduisent</strong> chaque vecteur de <span class="math inline">\(D\)</span> à <span class="math inline">\(d_h\)</span> dimensions.</p>
 <p><span class="math display">\[
-\underbrace{(d_h \times D)}_{\mathbf{W}_Q} \cdot \underbrace{(D \times T)}_{\mathbf{H}} = \underbrace{(d_h \times T)}_{\mathbf{Q}}
+\underbrace{(T \times D)}_{\mathbf{H}} \cdot \underbrace{(D \times d_h)}_{\mathbf{W}_Q} = \underbrace{(T \times d_h)}_{\mathbf{Q}}
 \]</span></p>
 </div>
 </div>
@@ -2138,44 +2145,44 @@ Important
 </div>
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[
-\mathbf{A} = \mathrm{softmax}_{\text{colonne}}\!\left( \frac{\mathbf{K}^\top \mathbf{Q}}{\sqrt{d_h}} + \mathbf{M} \right)
+\mathbf{A} = \mathrm{softmax}_{\text{ligne}}\!\left( \frac{\mathbf{Q} \mathbf{K}^\top}{\sqrt{d_h}} + \mathbf{M} \right)
 \]</span></p>
 <ul>
-<li><span class="math inline">\(\mathbf{K}^\top \mathbf{Q}\)</span> : <strong>tous</strong> les produits scalaires entre une key et une query. La case <span class="math inline">\((i, j)\)</span> contient <span class="math inline">\(\mathbf{k}_i \cdot \mathbf{q}_j\)</span>, le score du couple</li>
+<li><span class="math inline">\(\mathbf{Q} \mathbf{K}^\top\)</span> : <strong>tous</strong> les produits scalaires entre une query et une key. La case <span class="math inline">\((i, j)\)</span> contient <span class="math inline">\(\mathbf{q}_i \cdot \mathbf{k}_j\)</span>, le score du couple</li>
 <li><span class="math inline">\(\sqrt{d_h}\)</span> : sans cette division, les produits scalaires grandiraient avec le nombre de dimensions, et le softmax saturerait</li>
 <li><span class="math inline">\(\mathbf{M}\)</span> : le <strong>masque causal</strong>, qui met <span class="math inline">\(-\infty\)</span> dans les cases où la key est <strong>après</strong> la query. Il empêche un token de regarder ceux qui le suivent. C’est ce qui rend le modèle capable de générer du texte de gauche à droite.</li>
-<li>le softmax est appliqué <strong>colonne par colonne</strong> : chaque colonne de <span class="math inline">\(\mathbf{A}\)</span> somme à 1</li>
+<li>le softmax est appliqué <strong>ligne par ligne</strong> : chaque ligne de <span class="math inline">\(\mathbf{A}\)</span> somme à 1</li>
 <li>La taille de <span class="math inline">\(\mathbf{A}\)</span> ne dépend que du <strong>nombre de tokens</strong>.</li>
 </ul>
 <p><span class="math display">\[
-\underbrace{(T \times d_h)}_{\mathbf{K}^\top} \cdot \underbrace{(d_h \times T)}_{\mathbf{Q}} = \underbrace{(T \times T)}_{\mathbf{A}}
+\underbrace{(T \times d_h)}_{\mathbf{Q}} \cdot \underbrace{(d_h \times T)}_{\mathbf{K}^\top} = \underbrace{(T \times T)}_{\mathbf{A}}
 \]</span></p>
 </div>
 </div>
-<p>La colonne <span class="math inline">\(j\)</span> est le token qui cherche (sa query), la ligne <span class="math inline">\(i\)</span> le token regardé (sa key). La case <span class="math inline">\(\mathbf{A}_{ij}\)</span> répond donc à la question : <em>quelle part de son attention le token <span class="math inline">\(j\)</span> accorde-t-il au token <span class="math inline">\(i\)</span> ?</em></p>
+<p>La ligne <span class="math inline">\(i\)</span> est le token qui cherche (sa query), la colonne <span class="math inline">\(j\)</span> le token regardé (sa key). La case <span class="math inline">\(\mathbf{A}_{ij}\)</span> répond donc à la question : <em>quelle part de son attention le token <span class="math inline">\(i\)</span> accorde-t-il au token <span class="math inline">\(j\)</span> ?</em></p>
 </section>
 <section id="value" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="value"><span class="header-section-number">7.4</span> Value</h2>
 <p>Une fois la matrice d’attention calculée, on l’utilise pour modifier la “value” de chaque token.</p>
 <p>On calcule :</p>
 <ul>
-<li><span class="math inline">\(\mathbf{V} = \mathbf{W}_V \mathbf{H}\)</span> (<em>value</em>) : ce que le token <strong>transmet</strong> s’il est retenu
+<li><span class="math inline">\(\mathbf{V} = \mathbf{H} \mathbf{W}_V\)</span> (<em>value</em>) : ce que le token <strong>transmet</strong> s’il est retenu
 <ul>
 <li>Par exemple, la value de <code>chat</code> : « je suis un animal, au singulier ». Elle est calculée avant l’attention, donc elle ne parle que de <code>chat</code>.</li>
 </ul></li>
 <li>Puis la sortie de l’attention head :</li>
 </ul>
 <p><span class="math display">\[
-\text{sortie} = \mathbf{V} \mathbf{A}
+\text{sortie} = \mathbf{A} \mathbf{V}
 \]</span></p>
-<p>La sortie est de dimensions <span class="math inline">\(d_h \times T\)</span> :</p>
+<p>La sortie est de dimensions <span class="math inline">\(T \times d_h\)</span> :</p>
 <p><span class="math display">\[
-\underbrace{(d_h \times T)}_{\mathbf{V}} \cdot \underbrace{(T \times T)}_{\mathbf{A}} = \underbrace{(d_h \times T)}_{\text{sortie}}
+\underbrace{(T \times T)}_{\mathbf{A}} \cdot \underbrace{(T \times d_h)}_{\mathbf{V}} = \underbrace{(T \times d_h)}_{\text{sortie}}
 \]</span></p>
 <p>On retrouve exactement la structure d’une couche cachée : une <strong>somme pondérée</strong>, sans biais ni fonction d’activation, comme la couche d’embedding du début du chapitre.</p>
 <p>La matrice d’attention joue le rôle de la matrice de poids, à une différence près : ses coefficients ne sont pas des paramètres appris une fois pour toutes, ils sont <strong>recalculés pour chaque phrase</strong>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2184,14 +2191,14 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse show">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>Avec la matrice d’attention <span class="math inline">\(A\)</span> ci-dessus, la colonne <code>boit</code> donne :</p>
+<p>Avec la matrice d’attention <span class="math inline">\(A\)</span> ci-dessus, la ligne <code>boit</code> donne :</p>
 <p><span class="math display">\[
 \text{sortie}(\text{boit}) = 0{,}85 \cdot \mathbf{v}_{\text{chat}} + 0{,}10 \cdot \mathbf{v}_{\text{boit}} + 0{,}05 \cdot \mathbf{v}_{\text{le}}
 \]</span></p>
 <p>C’est seulement ici qu’apparaît le rôle de sujet.</p>
-<p>La value de <code>chat</code> ne disait que « un animal, au singulier », mais c’est la colonne <code>boit</code> qui est allée la chercher. En sortie, “boit” ne représente plus le verbe “boire” en général, mais “boire, avec un animal singulier comme sujet”.</p>
+<p>La value de <code>chat</code> ne disait que « un animal, au singulier », mais c’est la ligne <code>boit</code> qui est allée la chercher. En sortie, “boit” ne représente plus le verbe “boire” en général, mais “boire, avec un animal singulier comme sujet”.</p>
 </div>
 </div>
 </div>
@@ -2220,7 +2227,7 @@ Important
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><p>Le but principal du mécanisme d’<strong>attention</strong> est que chaque colonne puisse trouver de l’information pertinente dans les autres colonnes, en extrayant leur valeur. Il fait cela en comparant ses vecteurs <strong>Query</strong> avec les vecteurs <strong>Key</strong> des autres colonnes. Le <strong>masque causal</strong> modifie l’attention pour empêcher de regarder les colonnes futures, c.-à-d.&nbsp;les colonnes suivantes.</p></li>
+<li><p>Le but principal du mécanisme d’<strong>attention</strong> est que chaque token puisse trouver de l’information pertinente dans les autres tokens, en extrayant leur valeur. Il fait cela en comparant son vecteur <strong>Query</strong> avec les vecteurs <strong>Key</strong> des autres tokens. Le <strong>masque causal</strong> modifie l’attention pour empêcher de regarder les tokens futurs, c.-à-d.&nbsp;les tokens suivants.</p></li>
 <li><p>Comme souvent avec le deep learning, il est difficile de savoir exactement ce que chaque couche fait exactement, mais on a une idée générale :</p>
 <ul>
 <li>Les premières couches se focalisent sur des propriétés et des patterns de bas niveau, comme la grammaire, la syntaxe, des associations de mots simples.</li>
