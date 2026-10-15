@@ -731,14 +731,14 @@ ul.task-list li input[type="checkbox"] {
 <p>Pour développer des applications utilisant un LLM, nous utiliserons la plupart du temps un modèle déjà entraîné. Exemples d’application :</p>
 <ul>
 <li>supprimer des données personnelles d’un jeu de données, pour satisfaire le RGPD</li>
-<li>Chatbot support qui répond aux questions des clients, en utilisant une base de connaissances.</li>
-<li>Chatbot interne qui utilise des données privées à l’entreprise : mails, système comptable, …
+<li>chatbot support qui répond aux questions des clients, en utilisant une base de connaissances.</li>
+<li>chatbot interne qui utilise des données privées à l’entreprise : mails, système comptable, …
 <ul>
 <li>exemple de question : “est-ce que la dernière facture de mr dupont a été payée ?”</li>
 </ul></li>
 <li>coding agent dans une entreprise sensible (défence, banque, …)</li>
 <li>analyseur de logs pour détecter des cyberattaques</li>
-<li>TODO autres exemples</li>
+<li>…</li>
 </ul>
 <p>En fonction des besoins de l’application, nous essaierons des solutions dans l’ordre suivant, du plus simple au plus complexe :</p>
 <p>TODO schéma 1. Prompter. Les LLMs modernes supportent un contexte très long. De nombreuses tâches peuvent être traitées avec un prompt suffisamment développé. TODO lien recommandation claude 2. Développer une solution RAG 3. fine-tuning d’un modèle TODO où placer l’agentique ?</p>
@@ -748,7 +748,8 @@ ul.task-list li input[type="checkbox"] {
 <li>est-ce qu’elle est fiable : faux positifs, faux négatifs, hallucinations ?</li>
 <li>est-ce qu’elle permet d’éviter les propos toxiques ?</li>
 <li>est-ce qu’elle est stable : est-ce qu’on doit ré-entraîner le modèle régulièrement ? Que se passe-t-il si le fournisseur met à jour le modèle ?</li>
-<li>quel est son coût global : développement de la solution, entraînement et inference ?</li>
+<li>quel est son coût de développement ? : développement de la solution, entraînement, tests ?</li>
+<li>quel est son coût d’inférence par requête ? : coût API / coûts serveurs ?</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
@@ -768,25 +769,46 @@ Note
 </div>
 <section id="choix-du-modèle" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="choix-du-modèle"><span class="header-section-number">2.1</span> Choix du modèle</h2>
-<p>Plusieurs choix s’offrent à vous en fonction de l’application à développer, de votre budget, de vos contraintes de localisation des données. d</p>
+<p>Plusieurs choix s’offrent à vous en fonction de l’application à développer, de votre budget, de vos contraintes de localisation des données.</p>
 <p>TODO arbre de décision, avec pros/cons</p>
-<p>propriétaire / open source cloud / hébergé dans l’entreprise maîtrise des coûts “intelligence” du modèle stabilité : update contrôlés rapidité : tokens/s</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th></th>
-<th>Propriétaire</th>
-<th>Open source</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Hébergement</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<ul>
+<li><strong>propriétaire / ou open weights</strong>
+<ul>
+<li>Open weight (ou open source par abus de langage) : le modèle peut être téléchargé et utilisé selon les conditions de sa licence. Exemples : TODO</li>
+<li>Propriétaire : le modèle doit être utilisé via une API ou via une application du fournisseur (Claude code, ChatGPT)</li>
+<li>Les abonnements des modèles propriétaires (Claude, ChatGPT) ne sont en général pas utilisable à l’échelle pour une application IA. Il faudra utiliser l’API qui a un coût beaucoup plus élevé. Exemple : TODO</li>
+<li>Les modèles open weights peuvent être installés chez un hébergeur cloud, comme TODO</li>
+<li>Les modèles open weights peuvent être customisés plus facilement : accès aux logits, fine-tuning</li>
+</ul></li>
+<li><strong>cloud / hébergé dans l’entreprise</strong>
+<ul>
+<li>les modèles propriétaires sont uniquement accessibles sur le cloud. Cela pose des problèmes de confidentialité et de juridiction des données.</li>
+<li>pour les données sensibles, vous devrez héberger le modèle dans l’entreprise ou éventuellement par un hébergeur cloud dans votre pays.</li>
+<li>Une autre option serait d’anonymiser les données envoyées vers le cloud</li>
+<li>hébergé dans l’entreprise : il faudra dimensionner l’infrastructure physique et penser à la scalabilité</li>
+<li>cloud : les coûts peuvent s’envoler en cas d’utilisation abusive</li>
+</ul></li>
+<li><strong>rapidité</strong>
+<ul>
+<li>elle se mesure en tokens/s (input ou output)</li>
+<li>plus un modèle est “intelligent”, plus il est rapide</li>
+<li>certains modèles sont plus verbeux et consomment plus de tokens</li>
+</ul></li>
+<li><strong>intelligence</strong> TODO est-ce le bon terme ?
+<ul>
+<li>les benchmarks permettent de comparer les modèles. TODO exemples</li>
+<li>les “frontier models” sont ceux qui sont les plus intelligents à un moment donné</li>
+<li>dans une même famille open weights, ceux qui ont le plus de paramètres sont les plus puissants</li>
+<li>les modèles open weight sont en général moins puissants que les modèles propriétaires, mais ils peuvent être suffisants pour votre application.</li>
+<li>une approche possible : envoyer les requêtes simples à un modèle léger, et les plus complexes à un modèle plus puissant</li>
+</ul></li>
+<li><strong>stabilité</strong>
+<ul>
+<li>si vous hébergez le modèle, vous êtes responsable des mises à jour, mais vous contrôlez le modèle.<br>
+</li>
+<li>sur le cloud, le fournisseur peut changer le modèle ou son paramétrage, il pourrait se comporter différemment du jour au lendemain. TODO exemples news ?</li>
+</ul></li>
+</ul>
 </section>
 <section id="echantillonage-sampling" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="echantillonage-sampling"><span class="header-section-number">2.2</span> Echantillonage (sampling)</h2>
