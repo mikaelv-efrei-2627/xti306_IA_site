@@ -77,7 +77,7 @@
     "href": "glossaire.html#a",
     "title": "Glossaire",
     "section": "A",
-    "text": "A\n\nApprentissage automatique (machine learning)\n\nConstruire la fonction \\(f\\) d’un modèle à partir d’exemples, au lieu de l’écrire à la main. CM1 · Comment une machine peut-elle apprendre ?\n\nApprentissage profond (deep learning)\n\nRéseau de neurones comportant plusieurs couches cachées empilées. Chaque couche construit une représentation de la précédente. CM2 · Apprentissage profond\n\nApprentissage supervisé (supervised learning)\n\nApprentissage à partir d’exemples qui fournissent à la fois l’entrée et la sortie attendue. CM1 · Apprentissage supervisé\n\nApprentissage auto-supervisé (self-supervised learning)\n\nLa cible est extraite des données elles-mêmes. C’est ainsi qu’on entraîne un LLM : la cible est le token suivant, déjà présent dans le corpus. CM1 · D’autres formes d’apprentissage\n\nApprentissage non supervisé (unsupervised learning)\n\nLes exemples n’ont pas de cible : l’algorithme cherche lui-même une structure dans les données. CM1 · D’autres formes d’apprentissage\n\nApprentissage par renforcement (reinforcement learning)\n\nPas de cible, mais une récompense obtenue après une suite d’actions. CM1 · D’autres formes d’apprentissage\n\nArchitecture\n\nChoix de structure d’un réseau : nombre de couches (profondeur) et nombre de neurones par couche (largeur). CM2 · Architecture\n\nArrêt anticipé (early stopping)\n\nArrêter l’entraînement dès que le coût de validation remonte alors que le coût d’entraînement continue de baisser : le surapprentissage a commencé. CM2 · Nombre d’epochs · CM3 · Early stopping\n\nAttention (attention mechanism)\n\nCouche qui permet à chaque token de se référer plus ou moins fortement aux tokens qui le précèdent, et d’en récupérer de l’information. CM3 · Attention\n\nAttention head (tête d’attention)\n\nUne attention élémentaire, qui apprend un type de relation entre tokens. Un bloc décodeur en contient plusieurs, travaillant en parallèle. CM3 · Zoom sur une attention head",
+    "text": "A\n\nAdam\n\nOptimiseur qui adapte automatiquement le pas de chaque paramètre. On l’utilise souvent à la place de la descente de gradient simple (SGD). CM2 · Un meilleur optimiseur : Adam\n\nApprentissage automatique (machine learning)\n\nConstruire la fonction \\(f\\) d’un modèle à partir d’exemples, au lieu de l’écrire à la main. CM1 · Comment une machine peut-elle apprendre ?\n\nApprentissage profond (deep learning)\n\nRéseau de neurones comportant plusieurs couches cachées empilées. Chaque couche construit une représentation de la précédente. CM2 · Apprentissage profond\n\nApprentissage supervisé (supervised learning)\n\nApprentissage à partir d’exemples qui fournissent à la fois l’entrée et la sortie attendue. CM1 · Apprentissage supervisé\n\nApprentissage auto-supervisé (self-supervised learning)\n\nLa cible est extraite des données elles-mêmes. C’est ainsi qu’on entraîne un LLM : la cible est le mot suivant du texte, déjà présent dans le corpus. CM1 · D’autres formes d’apprentissage\n\nApprentissage non supervisé (unsupervised learning)\n\nLes exemples n’ont pas de cible : l’algorithme cherche lui-même une structure dans les données. CM1 · D’autres formes d’apprentissage\n\nApprentissage par renforcement (reinforcement learning)\n\nPas de cible, mais une récompense obtenue après une suite d’actions. CM1 · D’autres formes d’apprentissage\n\nArchitecture\n\nChoix de structure d’un réseau : nombre de couches (profondeur) et nombre de neurones par couche (largeur). CM2 · Comment régler en pratique\n\nArrêt anticipé (early stopping)\n\nArrêter l’entraînement quand le coût de validation ne s’améliore plus depuis un certain nombre d’epochs (la patience), puis garder les paramètres de la meilleure epoch. CM2 · Comment régler en pratique",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -88,7 +88,7 @@
     "href": "glossaire.html#b",
     "title": "Glossaire",
     "section": "B",
-    "text": "B\n\nBiais (bias)\n\nLe paramètre \\(b\\) d’une transformation linéaire \\(wx + b\\). Il décale la sortie du neurone. CM1 · Transformation linéaire\n\nByte-Pair Encoding (BPE)\n\nAlgorithme qui construit le vocabulaire de tokens à partir d’un corpus, en fusionnant itérativement les paires de tokens les plus fréquentes. CM3 · L’algorithme Byte-Pair Encoding",
+    "text": "B\n\nBiais (bias)\n\nLe paramètre \\(b\\) d’une transformation linéaire \\(wx + b\\). Il décale la sortie du neurone. CM1 · Transformation linéaire",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -99,7 +99,7 @@
     "href": "glossaire.html#c",
     "title": "Glossaire",
     "section": "C",
-    "text": "C\n\nCaractéristique (feature)\n\nUne des grandeurs décrivant un exemple : surface, nombre de pièces, localisation… Le nombre de caractéristiques est noté \\(D\\). CM1 · Choisir l’entrée · CM2 · Plusieurs dimensions\n\nCible (target), ou étiquette (label)\n\nLa sortie \\(y^{(i)}\\) attendue pour l’exemple \\(i\\) : ce que le modèle aurait dû répondre. CM1 · Apprentissage supervisé\n\nClassification binaire (binary classification)\n\nTâche dont la sortie est une catégorie parmi deux : spam / non spam, bénigne / maligne. CM3 · Classification\n\nClassification multi-classe (multiclass classification)\n\nTâche dont la sortie est une catégorie parmi \\(K\\). La sortie du modèle est un vecteur de \\(K\\) probabilités dont la somme vaut 1. CM3 · Classification\n\nCNN (Convolutional Neural Network)\n\nRéseau utilisant des couches de convolution, qui ne sont pas entièrement connectées. Adapté aux images et au son. CM3 · Autres types de réseaux de neurones\n\nConnexion résiduelle (residual connection)\n\nAddition de l’entrée d’une sous-couche à sa sortie, dans un bloc décodeur : l’information d’origine n’est jamais perdue. CM3 · Zoom sur un bloc décodeur\n\nConvergence\n\nMoment où le coût \\(J\\) ne change presque plus d’une epoch à l’autre : la descente de gradient s’arrête. CM1 · Application sur une régression linéaire\n\nCorpus\n\nEnsemble de textes servant à construire le vocabulaire, puis à entraîner un modèle de langage. CM3 · L’algorithme Byte-Pair Encoding\n\nCouche cachée (hidden layer)\n\nCouche de neurones placés en parallèle entre l’entrée et la sortie. Chaque neurone y apporte son propre « pli » à la fonction. CM2 · Trois neurones\n\nCouche de sortie (output layer)\n\nDernière couche du réseau, qui produit \\(f(x)\\). En régression, un seul neurone sans activation ; en classification, un neurone par classe suivi d’un softmax. CM2 · Trois neurones · CM3 · Couche de sortie\n\nCouche entièrement connectée (fully connected, ou dense)\n\nCouche dont chaque neurone est relié à tous les neurones de la couche précédente. CM2 · Apprentissage profond\n\nCoût (cost)\n\nAgrégation de la perte sur tout un dataset, notée \\(J(\\theta)\\). Les meilleurs paramètres sont ceux pour lesquels \\(J\\) est le plus proche de 0. CM1 · Fonction de coût",
+    "text": "C\n\nCaractéristique (feature)\n\nUne des grandeurs décrivant un exemple : surface, nombre de pièces, localisation… Le nombre de caractéristiques est noté \\(D\\). CM1 · Choisir l’entrée · CM2 · Plusieurs dimensions\n\nCible (target), ou étiquette (label)\n\nLa sortie \\(y^{(i)}\\) attendue pour l’exemple \\(i\\) : ce que le modèle aurait dû répondre. CM1 · Apprentissage supervisé\n\nConvergence\n\nMoment où le coût \\(J\\) ne change presque plus d’une epoch à l’autre : la descente de gradient s’arrête. CM1 · Application sur une régression linéaire\n\nCouche cachée (hidden layer)\n\nCouche de neurones placés en parallèle entre l’entrée et la sortie. Chaque neurone y apporte son propre « pli » à la fonction. CM2 · Trois neurones avec une dimension\n\nCouche de sortie (output layer)\n\nDernière couche du réseau, qui produit \\(f(x)\\). En régression, un seul neurone sans fonction d’activation. CM2 · Trois neurones avec une dimension\n\nCouche entièrement connectée (fully connected, ou dense)\n\nCouche dont chaque neurone est relié à tous les neurones de la couche précédente. CM2 · Apprentissage profond\n\nCoût (cost)\n\nAgrégation de la perte sur tout un dataset, notée \\(J(\\theta)\\). Les meilleurs paramètres sont ceux pour lesquels \\(J\\) est le plus proche de 0. CM1 · Fonction de coût",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -110,7 +110,7 @@
     "href": "glossaire.html#d",
     "title": "Glossaire",
     "section": "D",
-    "text": "D\n\nDataset (jeu de données)\n\nEnsemble de \\(N\\) exemples. En apprentissage supervisé, \\(N\\) paires \\(\\left(x^{(i)}, y^{(i)}\\right)\\). CM1 · Apprentissage supervisé\n\nDataset d’entraînement (training set)\n\nLa partie du dataset qui sert à ajuster les paramètres (typiquement 90 %). CM2 · Validation\n\nDataset de validation (validation set, ou dev set)\n\nLa partie du dataset qui ne sert jamais à l’entraînement, mais à régler les hyperparamètres et à diagnostiquer le surapprentissage. CM2 · Validation\n\nDataset de test (test set)\n\nDataset réservé au score final du modèle. Il ne doit jamais servir à régler les hyperparamètres. CM2 · Test\n\nDécodeur (decoder)\n\nBloc répété un grand nombre de fois dans un LLM (32 fois pour Llama 3 8B). Il enchaîne une multi-head attention et un MLP, et conserve les dimensions \\(D \\times T\\). CM3 · Décodeurs · CM3 · La pile de décodeurs\n\nDecoder-only\n\nArchitecture des LLMs modernes (GPT, Llama, Mistral, Claude) : l’encodeur du transformer d’origine a été supprimé, le modèle ne fait que continuer un texte. CM3 · Décodeurs\n\nDense (matrice)\n\nMatrice dont la plupart des cellules sont non nulles. C’est ce que produit la couche d’embedding, par opposition à la matrice one-hot, sparse. CM3 · Matrice d’embedding\n\nDescente de gradient (gradient descent)\n\nAlgorithme itératif qui ajuste les paramètres dans la direction opposée au gradient, jusqu’à minimiser le coût. Analogie : le randonneur dans le brouillard. CM1 · Descente de gradient\n\nDropout\n\nTechnique de régularisation qui désactive certains poids au hasard pendant l’entraînement, pour réduire la dépendance du réseau à certaines caractéristiques. CM3 · Régularisation",
+    "text": "D\n\nDataset (jeu de données)\n\nEnsemble de \\(N\\) exemples. En apprentissage supervisé, \\(N\\) paires \\(\\left(x^{(i)}, y^{(i)}\\right)\\). CM1 · Apprentissage supervisé\n\nDataset d’entraînement (training dataset)\n\nLa partie du dataset qui sert à ajuster les paramètres (environ 80 %). CM2 · Validation\n\nDataset de validation (validation dataset, ou dev set)\n\nLa partie du dataset qui ne sert jamais à l’entraînement, mais à régler les hyperparamètres et à diagnostiquer le surapprentissage. CM2 · Validation\n\nDataset de test (test dataset)\n\nDataset réservé au score final du modèle. Il ne doit jamais servir à régler les hyperparamètres. CM2 · Test\n\nDescente de gradient (gradient descent)\n\nAlgorithme itératif qui ajuste les paramètres dans la direction opposée au gradient, jusqu’à minimiser le coût. Analogie : le randonneur dans le brouillard. Dans PyTorch : torch.optim.SGD. CM1 · Descente de gradient · CM2 · Les briques",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -121,7 +121,7 @@
     "href": "glossaire.html#e",
     "title": "Glossaire",
     "section": "E",
-    "text": "E\n\nEmbedding\n\nReprésentation vectorielle dense d’un token (ou d’un texte), apprise pendant l’entraînement. Deux tokens de sens proche ont des embeddings proches. CM3 · Embeddings\n\nEncodage one-hot (one-hot encoding)\n\nReprésentation d’une catégorie par un vecteur de \\(V\\) dimensions : un 1 sur la bonne ligne, des 0 partout ailleurs. CM3 · One-hot vectors\n\nEntraînement (training)\n\nPhase pendant laquelle l’algorithme construit \\(f\\) à partir des exemples. Très coûteuse en ressources par rapport à l’inférence. CM1 · L’entraînement\n\nEntrée (input) et sortie (output)\n\nLes deux extrémités d’un modèle : \\(y = f(x)\\), où \\(x\\) est l’entrée et \\(y\\) la sortie. CM1 · Modèle\n\nEntropie croisée (cross-entropy)\n\nFonction de perte des tâches de classification. Elle ne tient compte que de la probabilité attribuée à la bonne classe : se tromper avec assurance coûte très cher. CM3 · Fonctions de perte et de coût\n\nEpoch (époque)\n\nUn passage complet sur tout le dataset d’entraînement. Avec des mini-batchs, une epoch effectue \\(N/B\\) mises à jour des paramètres. CM1 · Application sur une régression linéaire · CM3 · Mini-batch\n\nErreur quadratique moyenne (mean square error, MSE)\n\nFonction de coût de la régression : la moyenne des carrés des écarts entre prédiction et cible. CM1 · Fonction de coût",
+    "text": "E\n\nEntraînement (training)\n\nPhase pendant laquelle l’algorithme construit \\(f\\) à partir des exemples. Très coûteuse en ressources par rapport à l’inférence. CM1 · L’entraînement · CM2 · La boucle d’entraînement\n\nEntrée (input) et sortie (output)\n\nLes deux extrémités d’un modèle : \\(y = f(x)\\), où \\(x\\) est l’entrée et \\(y\\) la sortie. CM1 · Modèle\n\nEpoch (époque)\n\nUn passage complet sur tout le dataset d’entraînement. CM1 · Application sur une régression linéaire\n\nErreur quadratique moyenne (mean square error, MSE)\n\nFonction de coût de la régression : la moyenne des carrés des écarts entre prédiction et cible. Dans PyTorch : nn.MSELoss(). CM1 · Fonction de coût",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -132,7 +132,7 @@
     "href": "glossaire.html#f",
     "title": "Glossaire",
     "section": "F",
-    "text": "F\n\nFenêtre de contexte (context window)\n\nLongueur maximale de texte acceptée par un modèle. Elle est limitée parce que la matrice d’attention est en \\(T \\times T\\) : doubler le texte quadruple le coût. CM3 · Points à retenir\n\nFonction d’activation\n\nFonction non linéaire \\(\\sigma\\) appliquée à la sortie de la transformation linéaire. Sans elle, empiler des couches ne servirait à rien. Voir ReLU, sigmoïde, tanh. CM2 · Fonction d’activation\n\nFonction de coût (cost function)\n\nVoir coût. CM1 · Fonction de coût\n\nFonction de perte (loss function)\n\nVoir perte. CM1 · Fonction de perte",
+    "text": "F\n\nFonction d’activation\n\nFonction non linéaire \\(\\sigma\\) appliquée à la sortie de la transformation linéaire. C’est elle qui permet de « courber » la fonction. Voir ReLU, sigmoïde, tanh. CM2 · Fonction d’activation\n\nFonction de coût (cost function)\n\nVoir coût. CM1 · Fonction de coût\n\nFonction de perte (loss function)\n\nVoir perte. CM1 · Fonction de perte\n\nForme (shape)\n\nLe nombre d’éléments d’un tenseur dans chaque dimension. Les données ont toujours la forme (N, D) : une ligne par exemple, une colonne par caractéristique. CM2 · Les tenseurs",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -143,7 +143,7 @@
     "href": "glossaire.html#g",
     "title": "Glossaire",
     "section": "G",
-    "text": "G\n\nGénéralisation (generalization)\n\nCapacité d’un modèle à répondre juste sur des entrées qu’il n’a jamais vues. C’est le seul but qui compte. CM1 · L’inférence · CM2 · Surapprentissage\n\nGradient\n\nDérivée partielle de la fonction de coût par rapport à chaque paramètre. C’est la « pente » ressentie par le randonneur. CM1 · Application sur une régression linéaire\n\nGraphe de calcul (computational graph)\n\nReprésentation d’un modèle sous forme de nœuds (neurones) et de flèches (poids). PyTorch l’enregistre pendant la passe avant pour pouvoir le remonter ensuite. CM2 · Trois neurones",
+    "text": "G\n\nGénéralisation (generalization)\n\nCapacité d’un modèle à répondre juste sur des entrées qu’il n’a jamais vues. C’est le seul but qui compte. CM1 · L’inférence · CM2 · Surapprentissage\n\nGradient\n\nDérivée partielle de la fonction de coût par rapport à chaque paramètre. C’est la « pente » ressentie par le randonneur. CM1 · Application sur une régression linéaire\n\nGraphe de calcul (computational graph)\n\nReprésentation d’un modèle sous forme de nœuds (neurones) et de flèches (poids). PyTorch l’enregistre pendant la passe avant pour pouvoir le remonter ensuite. CM2 · Trois neurones avec une dimension",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -154,7 +154,7 @@
     "href": "glossaire.html#h",
     "title": "Glossaire",
     "section": "H",
-    "text": "H\n\nHyperparamètre\n\nVariable choisie manuellement par l’ingénieur, qui influe sur l’entraînement sans être apprise : taux d’apprentissage, nombre d’epochs, taille de batch, profondeur, largeur, fonction d’activation, taille du vocabulaire, dimension d’embedding. CM2 · Réglage des hyperparamètres",
+    "text": "H\n\nHyperparamètre\n\nVariable choisie manuellement par l’ingénieur, qui influe sur l’entraînement sans être apprise : taux d’apprentissage, nombre d’epochs, profondeur, largeur, fonction d’activation. CM2 · Les hyperparamètres",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -165,18 +165,7 @@
     "href": "glossaire.html#i",
     "title": "Glossaire",
     "section": "I",
-    "text": "I\n\nInférence (inference), ou prédiction\n\nPhase où le modèle est figé et répond \\(\\hat{y} = f(x)\\) à une entrée nouvelle. Bien moins coûteuse que l’entraînement. CM1 · L’inférence",
-    "crumbs": [
-      "Cours",
-      "Glossaire"
-    ]
-  },
-  {
-    "objectID": "glossaire.html#k",
-    "href": "glossaire.html#k",
-    "title": "Glossaire",
-    "section": "K",
-    "text": "K\n\nKey (clé)\n\n\\(\\mathbf{K} = \\mathbf{W}_K \\mathbf{H}\\) : ce qu’un token propose, l’étiquette qu’il présente aux autres tokens. CM3 · Query, Key",
+    "text": "I\n\nInférence (inference), ou prédiction\n\nPhase où le modèle est figé et répond \\(\\hat{y} = f(x)\\) à une entrée nouvelle. Bien moins coûteuse que l’entraînement. Dans PyTorch, on la place dans un bloc with torch.no_grad():. CM1 · L’inférence · CM2 · La boucle d’entraînement",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -187,7 +176,7 @@
     "href": "glossaire.html#l",
     "title": "Glossaire",
     "section": "L",
-    "text": "L\n\nLargeur (width)\n\nLe nombre de neurones \\(M\\) d’une couche. CM2 · Trois neurones\n\nLLM (Large Language Model, grand modèle de langage)\n\nModèle de langage à plusieurs milliards de paramètres, qui prédit le token suivant d’un texte. CM3 · Vue globale · CM1 · Panorama\n\nLogits\n\nLes scores bruts produits par la couche de sortie, un par token du vocabulaire, avant leur transformation en probabilités par le softmax. CM3 · Vue globale",
+    "text": "L\n\nLargeur (width)\n\nLe nombre de neurones \\(M\\) d’une couche. CM2 · Trois neurones avec une dimension\n\nLLM (Large Language Model, grand modèle de langage)\n\nModèle de langage à plusieurs milliards de paramètres, qui prédit le mot suivant d’un texte. CM1 · Panorama",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -198,7 +187,7 @@
     "href": "glossaire.html#m",
     "title": "Glossaire",
     "section": "M",
-    "text": "M\n\nMasque causal\n\nMatrice \\(\\mathbf{M}\\) qui met \\(-\\infty\\) sur les cases où la key suit la query, empêchant un token de regarder ceux qui le suivent. C’est ce qui rend la génération possible de gauche à droite. CM3 · Query, Key\n\nMatrice\n\nTableau rectangulaire de nombres. \\(a_{ij}\\) est l’élément de la ligne \\(i\\) et de la colonne \\(j\\). CM2 · Matrices\n\nMatrice d’attention\n\nMatrice \\(\\mathbf{A}\\) de taille \\(T \\times T\\) dont la case \\((i, j)\\) dit quelle part de son attention le token \\(j\\) accorde au token \\(i\\). Chaque colonne somme à 1. Elle est recalculée pour chaque phrase. CM3 · Matrice d’attention\n\nMatrice d’embedding\n\n\\(\\mathbf{W}_e\\), de dimensions \\(D \\times V\\) : une colonne par token du vocabulaire. C’est la première couche d’un LLM, sans biais ni fonction d’activation. CM3 · Matrice d’embedding\n\nMini-batch (mini-lot)\n\nSous-ensemble de \\(B\\) exemples servant à une mise à jour des paramètres. Le gradient obtenu est une approximation bruitée, ce qui aide à s’échapper des minima locaux. CM3 · Mini-batch\n\nMLP (multilayer perceptron, perceptron multicouche)\n\nRéseau formé uniquement de couches entièrement connectées, où l’information ne circule que vers l’avant. CM2 · Apprentissage profond\n\nModèle (model)\n\nFonction \\(f\\) qui transforme une entrée en une sortie : \\(y = f(x)\\). CM1 · Modèle\n\nMulti-head attention\n\nEnsemble des \\(h\\) attention heads d’un bloc décodeur, qui travaillent en parallèle sur la même entrée. Leurs sorties sont concaténées puis multipliées par \\(\\mathbf{W}_O\\). CM3 · Zoom sur un bloc décodeur",
+    "text": "M\n\nMatrice\n\nTableau rectangulaire de nombres. \\(a_{ij}\\) est l’élément de la ligne \\(i\\) et de la colonne \\(j\\). Annexe · Définition\n\nMLP (multilayer perceptron, perceptron multicouche)\n\nRéseau formé uniquement de couches entièrement connectées, où l’information ne circule que vers l’avant. CM2 · Apprentissage profond\n\nModèle (model)\n\nFonction \\(f\\) qui transforme une entrée en une sortie : \\(y = f(x)\\). Dans PyTorch, une classe qui hérite de nn.Module. CM1 · Modèle · CM2 · Les briques",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -216,33 +205,11 @@
     ]
   },
   {
-    "objectID": "glossaire.html#o",
-    "href": "glossaire.html#o",
-    "title": "Glossaire",
-    "section": "O",
-    "text": "O\n\nOne-hot vector\n\nVecteur de \\(V\\) dimensions ne contenant qu’un seul 1. Il représente un tokenID sans lui donner de signification numérique : tous les tokens sont équidistants. CM3 · One-hot vectors",
-    "crumbs": [
-      "Cours",
-      "Glossaire"
-    ]
-  },
-  {
     "objectID": "glossaire.html#p",
     "href": "glossaire.html#p",
     "title": "Glossaire",
     "section": "P",
-    "text": "P\n\nParamètre\n\nValeur ajustée automatiquement pendant l’entraînement : les poids \\(\\mathbf{W}\\) et les biais \\(\\mathbf{b}\\). L’ensemble des paramètres est noté \\(\\theta\\). CM1 · Transformation linéaire · CM2 · Réglage des hyperparamètres\n\nPasse avant (forward pass)\n\nParcours du graphe de calcul de gauche à droite, pour calculer \\(f(x)\\). Utilisée à l’entraînement comme à l’inférence. CM2 · Rétropropagation\n\nPasse arrière (backward pass)\n\nÉtape de l’entraînement pendant laquelle on exécute la rétropropagation pour obtenir les gradients. CM2 · Rétropropagation\n\nPerceptron\n\nPremier modèle de neurone artificiel, inventé dans les années 1950. Ses limitations à une seule couche ont provoqué l’« hiver de l’IA ». CM2 · Introduction\n\nPerte (loss)\n\nÉcart entre la prédiction et la cible, pour un seul exemple. Toujours positive ; le but de l’entraînement est de l’amener près de 0. CM1 · Fonction de perte\n\nPoids (weight)\n\nLe paramètre \\(w\\) qui multiplie une entrée. Un neurone a un poids par caractéristique. CM1 · Transformation linéaire\n\nPré-activation\n\nLa valeur \\(z = wx + b\\), sortie de la transformation linéaire avant la fonction d’activation. CM2 · Fonction d’activation\n\nProfondeur (depth)\n\nLe nombre \\(L\\) de couches cachées d’un réseau. C’est cet empilement qui donne son nom à l’apprentissage profond. CM2 · Apprentissage profond\n\nPyTorch\n\nBibliothèque Python de calcul matriciel et de différentiation automatique. Un modèle s’y écrit comme une classe héritant de torch.nn.Module. CM2 · Réseau de neurones avec PyTorch",
-    "crumbs": [
-      "Cours",
-      "Glossaire"
-    ]
-  },
-  {
-    "objectID": "glossaire.html#q",
-    "href": "glossaire.html#q",
-    "title": "Glossaire",
-    "section": "Q",
-    "text": "Q\n\nQuery (requête)\n\n\\(\\mathbf{Q} = \\mathbf{W}_Q \\mathbf{H}\\) : ce qu’un token cherche chez les autres tokens. CM3 · Query, Key",
+    "text": "P\n\nParamètre\n\nValeur ajustée automatiquement pendant l’entraînement : les poids et les biais. L’ensemble des paramètres est noté \\(\\theta\\). CM1 · Transformation linéaire · CM2 · Les hyperparamètres\n\nPasse avant (forward pass)\n\nCalcul de la prédiction, couche après couche, de l’entrée vers la sortie. C’est la méthode forward du modèle. CM2 · Passe avant et passe arrière\n\nPasse arrière (backward pass)\n\nCalcul des pentes, en partant du coût et en remontant les couches de la sortie vers l’entrée. C’est cost.backward(). CM2 · Passe avant et passe arrière\n\nPerceptron\n\nPremier modèle de neurone artificiel, inventé dans les années 1950. Ses limitations à une seule couche ont provoqué l’« hiver de l’IA ». CM2 · Réseaux de neurones\n\nPerte (loss)\n\nÉcart entre la prédiction et la cible, pour un seul exemple. Toujours positive ; le but de l’entraînement est de l’amener près de 0. CM1 · Fonction de perte\n\nPoids (weight)\n\nLe paramètre \\(w\\) qui multiplie une entrée. Un neurone a un poids par caractéristique. CM1 · Transformation linéaire · CM2 · Une couche cachée avec 2 dimensions\n\nPré-activation\n\nLa valeur \\(z = wx + b\\), sortie de la transformation linéaire avant la fonction d’activation. CM2 · Un neurone avec une dimension\n\nProfondeur (depth)\n\nLe nombre de couches cachées d’un réseau. C’est cet empilement qui donne son nom à l’apprentissage profond. CM2 · Apprentissage profond\n\nPyTorch\n\nBibliothèque Python qui calcule automatiquement les pentes, quel que soit le modèle, et fournit des briques toutes prêtes (nn.Linear, nn.ReLU, nn.MSELoss…). CM2 · PyTorch",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -253,7 +220,7 @@
     "href": "glossaire.html#r",
     "title": "Glossaire",
     "section": "R",
-    "text": "R\n\nRAG (Retrieval-Augmented Generation)\n\nSystème qui retrouve les documents pertinents par similarité d’embeddings, puis les fournit au LLM pour qu’il réponde à partir de vos documents. CM3 · RAG\n\nRecherche sémantique (semantic search)\n\nRecherche par proximité de sens plutôt que par mots-clés : « comment arrêter de payer ? » retrouve « Résiliation de votre abonnement ». CM3 · RAG\n\nRégression\n\nTâche dont la sortie est un nombre réel, par opposition à la classification. CM3 · Classification\n\nRégression linéaire\n\nModèle \\(f(x) = wx + b\\) : trouver les meilleurs paramètres \\(w\\) et \\(b\\) pour faire passer une droite au milieu du nuage de points. CM1 · Régression linéaire\n\nRégularisation (regularization)\n\nTechniques limitant le surapprentissage : pénalités L1 et L2 ajoutées au coût, dropout. CM3 · Régularisation\n\nReLU (Rectified Linear Unit)\n\n\\(\\mathrm{ReLU}(z) = \\max(0, z)\\). Choix par défaut dans les couches cachées : rapide à calculer, et elle atténue la disparition du gradient. CM2 · Fonction d’activation\n\nRéseau de neurones (artificial neural network, ANN)\n\nEmpilement de transformations simples inspiré du cerveau : des neurones organisés en couches. CM2 · Introduction\n\nRétropropagation (backpropagation)\n\nAlgorithme qui calcule les gradients en remontant le graphe de calcul de droite à gauche, par la règle de dérivation en chaîne. Elle ne modifie aucun paramètre : c’est la descente de gradient qui s’en charge. CM2 · Rétropropagation\n\nRMSE (Root Mean Square Error)\n\nRacine carrée du coût MSE. Elle s’exprime dans l’unité de la sortie, ce qui la rend lisible. Elle sert à lire le coût, pas à l’optimiser. CM1 · Lire le coût : la RMSE\n\nRMSNorm\n\nFonction de mise à l’échelle appliquée avant chaque sous-couche d’un bloc décodeur. CM3 · Zoom sur un bloc décodeur\n\nRNN (Recurrent Neural Network)\n\nRéseau comportant une boucle dans ses connexions, ce qui simule une forme de mémoire. Adapté aux données séquentielles. CM3 · Autres types de réseaux de neurones\n\nRoPE (Rotary Position Embedding)\n\nEncodage de la position des tokens : il fait tourner les vecteurs \\(\\mathbf{Q}\\) et \\(\\mathbf{K}\\) d’un angle proportionnel à la position, rendant les scores dépendants de la distance entre tokens. CM3 · RoPE",
+    "text": "R\n\nRégression\n\nTâche dont la sortie est un nombre réel, comme le prix d’un appartement. CM1 · Régression linéaire\n\nRégression linéaire\n\nModèle \\(f(x) = wx + b\\) : trouver les meilleurs paramètres \\(w\\) et \\(b\\) pour faire passer une droite au milieu du nuage de points. CM1 · Régression linéaire\n\nReLU (Rectified Linear Unit)\n\n\\(\\mathrm{ReLU}(z) = \\max(0, z)\\). Choix par défaut dans les couches cachées : simple et rapide à calculer. CM2 · Fonction d’activation\n\nRéseau de neurones (artificial neural network, ANN)\n\nEmpilement de transformations simples inspiré du cerveau : des neurones organisés en couches. CM2 · Réseaux de neurones\n\nRétropropagation (backpropagation)\n\nAlgorithme qui calcule les pentes en remontant les couches, de la sortie vers l’entrée. Elle ne modifie aucun paramètre : c’est l’optimiseur (optimizer.step()) qui s’en charge. CM2 · Passe avant et passe arrière\n\nRMSE (Root Mean Square Error)\n\nRacine carrée du coût MSE. Elle s’exprime dans l’unité de la sortie, ce qui la rend lisible. Elle sert à lire le coût, pas à l’optimiser. CM1 · Lire le coût : la RMSE",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -264,7 +231,7 @@
     "href": "glossaire.html#s",
     "title": "Glossaire",
     "section": "S",
-    "text": "S\n\nSigmoïde (sigmoid)\n\nFonction d’activation à valeurs dans \\(]0, 1[\\), utilisée en sortie d’une classification binaire : elle se lit comme une probabilité. CM2 · Fonction d’activation\n\nSimilarité cosinus (cosine similarity)\n\nMesure de proximité entre deux embeddings, comprise entre \\(-1\\) et \\(1\\). Elle ne mesure que l’angle entre les vecteurs, pas leur longueur. CM3 · Similarité sémantique\n\nSoftmax\n\nFonction d’activation de la couche de sortie d’une classification. Elle transforme les logits en probabilités dont la somme vaut 1. Elle n’a aucun paramètre, et ne s’applique pas cellule par cellule. CM3 · Couche de sortie\n\nSous-apprentissage (underfitting)\n\nCoût élevé à la fois en entraînement et en validation : le modèle est trop simple. CM2 · Validation\n\nSparse (matrice creuse)\n\nMatrice presque entièrement composée de 0, comme la matrice one-hot \\(\\mathbf{X}\\). La couche d’embedding la transforme en matrice dense. CM3 · Matrice d’embedding\n\nSurapprentissage (overfitting)\n\nLe modèle a mémorisé les exemples d’entraînement au lieu d’apprendre : coût d’entraînement faible, coût de validation bien plus élevé. CM2 · Surapprentissage · CM3 · Techniques pour éviter le surapprentissage",
+    "text": "S\n\nSigmoïde (sigmoid)\n\nFonction d’activation à valeurs dans \\(]0, 1[\\), utilisée en sortie d’une classification binaire : elle se lit comme une probabilité. CM2 · Fonction d’activation\n\nSous-apprentissage (underfitting)\n\nCoût élevé à la fois en entraînement et en validation : le modèle est trop simple. CM2 · Validation\n\nSurapprentissage (overfitting)\n\nLe modèle a mémorisé les exemples d’entraînement au lieu d’apprendre : coût d’entraînement faible, coût de validation bien plus élevé. CM2 · Surapprentissage",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -275,7 +242,7 @@
     "href": "glossaire.html#t",
     "title": "Glossaire",
     "section": "T",
-    "text": "T\n\nTaille de batch (batch size)\n\nLe nombre \\(B\\) d’exemples utilisés pour chaque mise à jour des paramètres. Petit \\(B\\) : des mises à jour nombreuses mais bruitées ; grand \\(B\\) : des gradients précis, mais peu de mises à jour. CM3 · Mini-batch\n\ntanh (tangente hyperbolique)\n\nFonction d’activation en S à valeurs dans \\(]-1, 1[\\), utilisée quand on veut une sortie centrée sur 0. CM2 · Fonction d’activation\n\nTaux d’apprentissage (learning rate)\n\nLe pas \\(\\alpha\\) de la descente de gradient. C’est de loin l’hyperparamètre le plus critique : on le cherche en puissances de 10. CM1 · Application sur une régression linéaire · CM2 · Taux d’apprentissage\n\nThéorème d’approximation universelle\n\nRésultat prouvant qu’un perceptron multicouche peut approximer n’importe quelle fonction. CM3 · Théorème d’approximation universelle\n\nToken\n\nÉlément du vocabulaire d’un modèle de langage : un mot, un morceau de mot, ou un signe de ponctuation. L’espace fait partie du token. CM3 · Tokenization\n\nTokenID\n\nL’indice d’un token dans le vocabulaire. C’est un simple identifiant, comme une clé primaire : ces nombres n’ont aucune signification numérique. CM3 · Transformation en liste de tokenID\n\nTokenization\n\nDécoupage d’un texte en liste de tokens, puis en liste de tokenIDs. CM3 · Tokenization\n\nTransformation linéaire\n\nLa formule \\(wx + b\\), ou \\(\\mathbf{W}\\mathbf{x} + \\mathbf{b}\\) en plusieurs dimensions. CM1 · Transformation linéaire\n\nTransformer\n\nArchitecture publiée par Google en 2017 (Attention Is All You Need), composée d’un encodeur et d’un décodeur. Les LLMs modernes n’en gardent que le décodeur. CM3 · Décodeurs",
+    "text": "T\n\ntanh (tangente hyperbolique)\n\nFonction d’activation en S à valeurs dans \\(]-1, 1[\\), utilisée quand on veut une sortie centrée sur 0. CM2 · Fonction d’activation\n\nTaux d’apprentissage (learning rate)\n\nLe pas \\(\\alpha\\) de la descente de gradient (lr dans PyTorch). C’est de loin l’hyperparamètre le plus critique : on le cherche en puissances de 10. CM1 · Application sur une régression linéaire · CM2 · Comment régler en pratique\n\nTenseur (tensor)\n\nTableau de nombres manipulé par PyTorch. Une opération sur un tenseur s’applique à tous ses éléments d’un coup, sans boucle. CM2 · Les tenseurs\n\nTransformation linéaire\n\nLa formule \\(wx + b\\), ou \\(w_1 x_1 + w_2 x_2 + b\\) avec plusieurs caractéristiques. Dans PyTorch : nn.Linear. CM1 · Transformation linéaire",
     "crumbs": [
       "Cours",
       "Glossaire"
@@ -286,7 +253,7 @@
     "href": "glossaire.html#v",
     "title": "Glossaire",
     "section": "V",
-    "text": "V\n\nValidation\n\nComparaison du coût d’entraînement et du coût de validation, pour diagnostiquer sous-apprentissage, surapprentissage ou bonne généralisation. CM2 · Validation\n\nValue (valeur)\n\n\\(\\mathbf{V} = \\mathbf{W}_V \\mathbf{H}\\) : ce qu’un token transmet s’il est retenu par l’attention. La sortie de la head est \\(\\mathbf{V}\\mathbf{A}\\). CM3 · Value\n\nVecteur de caractéristiques (feature vector)\n\nL’entrée \\(\\mathbf{x}\\) quand elle comporte plusieurs caractéristiques. Vecteurs et matrices sont notés en gras. CM2 · Vecteurs\n\nVocabulaire\n\nL’ensemble fixe des tokens connus d’un modèle. Sa taille \\(V\\) est un hyperparamètre : environ 32 000 tokens là où le français compte 100 000 mots. CM3 · Tokenization",
+    "text": "V\n\nValidation\n\nComparaison du coût d’entraînement et du coût de validation, pour diagnostiquer sous-apprentissage, surapprentissage ou bonne généralisation. CM2 · Validation\n\nVecteur de caractéristiques (feature vector)\n\nL’entrée \\(\\mathbf{x}\\) quand elle comporte plusieurs caractéristiques. Vecteurs et matrices sont notés en gras. CM2 · Vecteurs",
     "crumbs": [
       "Cours",
       "Glossaire"
