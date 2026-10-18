@@ -119,7 +119,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">CM2 - TensorFlow Playground</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cours1_linear_fit.html">Activités</a></li><li class="breadcrumb-item"><a href="./playground.html">CM2 - TensorFlow Playground</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
@@ -168,6 +168,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cours2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Réseaux de neurones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glossaire</span></a>
   </div>
@@ -182,13 +188,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Activités</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cours1_linear_fit.html" class="sidebar-item-text sidebar-link">
@@ -199,6 +205,30 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./cours1_gradient_descent.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CM1 - Descente de Gradient</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./single-neuron.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Modèle à un neurone</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi-neuron.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Modèle à plusieurs neurones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./playground.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">CM2 - TensorFlow Playground</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./playground-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - TensorFlow Playground : plusieurs couches</span></a>
   </div>
 </li>
       </ul>
@@ -220,6 +250,23 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours2_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Annexe (facultatif) : calcul matriciel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -230,17 +277,15 @@ window.Quarto = {
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul class="collapse">
-  <li><a href="#le-lien" id="toc-le-lien" class="nav-link active" data-scroll-target="#le-lien"><span class="header-section-number">1</span> Le lien</a></li>
-  <li><a href="#retrouver-le-cours-dans-loutil" id="toc-retrouver-le-cours-dans-loutil" class="nav-link" data-scroll-target="#retrouver-le-cours-dans-loutil"><span class="header-section-number">2</span> Retrouver le cours dans l’outil</a></li>
-  <li><a href="#lire-la-visualisation" id="toc-lire-la-visualisation" class="nav-link" data-scroll-target="#lire-la-visualisation"><span class="header-section-number">3</span> Lire la visualisation</a></li>
-  <li><a href="#à-faire" id="toc-à-faire" class="nav-link" data-scroll-target="#à-faire"><span class="header-section-number">4</span> À faire</a></li>
+  <li><a href="#lire-lécran" id="toc-lire-lécran" class="nav-link active" data-scroll-target="#lire-lécran"><span class="header-section-number">1</span> Lire l’écran</a></li>
+  <li><a href="#à-faire" id="toc-à-faire" class="nav-link" data-scroll-target="#à-faire"><span class="header-section-number">2</span> À faire</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cours1_linear_fit.html">Activités</a></li><li class="breadcrumb-item"><a href="./playground.html">CM2 - TensorFlow Playground</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">CM2 - TensorFlow Playground</h1>
 </div>
@@ -265,13 +310,10 @@ window.Quarto = {
 </header>
 
 
-<section id="le-lien" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="le-lien"><span class="header-section-number">1</span> Le lien</h2>
 <p><a href="https://playground.tensorflow.org/#activation=relu&amp;batchSize=10&amp;dataset=circle&amp;regDataset=reg-plane&amp;learningRate=0.03&amp;regularizationRate=0&amp;noise=0&amp;networkShape=3&amp;seed=0.22960&amp;showTestData=false&amp;discretize=false&amp;percTrainData=50&amp;x=true&amp;y=true&amp;xTimesY=false&amp;xSquared=false&amp;ySquared=false&amp;cosX=false&amp;sinX=false&amp;cosY=false&amp;sinY=false&amp;collectStats=false&amp;problem=regression&amp;initZero=false&amp;hideText=false&amp;batchSize_hide=true&amp;noise_hide=true&amp;percTrainData_hide=true&amp;problem_hide=true&amp;activation_hide=false&amp;regularization_hide=true&amp;regularizationRate_hide=true&amp;numHiddenLayers_hide=true" target="_blank">Ouvrir TensorFlow Playground</a></p>
-<p>Le lien ouvre un réseau déjà configuré comme celui du cours : <strong>2 caractéristiques en entrée</strong>, <strong>une couche cachée de 3 neurones</strong>, <strong>une seule sortie</strong>, en régression.</p>
-</section>
-<section id="retrouver-le-cours-dans-loutil" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="retrouver-le-cours-dans-loutil"><span class="header-section-number">2</span> Retrouver le cours dans l’outil</h2>
+<p>Le réseau est configuré comme dans le cours : 2 caractéristiques en entrée, une couche cachée de 3 neurones, une sortie.</p>
+<section id="lire-lécran" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="lire-lécran"><span class="header-section-number">1</span> Lire l’écran</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 48%">
@@ -285,73 +327,43 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Colonne <em>FEATURES</em>, <span class="math inline">\(X_1\)</span> et <span class="math inline">\(X_2\)</span></td>
-<td>l’entrée <span class="math inline">\(\mathbf{x}\)</span>, avec <span class="math inline">\(D = 2\)</span></td>
+<td><em>X₁</em>, <em>X₂</em> (colonne <em>FEATURES</em>)</td>
+<td>les 2 caractéristiques <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_2\)</span></td>
 </tr>
 <tr class="even">
-<td>La colonne de neurones au milieu</td>
-<td>la couche cachée, <span class="math inline">\(M = 3\)</span></td>
+<td>les 3 neurones au milieu</td>
+<td>la couche cachée : <code>nn.Linear(2, 3)</code> → <code>nn.ReLU()</code></td>
 </tr>
 <tr class="odd">
-<td>Les traits entre les colonnes</td>
-<td>les poids : <span class="math inline">\(\mathbf{W}\)</span> à gauche, <span class="math inline">\(\mathbf{V}\)</span> à droite</td>
+<td>le grand carré <em>OUTPUT</em></td>
+<td>la sortie <span class="math inline">\(f(x)\)</span> : <code>nn.Linear(3, 1)</code></td>
 </tr>
 <tr class="even">
-<td>Épaisseur du trait</td>
-<td>valeur absolue du poids</td>
+<td>les traits</td>
+<td>les poids : plus le trait est épais, plus le poids est grand</td>
 </tr>
 <tr class="odd">
-<td>Couleur du trait (bleu / orange)</td>
-<td>signe du poids (positif / négatif)</td>
-</tr>
-<tr class="even">
 <td><em>Training loss</em></td>
-<td>notre coût <span class="math inline">\(J\)</span> (MSE)</td>
+<td>le coût (MSE)</td>
 </tr>
-<tr class="odd">
-<td>Bouton ▶</td>
-<td>la descente de gradient, un pas par image</td>
+<tr class="even">
+<td>▶</td>
+<td>l’entraînement</td>
 </tr>
 </tbody>
 </table>
+<p>Dans chaque carré : <span style="color:#0877bd"><strong>bleu</strong></span> = valeur positive, <span style="color:#f59322"><strong>orange</strong></span> = valeur négative, blanc = 0. Dans le carré <em>OUTPUT</em>, les points sont les exemples : le modèle est bon quand leur couleur se confond avec le fond.</p>
 </section>
-<section id="lire-la-visualisation" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="lire-la-visualisation"><span class="header-section-number">3</span> Lire la visualisation</h2>
-<p>Tous les carrés de la page se lisent de la même façon.</p>
-<p><strong>Le carré, c’est le plan des deux caractéristiques.</strong> L’axe horizontal est <span class="math inline">\(x_1\)</span>, l’axe vertical <span class="math inline">\(x_2\)</span>. Chaque point du carré est un exemple du jeu de données d’entraînement. Sa <strong>couleur est la valeur calculée</strong> en ce point :</p>
-<ul>
-<li><span style="color:#0877bd"><strong>bleu</strong></span> = valeur positive, <span style="color:#f59322"><strong>orange</strong></span> = valeur négative, blanc = zéro ;</li>
-<li>plus la couleur est vive, plus la valeur est grande.</li>
-</ul>
-<p><strong>Le grand carré de droite (<em>OUTPUT</em>)</strong> montre la sortie <span class="math inline">\(f(\mathbf{x})\)</span> du réseau sur tout le plan. Les <strong>points</strong> dessinés dessus sont les exemples d’entraînement, coloriés selon leur <strong>vraie</strong> valeur, avec la même échelle. Le modèle est bon quand chaque point se fond dans le fond : sa couleur et celle du fond sont alors les mêmes.</p>
-<p><strong>Le petit carré dans chaque neurone caché</strong> montre ce que ce neurone calcule, lui, sur tout le plan — sa sortie <span class="math inline">\(h_i\)</span>. Avec ReLU, on y voit nettement une zone blanche (le neurone est éteint, <span class="math inline">\(h_i = 0\)</span>) séparée d’une zone colorée par une droite : c’est le “pli” apporté par ce neurone.</p>
-<p>Passer la souris sur un neurone l’agrandit dans le carré de droite ; passer la souris sur un trait affiche la valeur du poids.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Astuce
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La sortie du réseau est la <strong>somme</strong> des petits carrés de la couche cachée, chacun multiplié par son poids <span class="math inline">\(v_i\)</span> (le trait qui en part), plus le biais <span class="math inline">\(c\)</span>. Superposez-les mentalement : vous retrouvez le grand carré.</p>
-</div>
-</div>
-</section>
-<section id="à-faire" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="à-faire"><span class="header-section-number">4</span> À faire</h2>
+<section id="à-faire" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="à-faire"><span class="header-section-number">2</span> À faire</h2>
 <ol type="1">
-<li>Avant de lancer quoi que ce soit, regardez les 3 petits carrés de la couche cachée : les poids sont encore au hasard.</li>
-<li>Lancez l’entraînement (▶) et laissez tourner quelques secondes. Regardez la <em>Training loss</em> descendre, les traits changer d’épaisseur et les carrés se réorganiser.</li>
-<li>Mettez en pause. Pour chaque neurone caché, repérez où passe son “pli”. Retrouvez-vous ces plis dans le carré de sortie ?</li>
-<li>Ramenez la couche cachée à <strong>1 seul neurone</strong> (bouton <strong>−</strong>) et relancez. Quelle est la meilleure <em>loss</em> atteinte ?</li>
-<li>Remontez à <strong>3 neurones</strong>, puis changez de jeu de données (colonne <em>DATA</em>). Combien de neurones faut-il pour descendre la <em>loss</em> sous 0,015 ?</li>
+<li>Lancez l’entraînement (▶) et regardez la <em>Training loss</em> baisser. Dans le petit carré de chaque neurone caché, la limite entre la zone blanche et la zone colorée est le « pli » de ce neurone.</li>
+<li>Réduisez la couche cachée à <strong>1 neurone</strong> (bouton <strong>−</strong>) et relancez. Quelle est la meilleure <em>loss</em> atteinte ?</li>
+<li>Revenez à <strong>3 neurones</strong> et changez de jeu de données (colonne <em>DATA</em>). Combien de neurones faut-il pour descendre la <em>loss</em> sous 0,015 ?</li>
 <li>Changez la fonction d’activation pour <strong>tanh</strong>, puis <strong>sigmoid</strong>. La sortie a-t-elle la même allure ?</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -360,28 +372,14 @@ Astuce
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>1 neurone</strong> : la sortie ne peut être qu’un seul pli. La <em>loss</em> stagne dès que la cible a une forme un peu complexe.</li>
-<li><strong>Plus de neurones</strong> : chaque neurone ajoute un pli, et la couche de sortie les additionne en les pondérant par <span class="math inline">\(\mathbf{V}\)</span> — exactement comme dans l’activité <a href="./multi-neuron.html">Modèle à plusieurs neurones</a>.</li>
+<li><strong>1 neurone</strong> : la sortie n’a qu’un seul pli. La <em>loss</em> stagne dès que la forme à apprendre est un peu complexe.</li>
+<li><strong>Plus de neurones</strong> : chaque neurone ajoute un pli, et la couche de sortie les additionne.</li>
 <li><strong>ReLU</strong> découpe le plan en zones à bords droits ; <strong>tanh</strong> et <strong>sigmoid</strong> donnent des transitions arrondies.</li>
-<li>Certains neurones finissent avec des traits très fins : ils ne servent presque à rien. Le réseau n’utilise pas toujours toute la largeur qu’on lui donne.</li>
 </ul>
 </div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Astuce
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Le bouton ↺ (à gauche du ▶) réinitialise les poids au hasard. Relancez deux fois de suite le même entraînement : vous n’obtiendrez pas exactement le même résultat.</p>
 </div>
 </div>
 

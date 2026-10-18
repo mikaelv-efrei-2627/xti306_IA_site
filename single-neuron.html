@@ -119,7 +119,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">CM2 - Modèle à un neurone</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cours1_linear_fit.html">Activités</a></li><li class="breadcrumb-item"><a href="./single-neuron.html">CM2 - Modèle à un neurone</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
@@ -168,6 +168,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cours2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Réseaux de neurones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glossaire</span></a>
   </div>
@@ -182,13 +188,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Activités</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cours1_linear_fit.html" class="sidebar-item-text sidebar-link">
@@ -199,6 +205,30 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./cours1_gradient_descent.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CM1 - Descente de Gradient</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./single-neuron.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">CM2 - Modèle à un neurone</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi-neuron.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Modèle à plusieurs neurones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./playground.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - TensorFlow Playground</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./playground-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - TensorFlow Playground : plusieurs couches</span></a>
   </div>
 </li>
       </ul>
@@ -216,6 +246,23 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./tp1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">TP1 - Introduction à l’apprentissage automatique (<em>machine learning</em>)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours2_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Annexe (facultatif) : calcul matriciel</span></a>
   </div>
 </li>
       </ul>
@@ -238,7 +285,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cours1_linear_fit.html">Activités</a></li><li class="breadcrumb-item"><a href="./single-neuron.html">CM2 - Modèle à un neurone</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">CM2 - Modèle à un neurone</h1>
 </div>
@@ -265,11 +312,29 @@ window.Quarto = {
 
 <section id="le-modèle" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="le-modèle"><span class="header-section-number">1</span> Le modèle</h2>
-<p>Un neurone unique avec une seule caractéristique <span class="math inline">\(x\)</span> en entrée possède deux paramètres : un poids <span class="math inline">\(w\)</span> et un biais <span class="math inline">\(b\)</span>. Il calcule</p>
+<p>Un neurone avec une seule entrée <span class="math inline">\(x\)</span> a deux paramètres : un poids <span class="math inline">\(w\)</span> et un biais <span class="math inline">\(b\)</span>. Il calcule <span class="math inline">\(wx + b\)</span>, puis applique la fonction d’activation. En PyTorch : <code>nn.Linear(1, 1)</code> → <code>nn.ReLU()</code>.</p>
+<ol type="1">
+<li>Choisissez un type de <strong>données</strong>.</li>
+<li>Choisissez une fonction d’<strong>activation</strong>.</li>
+<li>Déplacez les curseurs <span class="math inline">\(w\)</span> et <span class="math inline">\(b\)</span> pour rapprocher la courbe des points, en surveillant la <strong>MSE</strong>. Les traits verticaux montrent l’écart de chaque point.</li>
+<li>Cliquez sur <em>Descente de gradient</em> : l’algorithme fait le travail à votre place. Un second clic l’arrête.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>La formule (facultatif)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p><span class="math display">\[\hat{y} = \sigma(wx + b)\]</span></p>
-<p>où <span class="math inline">\(\sigma\)</span> est une <strong>fonction d’activation</strong> choisie à l’avance. Entraîner le modèle, c’est chercher le couple <span class="math inline">\((w, b)\)</span> qui place la courbe au plus près des points observés.</p>
-<p>Déplacez les curseurs ci-dessous et observez la réaction de l’erreur quadratique moyenne (<strong>mean squared error</strong>, MSE). Les traits verticaux montrent la <strong>perte</strong> (<strong>loss</strong>) : la distance entre chaque point et la courbe.</p>
-<p>Le bouton <em>Descente de gradient</em> fait le travail à votre place : il applique 20 000 pas de descente de gradient sur la MSE, avec un taux d’apprentissage (<strong>learning rate</strong>) de 0,05, en partant des valeurs actuelles des curseurs. Un second clic interrompt l’animation.</p>
+</div>
+</div>
+</div>
 <div class="neuron-fit" id="neuron-fit">
   <svg viewbox="0 0 680 340" class="nf-plot" role="img" aria-label="Courbe de sortie d'un neurone unique, tracée sur les points d'entraînement.">
     <line x1="60" y1="100" x2="620" y2="100" class="nf-grid"></line>
@@ -281,38 +346,40 @@ window.Quarto = {
     <rect x="60" y="40" width="560" height="240" class="nf-frame"></rect>
     <clippath id="nf-clip"><rect x="60" y="40" width="560" height="240"></rect></clippath>
     <g id="nf-layer" clip-path="url(#nf-clip)"></g>
-    <text x="52" y="44" class="nf-tick nf-end">2</text>
-    <text x="52" y="104" class="nf-tick nf-end">1</text>
-    <text x="52" y="164" class="nf-tick nf-end">0</text>
-    <text x="52" y="224" class="nf-tick nf-end">-1</text>
-    <text x="52" y="284" class="nf-tick nf-end">-2</text>
-    <text x="60" y="298" class="nf-tick nf-mid">-6</text>
-    <text x="200" y="298" class="nf-tick nf-mid">-3</text>
-    <text x="340" y="298" class="nf-tick nf-mid">0</text>
-    <text x="480" y="298" class="nf-tick nf-mid">3</text>
-    <text x="620" y="298" class="nf-tick nf-mid">6</text>
-    <line x1="88" y1="320" x2="114" y2="320" class="nf-key-dash"></line>
-    <text x="122" y="324" class="nf-tick">wx + b</text>
-    <line x1="220" y1="320" x2="246" y2="320" class="nf-key-solid"></line>
-    <text x="254" y="324" class="nf-tick">prédiction</text>
-    <circle cx="378" cy="320" r="4" class="nf-key-dot"></circle>
-    <text x="392" y="324" class="nf-tick">données d'entraînement</text>
+    <text x="52" y="44" class="nf-tick nf-end" id="nf-y0">2</text>
+    <text x="52" y="104" class="nf-tick nf-end" id="nf-y1">1</text>
+    <text x="52" y="164" class="nf-tick nf-end" id="nf-y2">0</text>
+    <text x="52" y="224" class="nf-tick nf-end" id="nf-y3">-1</text>
+    <text x="52" y="284" class="nf-tick nf-end" id="nf-y4">-2</text>
+    <text x="60" y="298" class="nf-tick nf-mid" id="nf-x0">-6</text>
+    <text x="200" y="298" class="nf-tick nf-mid" id="nf-x1">-3</text>
+    <text x="340" y="298" class="nf-tick nf-mid" id="nf-x2">0</text>
+    <text x="480" y="298" class="nf-tick nf-mid" id="nf-x3">3</text>
+    <text x="620" y="298" class="nf-tick nf-mid" id="nf-x4">6</text>
+    <line x1="88" y1="20" x2="114" y2="20" class="nf-key-dash"></line>
+    <text x="122" y="24" class="nf-tick">wx + b</text>
+    <line x1="220" y1="20" x2="246" y2="20" class="nf-key-solid"></line>
+    <text x="254" y="24" class="nf-tick">prédiction</text>
+    <circle cx="378" cy="20" r="4" class="nf-key-dot"></circle>
+    <text x="392" y="24" class="nf-tick">données d'entraînement</text>
+    <text x="340" y="320" class="nf-tick nf-mid nf-title" id="nf-xtitle"></text>
+    <text transform="translate(14 160) rotate(-90)" class="nf-tick nf-mid nf-title" id="nf-ytitle"></text>
   </svg>
 
   <div class="nf-row">
-    <span class="nf-label">Activation</span>
-    <button class="nf-btn" data-act="none">identité (pas d'activation)</button>
-    <button class="nf-btn is-on" data-act="tanh">tanh</button>
-    <button class="nf-btn" data-act="relu">ReLU</button>
-    <button class="nf-btn" data-act="sigmoid">sigmoïde</button>
+    <span class="nf-label">Données</span>
+    <button class="nf-btn is-on" data-data="price_area">Prix / surface</button>
+    <button class="nf-btn" data-data="gas_temp">Gaz / température</button>
+    <button class="nf-btn" data-data="price_position">Prix au m² / position</button>
   </div>
+  <p class="nf-caption" id="nf-caption"></p>
 
   <div class="nf-row">
-    <span class="nf-label">Données</span>
-    <button class="nf-btn" data-data="line">pente</button>
-    <button class="nf-btn is-on" data-data="step">seuil</button>
-    <button class="nf-btn" data-data="bump">bosse</button>
-    <button class="nf-btn nf-fit" id="nf-descend">Descente de gradient</button>
+    <span class="nf-label">Activation</span>
+    <button class="nf-btn is-on" data-act="none">identité (pas d'activation)</button>
+    <button class="nf-btn" data-act="tanh">tanh</button>
+    <button class="nf-btn" data-act="relu">ReLU</button>
+    <button class="nf-btn" data-act="sigmoid">sigmoïde</button>
   </div>
 
   <div class="nf-sliders">
@@ -324,6 +391,10 @@ window.Quarto = {
       <input type="range" id="nf-b" min="-4" max="4" step="0.02" value="0.00">
       <output id="nf-bv">0.00</output>
     </label>
+  </div>
+
+  <div class="nf-row">
+    <button class="nf-btn nf-fit" id="nf-descend">Descente de gradient</button>
   </div>
 
   <p class="nf-readout"><span id="nf-eq"></span><span class="nf-mse">MSE <strong id="nf-mse">0.000</strong></span></p>
@@ -355,7 +426,7 @@ window.Quarto = {
 }
 .nf-plot { width: 100%; height: auto; display: block; }
 .nf-grid { stroke: var(--nf-rule); stroke-width: .5; }
-.nf-axis { stroke: var(--nf-soft); stroke-width: 1; }
+.nf-axis { stroke: var(--nf-rule); stroke-width: .5; }
 .nf-frame { fill: none; stroke: var(--nf-rule); stroke-width: .5; }
 .nf-tick { font-size: 12px; fill: var(--nf-soft); font-family: inherit; }
 .nf-end { text-anchor: end; }
@@ -364,6 +435,8 @@ window.Quarto = {
 .nf-key-solid { stroke: var(--nf-curve); stroke-width: 2.5; }
 .nf-key-dot { fill: var(--nf-point); }
 .nf-row { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin-top: .9rem; }
+.nf-caption { font-size: .82rem; color: var(--nf-ink); margin: .4rem 0 0; line-height: 1.4; }
+.nf-title { fill: var(--nf-ink); font-size: 13px; }
 .nf-label { font-size: .8rem; color: var(--nf-soft); width: 5.2rem; }
 .nf-btn {
   font: inherit; font-size: .82rem; padding: .28rem .7rem;
@@ -372,7 +445,7 @@ window.Quarto = {
 }
 .nf-btn:hover { color: var(--nf-ink); }
 .nf-btn.is-on { background: var(--nf-chip-on); border-color: var(--nf-curve); color: var(--nf-curve); }
-.nf-fit { margin-left: auto; color: var(--nf-ink); }
+.nf-fit { color: var(--nf-ink); }
 .nf-sliders { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem 1.5rem; margin-top: 1rem; }
 .nf-ctl { display: flex; align-items: center; gap: .6rem; font-size: .82rem; color: var(--nf-soft); }
 .nf-ctl em { font-style: italic; }
@@ -399,7 +472,7 @@ window.Quarto = {
   // identity activation, whose gradients are the steepest of the four.
   var LR = 0.05, MAX_STEPS = 20000, STEPS_PER_FRAME = 250;
 
-  var W = 1.5, B = 0, ACT = "tanh", DATA = "step";
+  var W = 1.5, B = 0, ACT = "none", DATA = "price_area";
   var xs = [], ys = [];
   var frame = 0;
 
@@ -432,20 +505,62 @@ window.Quarto = {
     };
   }
 
-  function target(x) {
-    if (DATA === "step") return Math.tanh(1.8 * (x - 1));
-    if (DATA === "bump") return 1.4 * Math.exp(-x * x / 2) - 0.2;
-    return 0.16 * x;
-  }
+  // Real datasets, built by activites_data/prepare_activites.py: [x, y] in real units.
+  var RAW = {"price_area":[[38,178],[54,235],[72,158],[53,202],[37,170],[53,173],[77,321],[46,150],[50,201],[40,140],[74,380],[45,150],[44,138],[55,253],[62,260],[23,112],[49,201],[72,258],[33,121],[55,142],[44,175],[37,133],[32,205],[30,104],[90,299],[37,140],[86,277],[56,278],[33,206],[45,271]],"gas_temp":[[14.4,58.4],[11.0,102.8],[4.0,148.3],[4.5,137.4],[5.7,73.1],[8.3,93.8],[6.4,115.1],[4.4,115.8],[11.2,84.7],[15.0,65.2],[11.6,60.3],[13.6,43.7],[13.5,49.5],[19.7,37.3],[16.5,25.2],[13.9,42.0],[16.7,34.6],[21.6,23.0],[20.1,26.9],[20.9,29.3],[19.3,30.6],[23.0,21.7],[24.2,27.9],[21.4,25.8],[17.4,20.3],[22.6,18.4],[30.5,23.5],[21.2,32.2],[25.6,20.1],[19.2,32.2],[20.4,34.7],[15.9,30.2],[14.9,40.2],[16.2,46.2],[10.1,75.9],[15.7,58.4],[10.9,80.9],[11.6,103.1],[11.7,85.5],[2.4,141.0],[6.4,98.6]],"price_position":[[-4.69,3490],[-4.27,3460],[-3.73,3640],[-3.29,3640],[-2.77,4000],[-2.25,4340],[-1.75,4560],[-1.24,4600],[-0.78,5180],[-0.24,4820],[0.13,4650],[0.79,4630],[1.24,4310],[1.68,3920],[2.22,3740]],"temp_month":[[1,6.8],[2,5.9],[3,10.8],[4,12.8],[5,16.8],[6,21.4],[7,21.2],[8,22.1],[9,21.3],[10,16.7],[11,11.1],[12,8.5],[13,7.2],[14,9.6],[15,10.9],[16,13.0],[17,14.7],[18,18.8]],"letter_weight":[[5,1.52],[20,1.52],[35,3.1],[50,3.1],[65,3.1],[80,3.1],[95,3.1],[110,5.24],[125,5.24],[140,5.24],[155,5.24],[170,5.24],[185,5.24],[200,5.24],[215,5.24],[230,5.24],[245,5.24],[260,7.41],[275,7.41],[290,7.41],[305,7.41],[320,7.41],[335,7.41],[350,7.41],[365,7.41],[380,7.41],[395,7.41],[410,7.41],[425,7.41],[440,7.41],[455,7.41],[470,7.41],[485,7.41],[500,7.41],[515,9.29],[530,9.29],[545,9.29],[560,9.29],[575,9.29],[590,9.29]]};
+
+  // Axis titles, description of the data, decimals of the tick labels, and the range of y on the model's scale.
+  // The points are rescaled so that x spans [-5.5, 5.5] and y spans yTo: like a standardisation,
+  // the model always works on small numbers, while the ticks show the real units.
+  var META = {
+    price_area: {
+      x: "surface (m²)", y: "prix (k€)", dx: 0, dy: 0, yTo: [-1.5, 1.5],
+      description: "Chaque point est la vente d'un appartement à Bordeaux en 2025 : sa surface et son prix. 30 ventes tirées au hasard. Source : DVF (demandes de valeurs foncières)."
+    },
+    gas_temp: {
+      x: "température moyenne du jour à Bordeaux (°C)", y: "gaz (GWh/jour)", dx: 0, dy: 0, yTo: [0, 1.8],
+      description: "Chaque point est un jour de 2023 : la température moyenne à Bordeaux, et la consommation de gaz de toute la Nouvelle-Aquitaine ce jour-là. Quand il fait froid, on chauffe ; au-dessus de 17 °C environ, la consommation ne baisse plus. Sources : ODRÉ (GRTgaz, Teréga), Open-Meteo."
+    },
+    price_position: {
+      x: "position ouest → est (km depuis la place de la Bourse)", y: "prix (€/m²)", dx: 1, dy: 0, yTo: [0, 1.5],
+      description: "Les ventes d'appartements de 2025 situées sur une bande ouest-est qui traverse Bordeaux, regroupées par tranches de 500 m : chaque point est le prix médian au m² d'une tranche. La position 0 est la place de la Bourse. Source : DVF."
+    }
+  };
+  var scale = null;
 
   function makeData() {
-    var rand = seeded(20240607);
-    xs = []; ys = [];
-    for (var i = 0; i < 26; i++) {
-      var x = -5.5 + 11 * i / 25;
-      xs.push(x);
-      ys.push(target(x) + (rand() - 0.5) * 0.24);
+    var pts = RAW[DATA], m = META[DATA];
+    var xmin = Infinity, xmax = -Infinity, ymin = Infinity, ymax = -Infinity, i;
+    for (i = 0; i < pts.length; i++) {
+      xmin = Math.min(xmin, pts[i][0]); xmax = Math.max(xmax, pts[i][0]);
+      ymin = Math.min(ymin, pts[i][1]); ymax = Math.max(ymax, pts[i][1]);
     }
+    scale = { xmin: xmin, xmax: xmax, ymin: ymin, ymax: ymax, ylo: m.yTo[0], yhi: m.yTo[1] };
+    xs = []; ys = [];
+    for (i = 0; i < pts.length; i++) {
+      xs.push(-5.5 + 11 * (pts[i][0] - xmin) / (xmax - xmin));
+      ys.push(scale.ylo + (scale.yhi - scale.ylo) * (pts[i][1] - ymin) / (ymax - ymin));
+    }
+    updateAxes();
+  }
+
+  function formatNumber(value, decimals) {
+    return value.toLocaleString("fr-FR", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  }
+
+  // Five ticks on each axis, from the minimum to the maximum of the data, labelled in real units.
+  function updateAxes() {
+    var m = META[DATA], s = scale, k, t;
+    for (k = 0; k < 5; k++) {
+      t = document.getElementById("nf-x" + k);
+      t.setAttribute("x", px(-5.5 + 11 * k / 4).toFixed(1));
+      t.textContent = formatNumber(s.xmin + k / 4 * (s.xmax - s.xmin), m.dx);
+      t = document.getElementById("nf-y" + k);
+      t.setAttribute("y", (py(s.yhi - k / 4 * (s.yhi - s.ylo)) + 4).toFixed(1));
+      t.textContent = formatNumber(s.ymax - k / 4 * (s.ymax - s.ymin), m.dy);
+    }
+    document.getElementById("nf-caption").textContent = m.description;
+    document.getElementById("nf-xtitle").textContent = m.x;
+    document.getElementById("nf-ytitle").textContent = m.y;
   }
 
   function px(x) { return 60 + (x + 6) / 12 * 560; }
@@ -574,10 +689,11 @@ window.Quarto = {
 </section>
 <section id="à-tester-en-cours" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="à-tester-en-cours"><span class="header-section-number">2</span> À tester en cours</h2>
-<ul>
-<li>Choisissez un type de données, puis cherchez la meilleure fonction d’activation</li>
-<li>Que constatez vous pour les données en bosse ?</li>
-</ul>
+<ol type="1">
+<li><em>Prix / surface</em> : quelle fonction d’activation donne la plus petite MSE ? Pourquoi ?</li>
+<li><em>Gaz / température</em> : la consommation baisse quand il fait plus chaud, puis ne bouge presque plus au-dessus de 17 °C. Essayez <strong>ReLU</strong> (indice : il faut un poids <span class="math inline">\(w\)</span> négatif).</li>
+<li><em>Prix au m² / position</em> : le centre-ville est plus cher que les quartiers de part et d’autre. Un seul neurone peut-il suivre cette bosse, quelle que soit l’activation ?</li>
+</ol>
 
 
 </section>

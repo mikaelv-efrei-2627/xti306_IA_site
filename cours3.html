@@ -171,6 +171,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cours2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Réseaux de neurones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glossaire</span></a>
   </div>
@@ -204,6 +210,30 @@ window.Quarto = {
  <span class="menu-text">CM1 - Descente de Gradient</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./single-neuron.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Modèle à un neurone</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi-neuron.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Modèle à plusieurs neurones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./playground.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - TensorFlow Playground</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./playground-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - TensorFlow Playground : plusieurs couches</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -219,6 +249,23 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./tp1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">TP1 - Introduction à l’apprentissage automatique (<em>machine learning</em>)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours2_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Annexe (facultatif) : calcul matriciel</span></a>
   </div>
 </li>
       </ul>
@@ -485,7 +532,7 @@ Important
 \mathbf{h}^{[1]} &amp;= \sigma(\mathbf{W}^{[1]} \mathbf{x} + \mathbf{b}^{[1]}) \\
 &amp;\;\;\vdots \\
 \mathbf{h}^{[L]} &amp;= \sigma(\mathbf{W}^{[L]} \mathbf{h}^{[L-1]} + \mathbf{b}^{[L]}) \\
-\mathbf{z} &amp;= \mathbf{V} \mathbf{h}^{[L]} + \mathbf{c} \\
+\mathbf{z} &amp;= \mathbf{W}^{[L+1]} \mathbf{h}^{[L]} + \mathbf{b}^{[L+1]} \\
 f(\mathbf{x}) &amp;= \mathrm{softmax}(\mathbf{z})
 \end{aligned}
 \]</span></p>
@@ -498,14 +545,14 @@ f(\mathbf{x}) &amp;= \mathrm{softmax}(\mathbf{z})
 <p>Couche de sortie : <strong>modifiée</strong></p>
 <ul>
 <li><span class="math inline">\(K\)</span> : nombre de classes</li>
-<li><span class="math inline">\(\mathbf{V}\)</span> : poids de la couche de sortie, de dimensions <span class="math inline">\(K \times M_L\)</span></li>
-<li><span class="math inline">\(\mathbf{c}\)</span> : biais de la couche de sortie, de dimensions <span class="math inline">\(K \times 1\)</span></li>
+<li><span class="math inline">\(\mathbf{W}^{[L+1]}\)</span> : poids de la couche de sortie, de dimensions <span class="math inline">\(K \times M_L\)</span></li>
+<li><span class="math inline">\(\mathbf{b}^{[L+1]}\)</span> : biais de la couche de sortie, de dimensions <span class="math inline">\(K \times 1\)</span></li>
 <li><span class="math inline">\(\mathbf{z}\)</span> : vecteur des scores bruts (<strong>logits</strong>), de dimensions <span class="math inline">\(K \times 1\)</span></li>
 <li><span class="math inline">\(f(\mathbf{x})\)</span> : vecteur des probabilités, de dimensions <span class="math inline">\(K \times 1\)</span>, dont la somme vaut 1</li>
 </ul>
 </div>
 </div>
-<p>Par rapport à la régression, <span class="math inline">\(\mathbf{V}\)</span> passe de 1 à <span class="math inline">\(K\)</span> lignes, et le biais <span class="math inline">\(c\)</span>, qui était un simple nombre, devient un vecteur <span class="math inline">\(\mathbf{c}\)</span>.</p>
+<p>Par rapport à la régression, <span class="math inline">\(\mathbf{W}^{[L+1]}\)</span> passe de 1 à <span class="math inline">\(K\)</span> lignes, et le biais <span class="math inline">\(b^{[L+1]}\)</span>, qui était un simple nombre, devient un vecteur <span class="math inline">\(\mathbf{b}^{[L+1]}\)</span>.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-classification-network" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -572,7 +619,7 @@ f(\mathbf{x}) &amp;= \mathrm{softmax}(\mathbf{z})
   a3 --&gt; b3
   a3 --&gt; b4
 
-  %% V : links 18-29
+  %% output layer : links 18-29
   b1 --&gt; z1
   b1 --&gt; z2
   b1 --&gt; z3
@@ -626,7 +673,7 @@ Figure&nbsp;2: Le même réseau que pour la régression, avec 2 couches cachées
 </div>
 </div>
 </div>
-<p>Le softmax n’a <strong>aucun paramètre</strong> : il ne fait que normaliser les scores. Les seuls paramètres ajoutés par rapport à la régression sont les lignes supplémentaires de <span class="math inline">\(\mathbf{V}\)</span> et de <span class="math inline">\(\mathbf{c}\)</span>.</p>
+<p>Le softmax n’a <strong>aucun paramètre</strong> : il ne fait que normaliser les scores. Les seuls paramètres ajoutés par rapport à la régression sont les lignes supplémentaires de <span class="math inline">\(\mathbf{W}^{[L+1]}\)</span> et de <span class="math inline">\(\mathbf{b}^{[L+1]}\)</span>.</p>
 <p>Remarquez que les trois flèches <strong>entrent</strong> dans le softmax avant d’en ressortir : contrairement à <span class="math inline">\(\sigma\)</span>, il ne s’applique pas cellule par cellule. Chaque probabilité dépend de <strong>tous</strong> les scores : c’est ce qui permet à leur somme de valoir exactement 1.</p>
 </section>
 <section id="fonctions-de-perte-et-de-coût" class="level2" data-number="1.4">
@@ -2238,6 +2285,9 @@ Important
 </ul>
 </div>
 </div>
+<!-- TODO
+https://inventivehq.com/tools/developer/neural-network-playground?utm_source=chatgpt.com
+-->
 
 
 </section>
