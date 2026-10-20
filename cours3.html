@@ -8,7 +8,7 @@
 
 <meta name="author" content="Mikaël Valot">
 
-<title>CM3 - Introduction aux LLMs – 2627 XTI306 Introduction à l’ingénierie IA</title>
+<title>CM3 - Utiliser un LLM – 2627 XTI306 Introduction à l’ingénierie IA</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -122,7 +122,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">CM3 - Introduction aux LLMs</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">CM3 - Utiliser un LLM</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
@@ -286,54 +286,37 @@ window.Quarto = {
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul class="collapse">
-  <li><a href="#classification" id="toc-classification" class="nav-link active" data-scroll-target="#classification"><span class="header-section-number">1</span> Classification</a>
+  <li><a href="#activité-pièges" id="toc-activité-pièges" class="nav-link active" data-scroll-target="#activité-pièges"><span class="header-section-number">0.1</span> Activité : pièges</a></li>
+  <li><a href="#un-llm-prédit-le-token-suivant" id="toc-un-llm-prédit-le-token-suivant" class="nav-link" data-scroll-target="#un-llm-prédit-le-token-suivant"><span class="header-section-number">1</span> Un LLM prédit le token suivant</a>
   <ul class="collapse">
-  <li><a href="#sortie" id="toc-sortie" class="nav-link" data-scroll-target="#sortie"><span class="header-section-number">1.1</span> Sortie</a></li>
-  <li><a href="#couche-de-sortie" id="toc-couche-de-sortie" class="nav-link" data-scroll-target="#couche-de-sortie"><span class="header-section-number">1.2</span> Couche de sortie</a></li>
-  <li><a href="#modèle" id="toc-modèle" class="nav-link" data-scroll-target="#modèle"><span class="header-section-number">1.3</span> Modèle</a></li>
-  <li><a href="#fonctions-de-perte-et-de-coût" id="toc-fonctions-de-perte-et-de-coût" class="nav-link" data-scroll-target="#fonctions-de-perte-et-de-coût"><span class="header-section-number">1.4</span> Fonctions de perte et de coût</a></li>
+  <li><a href="#classification-donner-une-probabilité-par-classe" id="toc-classification-donner-une-probabilité-par-classe" class="nav-link" data-scroll-target="#classification-donner-une-probabilité-par-classe"><span class="header-section-number">1.1</span> Classification : donner une probabilité par classe</a></li>
+  <li><a href="#activité-reconnaître-des-chiffres-manuscrits" id="toc-activité-reconnaître-des-chiffres-manuscrits" class="nav-link" data-scroll-target="#activité-reconnaître-des-chiffres-manuscrits"><span class="header-section-number">1.2</span> Activité : reconnaître des chiffres manuscrits</a></li>
+  <li><a href="#un-llm-est-un-classifieur-de-tokens" id="toc-un-llm-est-un-classifieur-de-tokens" class="nav-link" data-scroll-target="#un-llm-est-un-classifieur-de-tokens"><span class="header-section-number">1.3</span> Un LLM est un classifieur de tokens</a></li>
+  <li><a href="#échantillonnage-sampling" id="toc-échantillonnage-sampling" class="nav-link" data-scroll-target="#échantillonnage-sampling"><span class="header-section-number">1.4</span> Échantillonnage (sampling)</a></li>
+  <li><a href="#activité-la-température" id="toc-activité-la-température" class="nav-link" data-scroll-target="#activité-la-température"><span class="header-section-number">1.5</span> Activité : la température</a></li>
+  <li><a href="#ce-que-ça-change-pour-vous" id="toc-ce-que-ça-change-pour-vous" class="nav-link" data-scroll-target="#ce-que-ça-change-pour-vous"><span class="header-section-number">1.6</span> Ce que ça change pour vous</a></li>
   </ul></li>
-  <li><a href="#réseaux-de-neurones---pour-aller-plus-loin" id="toc-réseaux-de-neurones---pour-aller-plus-loin" class="nav-link" data-scroll-target="#réseaux-de-neurones---pour-aller-plus-loin"><span class="header-section-number">2</span> Réseaux de neurones - pour aller plus loin</a>
+  <li><a href="#tokens" id="toc-tokens" class="nav-link" data-scroll-target="#tokens"><span class="header-section-number">2</span> Tokens</a>
   <ul class="collapse">
-  <li><a href="#mini-batch" id="toc-mini-batch" class="nav-link" data-scroll-target="#mini-batch"><span class="header-section-number">2.1</span> Mini-batch</a></li>
-  <li><a href="#techniques-pour-éviter-le-surapprentissage" id="toc-techniques-pour-éviter-le-surapprentissage" class="nav-link" data-scroll-target="#techniques-pour-éviter-le-surapprentissage"><span class="header-section-number">2.2</span> Techniques pour éviter le surapprentissage</a></li>
-  <li><a href="#théorème-dapproximation-universelle" id="toc-théorème-dapproximation-universelle" class="nav-link" data-scroll-target="#théorème-dapproximation-universelle"><span class="header-section-number">2.3</span> Théorème d’approximation universelle</a></li>
-  <li><a href="#autres-types-de-réseaux-de-neurones" id="toc-autres-types-de-réseaux-de-neurones" class="nav-link" data-scroll-target="#autres-types-de-réseaux-de-neurones"><span class="header-section-number">2.4</span> Autres types de réseaux de neurones</a></li>
+  <li><a href="#exemple" id="toc-exemple" class="nav-link" data-scroll-target="#exemple"><span class="header-section-number">2.1</span> Exemple</a></li>
+  <li><a href="#activité-openai-tokenizer" id="toc-activité-openai-tokenizer" class="nav-link" data-scroll-target="#activité-openai-tokenizer"><span class="header-section-number">2.2</span> Activité : OpenAI tokenizer</a></li>
+  <li><a href="#ce-que-ça-change-pour-vous-1" id="toc-ce-que-ça-change-pour-vous-1" class="nav-link" data-scroll-target="#ce-que-ça-change-pour-vous-1"><span class="header-section-number">2.3</span> Ce que ça change pour vous</a></li>
   </ul></li>
-  <li><a href="#les-llm" id="toc-les-llm" class="nav-link" data-scroll-target="#les-llm"><span class="header-section-number">3</span> Les LLM</a>
+  <li><a href="#embeddings" id="toc-embeddings" class="nav-link" data-scroll-target="#embeddings"><span class="header-section-number">3</span> Embeddings</a>
   <ul class="collapse">
-  <li><a href="#vue-globale" id="toc-vue-globale" class="nav-link" data-scroll-target="#vue-globale"><span class="header-section-number">3.1</span> Vue globale</a></li>
+  <li><a href="#matrice-dembedding" id="toc-matrice-dembedding" class="nav-link" data-scroll-target="#matrice-dembedding"><span class="header-section-number">3.1</span> Matrice d’embedding</a></li>
+  <li><a href="#similarité-sémantique" id="toc-similarité-sémantique" class="nav-link" data-scroll-target="#similarité-sémantique"><span class="header-section-number">3.2</span> Similarité sémantique</a></li>
+  <li><a href="#activité-word-embeddings" id="toc-activité-word-embeddings" class="nav-link" data-scroll-target="#activité-word-embeddings"><span class="header-section-number">3.3</span> Activité : word embeddings</a></li>
+  <li><a href="#ce-que-ça-change-pour-vous-2" id="toc-ce-que-ça-change-pour-vous-2" class="nav-link" data-scroll-target="#ce-que-ça-change-pour-vous-2"><span class="header-section-number">3.4</span> Ce que ça change pour vous</a></li>
   </ul></li>
-  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization"><span class="header-section-number">4</span> Tokenization</a>
+  <li><a href="#le-contexte" id="toc-le-contexte" class="nav-link" data-scroll-target="#le-contexte"><span class="header-section-number">4</span> Le contexte</a>
   <ul class="collapse">
-  <li><a href="#lalgorithme-byte-pair-encoding" id="toc-lalgorithme-byte-pair-encoding" class="nav-link" data-scroll-target="#lalgorithme-byte-pair-encoding"><span class="header-section-number">4.1</span> L’algorithme Byte-Pair encoding</a></li>
-  <li><a href="#transformation-en-liste-de-tokenid" id="toc-transformation-en-liste-de-tokenid" class="nav-link" data-scroll-target="#transformation-en-liste-de-tokenid"><span class="header-section-number">4.2</span> Transformation en liste de tokenID</a></li>
-  <li><a href="#activité-openai-tokenizer" id="toc-activité-openai-tokenizer" class="nav-link" data-scroll-target="#activité-openai-tokenizer"><span class="header-section-number">4.3</span> Activité : OpenAI tokenizer</a></li>
+  <li><a href="#lattention" id="toc-lattention" class="nav-link" data-scroll-target="#lattention"><span class="header-section-number">4.1</span> L’attention</a></li>
+  <li><a href="#la-fenêtre-de-contexte-context-window" id="toc-la-fenêtre-de-contexte-context-window" class="nav-link" data-scroll-target="#la-fenêtre-de-contexte-context-window"><span class="header-section-number">4.2</span> La fenêtre de contexte (context window)</a></li>
+  <li><a href="#ce-que-ça-change-pour-vous-3" id="toc-ce-que-ça-change-pour-vous-3" class="nav-link" data-scroll-target="#ce-que-ça-change-pour-vous-3"><span class="header-section-number">4.3</span> Ce que ça change pour vous</a></li>
   </ul></li>
-  <li><a href="#embeddings" id="toc-embeddings" class="nav-link" data-scroll-target="#embeddings"><span class="header-section-number">5</span> Embeddings</a>
-  <ul class="collapse">
-  <li><a href="#one-hot-vectors" id="toc-one-hot-vectors" class="nav-link" data-scroll-target="#one-hot-vectors"><span class="header-section-number">5.1</span> One-hot vectors</a></li>
-  <li><a href="#matrice-dembedding" id="toc-matrice-dembedding" class="nav-link" data-scroll-target="#matrice-dembedding"><span class="header-section-number">5.2</span> Matrice d’embedding</a></li>
-  <li><a href="#exemple" id="toc-exemple" class="nav-link" data-scroll-target="#exemple"><span class="header-section-number">5.3</span> Exemple</a></li>
-  <li><a href="#similarité-sémantique" id="toc-similarité-sémantique" class="nav-link" data-scroll-target="#similarité-sémantique"><span class="header-section-number">5.4</span> Similarité sémantique</a></li>
-  <li><a href="#activité" id="toc-activité" class="nav-link" data-scroll-target="#activité"><span class="header-section-number">5.5</span> Activité</a></li>
-  <li><a href="#autres-usages" id="toc-autres-usages" class="nav-link" data-scroll-target="#autres-usages"><span class="header-section-number">5.6</span> Autres usages</a></li>
-  </ul></li>
-  <li><a href="#décodeurs" id="toc-décodeurs" class="nav-link" data-scroll-target="#décodeurs"><span class="header-section-number">6</span> Décodeurs</a>
-  <ul class="collapse">
-  <li><a href="#la-pile-de-décodeurs" id="toc-la-pile-de-décodeurs" class="nav-link" data-scroll-target="#la-pile-de-décodeurs"><span class="header-section-number">6.1</span> La pile de décodeurs</a></li>
-  <li><a href="#zoom-sur-un-bloc-décodeur" id="toc-zoom-sur-un-bloc-décodeur" class="nav-link" data-scroll-target="#zoom-sur-un-bloc-décodeur"><span class="header-section-number">6.2</span> Zoom sur un bloc décodeur</a></li>
-  </ul></li>
-  <li><a href="#attention" id="toc-attention" class="nav-link" data-scroll-target="#attention"><span class="header-section-number">7</span> Attention</a>
-  <ul class="collapse">
-  <li><a href="#zoom-sur-une-attention-head" id="toc-zoom-sur-une-attention-head" class="nav-link" data-scroll-target="#zoom-sur-une-attention-head"><span class="header-section-number">7.1</span> Zoom sur une attention head</a></li>
-  <li><a href="#matrice-dattention" id="toc-matrice-dattention" class="nav-link" data-scroll-target="#matrice-dattention"><span class="header-section-number">7.2</span> Matrice d’attention</a></li>
-  <li><a href="#query-key" id="toc-query-key" class="nav-link" data-scroll-target="#query-key"><span class="header-section-number">7.3</span> Query, Key</a></li>
-  <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value"><span class="header-section-number">7.4</span> Value</a></li>
-  <li><a href="#rope" id="toc-rope" class="nav-link" data-scroll-target="#rope"><span class="header-section-number">7.5</span> RoPE</a></li>
-  <li><a href="#activité-1" id="toc-activité-1" class="nav-link" data-scroll-target="#activité-1"><span class="header-section-number">7.6</span> Activité</a></li>
-  <li><a href="#points-à-retenir" id="toc-points-à-retenir" class="nav-link" data-scroll-target="#points-à-retenir"><span class="header-section-number">7.7</span> Points à retenir</a></li>
-  </ul></li>
+  <li><a href="#tp3-utiliser-un-llm" id="toc-tp3-utiliser-un-llm" class="nav-link" data-scroll-target="#tp3-utiliser-un-llm"><span class="header-section-number">5</span> TP3 — Utiliser un LLM</a></li>
+  <li><a href="#points-à-retenir" id="toc-points-à-retenir" class="nav-link" data-scroll-target="#points-à-retenir"><span class="header-section-number">6</span> Points à retenir</a></li>
   </ul>
 </nav>
     </div>
@@ -342,7 +325,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">CM3 - Introduction aux LLMs</h1>
+<h1 class="title">CM3 - Utiliser un LLM</h1>
 </div>
 
 
@@ -365,55 +348,43 @@ window.Quarto = {
 </header>
 
 
-<section id="classification" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Classification</h1>
-<p>Jusqu’ici, nous avons vu des modèles de <strong>régression</strong> : Leur tâche est de prédire une sortie <span class="math inline">\(f(x)\)</span> qui est un <strong>nombre réel</strong>, comme le prix d’un appartement.</p>
-<p>Pour d’autres types de problèmes, nous aurons besoin que la sortie soit une catégorie, par exemple :</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 38%">
-<col style="width: 23%">
-<col style="width: 38%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Problème</th>
-<th>Entrée <span class="math inline">\(x\)</span></th>
-<th>Sortie <span class="math inline">\(\hat{y} = f(x)\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Reconnaître un spam</td>
-<td>liste de mots</td>
-<td>spam / non spam</td>
-</tr>
-<tr class="even">
-<td>Diagnostiquer une tumeur</td>
-<td>mesures médicales</td>
-<td>bénigne / maligne</td>
-</tr>
-<tr class="odd">
-<td>Reconnaître un chiffre manuscrit</td>
-<td>pixels d’une image</td>
-<td>un chiffre de 0 à 9</td>
-</tr>
-<tr class="even">
-<td>Identifier la langue d’un texte</td>
-<td>le texte</td>
-<td>français, anglais, espagnol, …</td>
-</tr>
-<tr class="odd">
-<td>Prédire le mot suivant (LLM)</td>
-<td>les mots précédents</td>
-<td>un mot parmi tout le vocabulaire</td>
-</tr>
-</tbody>
-</table>
-<p>Les deux premiers exemples n’ont que <strong>deux</strong> catégories possibles : c’est une <strong>classification binaire (binary classification)</strong>. Les suivants en ont plusieurs : on parle de <strong>classification multi-classe (multiclass classification)</strong>.</p>
-<section id="sortie" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="sortie"><span class="header-section-number">1.1</span> Sortie</h2>
-<p>Pour pouvoir représenter plusieurs classes, notre sortie <span class="math inline">\(f(x)\)</span> devient un vecteur. Chaque élément du vecteur correspond à une classe. Il contient un nombre de 0 à 1 qui représente la <strong>probabilité</strong> que cette classe soit la bonne. La somme de tous les éléments vaut 1.</p>
+<p>Ce cours présente les notions qui changent quelque chose pour <strong>utiliser</strong> un grand modèle de langage (Large Language Model, LLM) : ce qu’il prédit, ce qu’il lit, comment il représente le sens, et ce qu’il peut garder en tête.</p>
+<p>Ce qui se passe à l’intérieur du modèle est détaillé dans l’<a href="./cours3_annexe.html">annexe facultative</a>.</p>
+<section id="activité-pièges" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="activité-pièges"><span class="header-section-number">0.1</span> Activité : pièges</h2>
+<p>Posez ces questions à un chatbot (ChatGPT, Claude, Le Chat, …). Notez ses réponses : nous expliquerons ses erreurs au fil du cours.</p>
+<ol type="1">
+<li>Combien de fois la lettre « r » apparaît-elle dans « arrière-grand-mère » ?</li>
+<li>Combien font 4 739 × 8 216 ? Ne le laissez pas utiliser d’outil de calcul.</li>
+<li>Donnez-moi trois articles scientifiques sur la tokenization, avec leurs auteurs, leur année et leur lien.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Les réponses
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>5 fois.</li>
+<li>38 935 624.</li>
+<li>Vérifiez que les articles existent vraiment, et que les liens mènent au bon article.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="un-llm-prédit-le-token-suivant" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Un LLM prédit le token suivant</h1>
+<section id="classification-donner-une-probabilité-par-classe" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="classification-donner-une-probabilité-par-classe"><span class="header-section-number">1.1</span> Classification : donner une probabilité par classe</h2>
+<p>Au CM2, nos modèles faisaient de la <strong>régression</strong> : ils prédisaient un nombre, comme le prix d’un appartement. Pour d’autres problèmes, la sortie est une <strong>catégorie</strong> (une <strong>classe</strong>) : spam ou non spam, le chiffre écrit sur une image, la langue d’un texte, … On parle de <strong>classification</strong>.</p>
+<p>Le modèle donne alors <strong>une probabilité par classe</strong>. Toutes les probabilités sont entre 0 et 1, et leur somme vaut 1. La classe prédite est celle qui a la plus grande probabilité.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-classification-output" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -464,402 +435,21 @@ Figure&nbsp;1: Identifier la langue d’un texte : la couche de sortie a un neur
 </div>
 </div>
 </div>
-<p>L’ordre des classes est fixé une fois pour toutes : c’est nous qui décidons que <span class="math inline">\(y_1\)</span> est le français, <span class="math inline">\(y_2\)</span> l’anglais, et ainsi de suite.</p>
-<p><span class="math display">\[
-\mathbf{y} =
-\begin{pmatrix} y_1 \\ y_2 \\ y_3 \end{pmatrix}
-=
-\begin{pmatrix} 0{,}82 \\ 0{,}15 \\ 0{,}03 \end{pmatrix}
-\begin{matrix}
-\leftarrow \text{français} \\
-\leftarrow \text{anglais} \\
-\leftarrow \text{espagnol}
-\end{matrix}
-\]</span></p>
+<p>La dernière couche du réseau a <strong>un neurone par classe</strong>. Une fonction appelée <strong>softmax</strong> transforme les sorties de ces neurones en probabilités.</p>
 </section>
-<section id="couche-de-sortie" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="couche-de-sortie"><span class="header-section-number">1.2</span> Couche de sortie</h2>
-<p>Afin d’obtenir un vecteur de probabilités entre 0 et 1, nous devons modifier notre réseau de neurones :</p>
-<ul>
-<li>la sortie devient un vecteur à <span class="math inline">\(K\)</span> dimensions, où <span class="math inline">\(K\)</span> est le <strong>nombre de classes</strong> : un neurone de sortie par classe</li>
-<li>on applique une fonction d’activation <strong>softmax</strong>, qui va faire en sorte que chaque élément du vecteur est compris entre 0 et 1, et que leur somme vale 1.</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>La formule du softmax (facultatif)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\mathrm{softmax}(\mathbf{z})_k = \frac{e^{z_k}}{\sum_{j=1}^{K} e^{z_j}}
-\]</span></p>
-<p>L’exponentielle rend chaque valeur <strong>positive</strong>, quel que soit le signe du score <span class="math inline">\(z_k\)</span>. La division par la somme de toutes les exponentielles garantit que le total vaut <strong>1</strong>.</p>
-<p>Avec trois scores <span class="math inline">\(\mathbf{z} = (2{,}0 \;;\; 0{,}3 \;;\; -1{,}2)\)</span> :</p>
-<p><span class="math display">\[
-e^{2{,}0} = 7{,}39
-\qquad
-e^{0{,}3} = 1{,}35
-\qquad
-e^{-1{,}2} = 0{,}30
-\qquad
-\text{somme} = 9{,}04
-\]</span></p>
-<p><span class="math display">\[
-\mathrm{softmax}(\mathbf{z}) =
-\left( \frac{7{,}39}{9{,}04} \;;\; \frac{1{,}35}{9{,}04} \;;\; \frac{0{,}30}{9{,}04} \right)
-= (0{,}82 \;;\; 0{,}15 \;;\; 0{,}03)
-\]</span></p>
-<p>Le score le plus grand ressort largement en tête : l’exponentielle <strong>amplifie</strong> les écarts.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="modèle" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="modèle"><span class="header-section-number">1.3</span> Modèle</h2>
-<p>Notre MLP devient :</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\begin{aligned}
-\mathbf{h}^{[1]} &amp;= \sigma(\mathbf{W}^{[1]} \mathbf{x} + \mathbf{b}^{[1]}) \\
-&amp;\;\;\vdots \\
-\mathbf{h}^{[L]} &amp;= \sigma(\mathbf{W}^{[L]} \mathbf{h}^{[L-1]} + \mathbf{b}^{[L]}) \\
-\mathbf{z} &amp;= \mathbf{W}^{[L+1]} \mathbf{h}^{[L]} + \mathbf{b}^{[L+1]} \\
-f(\mathbf{x}) &amp;= \mathrm{softmax}(\mathbf{z})
-\end{aligned}
-\]</span></p>
-<p>Couches cachées : <strong>inchangées</strong></p>
-<ul>
-<li><span class="math inline">\(\mathbf{W}^{[\ell]}\)</span> : poids de la couche <span class="math inline">\(\ell\)</span>, de dimensions <span class="math inline">\(M_\ell \times M_{\ell-1}\)</span></li>
-<li><span class="math inline">\(\mathbf{b}^{[\ell]}\)</span> : biais de la couche <span class="math inline">\(\ell\)</span>, de dimensions <span class="math inline">\(M_\ell \times 1\)</span></li>
-<li><span class="math inline">\(\mathbf{h}^{[\ell]}\)</span> : vecteur résultat de la couche <span class="math inline">\(\ell\)</span>, de dimensions <span class="math inline">\(M_\ell \times 1\)</span></li>
-</ul>
-<p>Couche de sortie : <strong>modifiée</strong></p>
-<ul>
-<li><span class="math inline">\(K\)</span> : nombre de classes</li>
-<li><span class="math inline">\(\mathbf{W}^{[L+1]}\)</span> : poids de la couche de sortie, de dimensions <span class="math inline">\(K \times M_L\)</span></li>
-<li><span class="math inline">\(\mathbf{b}^{[L+1]}\)</span> : biais de la couche de sortie, de dimensions <span class="math inline">\(K \times 1\)</span></li>
-<li><span class="math inline">\(\mathbf{z}\)</span> : vecteur des scores bruts (<strong>logits</strong>), de dimensions <span class="math inline">\(K \times 1\)</span></li>
-<li><span class="math inline">\(f(\mathbf{x})\)</span> : vecteur des probabilités, de dimensions <span class="math inline">\(K \times 1\)</span>, dont la somme vaut 1</li>
-</ul>
-</div>
-</div>
-<p>Par rapport à la régression, <span class="math inline">\(\mathbf{W}^{[L+1]}\)</span> passe de 1 à <span class="math inline">\(K\)</span> lignes, et le biais <span class="math inline">\(b^{[L+1]}\)</span>, qui était un simple nombre, devient un vecteur <span class="math inline">\(\mathbf{b}^{[L+1]}\)</span>.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div id="fig-classification-network" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-classification-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div>
-<pre class="mermaid mermaid-js" data-label="fig-classification-network">flowchart LR
-  subgraph inputs ["entrée&lt;br/&gt;D = 2"]
-    direction TB
-    x1(["x&lt;sub&gt;1&lt;/sub&gt;"])
-    x2(["x&lt;sub&gt;2&lt;/sub&gt;"])
-  end
-
-  subgraph hidden1 ["couche cachée 1&lt;br/&gt;M&lt;sub&gt;1&lt;/sub&gt; = 3"]
-    direction TB
-    a1(["h&lt;sup&gt;[1]&lt;/sup&gt;&lt;sub&gt;1&lt;/sub&gt;"])
-    a2(["h&lt;sup&gt;[1]&lt;/sup&gt;&lt;sub&gt;2&lt;/sub&gt;"])
-    a3(["h&lt;sup&gt;[1]&lt;/sup&gt;&lt;sub&gt;3&lt;/sub&gt;"])
-  end
-
-  subgraph hidden2 ["couche cachée 2&lt;br/&gt;M&lt;sub&gt;2&lt;/sub&gt; = 4"]
-    direction TB
-    b1(["h&lt;sup&gt;[2]&lt;/sup&gt;&lt;sub&gt;1&lt;/sub&gt;"])
-    b2(["h&lt;sup&gt;[2]&lt;/sup&gt;&lt;sub&gt;2&lt;/sub&gt;"])
-    b3(["h&lt;sup&gt;[2]&lt;/sup&gt;&lt;sub&gt;3&lt;/sub&gt;"])
-    b4(["h&lt;sup&gt;[2]&lt;/sup&gt;&lt;sub&gt;4&lt;/sub&gt;"])
-  end
-
-  subgraph output ["couche de sortie&lt;br/&gt;K = 3"]
-    direction TB
-    z1(["z&lt;sub&gt;1&lt;/sub&gt;"])
-    z2(["z&lt;sub&gt;2&lt;/sub&gt;"])
-    z3(["z&lt;sub&gt;3&lt;/sub&gt;"])
-  end
-
-  sm["softmax"]
-
-  subgraph probas ["probabilités&lt;br/&gt;somme = 1"]
-    direction TB
-    p1(["f&lt;sub&gt;1&lt;/sub&gt;(x)"])
-    p2(["f&lt;sub&gt;2&lt;/sub&gt;(x)"])
-    p3(["f&lt;sub&gt;3&lt;/sub&gt;(x)"])
-  end
-
-  %% W[1] : links 0-5
-  x1 --&gt; a1
-  x1 --&gt; a2
-  x1 --&gt; a3
-  x2 --&gt; a1
-  x2 --&gt; a2
-  x2 --&gt; a3
-
-  %% W[2] : links 6-17
-  a1 --&gt; b1
-  a1 --&gt; b2
-  a1 --&gt; b3
-  a1 --&gt; b4
-  a2 --&gt; b1
-  a2 --&gt; b2
-  a2 --&gt; b3
-  a2 --&gt; b4
-  a3 --&gt; b1
-  a3 --&gt; b2
-  a3 --&gt; b3
-  a3 --&gt; b4
-
-  %% output layer : links 18-29
-  b1 --&gt; z1
-  b1 --&gt; z2
-  b1 --&gt; z3
-  b2 --&gt; z1
-  b2 --&gt; z2
-  b2 --&gt; z3
-  b3 --&gt; z1
-  b3 --&gt; z2
-  b3 --&gt; z3
-  b4 --&gt; z1
-  b4 --&gt; z2
-  b4 --&gt; z3
-
-  %% softmax : links 30-35
-  z1 --&gt; sm
-  z2 --&gt; sm
-  z3 --&gt; sm
-  sm --&gt; p1
-  sm --&gt; p2
-  sm --&gt; p3
-
-  classDef input fill:#f3f1ec,stroke:#6d6c66,stroke-width:1.5px,color:#2c2c2a;
-  classDef layer1 fill:#fbeae2,stroke:#c4562c,stroke-width:2px,color:#2c2c2a;
-  classDef layer2 fill:#e3edf8,stroke:#2f6fb0,stroke-width:2px,color:#2c2c2a;
-  classDef scores fill:#e7e3f7,stroke:#5b52c4,stroke-width:2px,color:#2c2c2a;
-  classDef proba fill:#e0f0e9,stroke:#12805f,stroke-width:2px,color:#2c2c2a;
-  class x1,x2 input;
-  class a1,a2,a3 layer1;
-  class b1,b2,b3,b4 layer2;
-  class z1,z2,z3 scores;
-  class sm,p1,p2,p3 proba;
-
-  %% One colour per weight matrix; green for the softmax step.
-  linkStyle 0,1,2,3,4,5 stroke:#c4562c,stroke-width:1.5px;
-  linkStyle 6,7,8,9,10,11,12,13,14,15,16,17 stroke:#2f6fb0,stroke-width:1.5px;
-  linkStyle 18,19,20,21,22,23,24,25,26,27,28,29 stroke:#5b52c4,stroke-width:1.5px;
-  linkStyle 30,31,32,33,34,35 stroke:#12805f,stroke-width:2px;
-
-  style probas fill:none,stroke:#d8d6cd,stroke-dasharray:4 4;
-  style inputs fill:none,stroke:#d8d6cd,stroke-dasharray:4 4;
-  style hidden1 fill:none,stroke:#d8d6cd,stroke-dasharray:4 4;
-  style hidden2 fill:none,stroke:#d8d6cd,stroke-dasharray:4 4;
-  style output fill:none,stroke:#d8d6cd,stroke-dasharray:4 4;
-</pre>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-classification-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Le même réseau que pour la régression, avec 2 couches cachées. Seule la fin change : la couche de sortie compte <span class="math inline">\(K = 3\)</span> neurones, un par classe, et le softmax transforme leurs scores en probabilités.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Le softmax n’a <strong>aucun paramètre</strong> : il ne fait que normaliser les scores. Les seuls paramètres ajoutés par rapport à la régression sont les lignes supplémentaires de <span class="math inline">\(\mathbf{W}^{[L+1]}\)</span> et de <span class="math inline">\(\mathbf{b}^{[L+1]}\)</span>.</p>
-<p>Remarquez que les trois flèches <strong>entrent</strong> dans le softmax avant d’en ressortir : contrairement à <span class="math inline">\(\sigma\)</span>, il ne s’applique pas cellule par cellule. Chaque probabilité dépend de <strong>tous</strong> les scores : c’est ce qui permet à leur somme de valoir exactement 1.</p>
-</section>
-<section id="fonctions-de-perte-et-de-coût" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="fonctions-de-perte-et-de-coût"><span class="header-section-number">1.4</span> Fonctions de perte et de coût</h2>
-<p>Pour mesurer la perte sur un exemple du dataset d’entraînement (différence entre ce que le modèle prédit et ce qu’il aurait dû prédire), nous utiliserons l’<strong>entropie croisée (cross-entropy)</strong>. Elle prend en paramètre le vecteur de sortie du modèle <span class="math inline">\(f(\mathbf{x})\)</span> et le vecteur cible <span class="math inline">\(\mathbf{y}\)</span>. Elle renvoie un nombre positif, proche de 0 lorsque <span class="math inline">\(f(\mathbf{x})\)</span> se rapproche de <span class="math inline">\(\mathbf{y}\)</span>.</p>
-<p>La cible <span class="math inline">\(\mathbf{y}\)</span> est elle aussi un vecteur à <span class="math inline">\(K\)</span> éléments : un <strong>1</strong> sur la bonne classe, des <strong>0</strong> partout ailleurs. C’est l’<strong>encodage one-hot (one-hot encoding)</strong>. Pour un texte en anglais, la deuxième classe de notre exemple :</p>
-<p><span class="math display">\[\mathbf{y} = (0 \;;\; 1 \;;\; 0)\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Formules (facultatif)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\mathcal{L}\big(f(\mathbf{x}), \mathbf{y}\big) = - \sum_{k=1}^{K} y_k \log f_k(\mathbf{x})
-\]</span></p>
-<p>Comme <span class="math inline">\(\mathbf{y}\)</span> ne contient qu’un seul 1, tous les termes de la somme s’annulent sauf un :</p>
-<p><span class="math display">\[
-\mathcal{L} = - \log f_c(\mathbf{x})
-\qquad \text{où } c \text{ est la bonne classe}
-\]</span></p>
-<p><strong>Seule compte la probabilité attribuée à la bonne classe.</strong></p>
-<p>La perte porte sur <strong>un</strong> exemple. Le <strong>coût</strong> <span class="math inline">\(J\)</span>, lui, est la moyenne des pertes sur tout le dataset, comme le MSE au CM1 :</p>
-<p><span class="math display">\[J = \frac{1}{N} \sum_{i=1}^{N} \mathcal{L}\big(f(\mathbf{x}^{(i)}), \mathbf{y}^{(i)}\big)\]</span></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Avec des nombres
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Prenons un dataset de <span class="math inline">\(N = 3\)</span> textes. Pour chacun, le modèle produit trois probabilités (français, anglais, espagnol) :</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Exemple</th>
-<th>Cible <span class="math inline">\(\mathbf{y}\)</span></th>
-<th>Prédiction <span class="math inline">\(f(\mathbf{x})\)</span></th>
-<th>Probabilité de la bonne classe</th>
-<th>Perte <span class="math inline">\(-\log f_c(\mathbf{x})\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>français <span class="math inline">\((1 ; 0 ; 0)\)</span></td>
-<td><span class="math inline">\((0{,}82 ; 0{,}15 ; 0{,}03)\)</span></td>
-<td>0,82</td>
-<td>0,20</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>anglais <span class="math inline">\((0 ; 1 ; 0)\)</span></td>
-<td><span class="math inline">\((0{,}10 ; 0{,}70 ; 0{,}20)\)</span></td>
-<td>0,70</td>
-<td>0,36</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>espagnol <span class="math inline">\((0 ; 0 ; 1)\)</span></td>
-<td><span class="math inline">\((0{,}50 ; 0{,}45 ; 0{,}05)\)</span></td>
-<td>0,05</td>
-<td>3,00</td>
-</tr>
-</tbody>
-</table>
-<p>Dans chaque ligne, seule la colonne « probabilité de la bonne classe » sert au calcul : les deux autres probabilités n’apparaissent nulle part, puisque leur <span class="math inline">\(y_k\)</span> vaut 0.</p>
-<p>Le coût est la moyenne des trois pertes :</p>
-<p><span class="math display">\[J = \frac{0{,}20 + 0{,}36 + 3{,}00}{3} \approx 1{,}19\]</span></p>
-<p>Le troisième exemple pèse à lui seul plus que les deux autres réunis : le modèle a prédit « français » alors que le texte était en espagnol. C’est le principe de l’entropie croisée : <strong>se tromper avec assurance coûte très cher</strong>. Si la bonne classe n’avait reçu que 0,001, sa perte serait montée à 6,9.</p>
-<p>(Le logarithme est ici le logarithme népérien, celui de la touche <code>ln</code>.)</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="réseaux-de-neurones---pour-aller-plus-loin" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Réseaux de neurones - pour aller plus loin</h1>
-<section id="mini-batch" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="mini-batch"><span class="header-section-number">2.1</span> Mini-batch</h2>
-<p>Jusqu’ici, chaque mise à jour des paramètres utilisait <strong>tous</strong> les exemples du dataset. Dès que celui-ci devient gros (plusieurs millions d’exemples), cela pose des problèmes :</p>
-<ul>
-<li>il ne tient plus forcément en mémoire,</li>
-<li>on ne progresse que d’un seul pas de descente de gradient pour un parcours complet des données</li>
-<li>c’est très lent.</li>
-</ul>
-<p>On découpe donc le dataset en <strong>mini-lots (mini-batchs)</strong> de taille <span class="math inline">\(B\)</span> fixe (typiquement 32, 64, 256 ou 512 exemples).</p>
-<p>À chaque <strong>epoch</strong> :</p>
+<section id="activité-reconnaître-des-chiffres-manuscrits" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="activité-reconnaître-des-chiffres-manuscrits"><span class="header-section-number">1.2</span> Activité : reconnaître des chiffres manuscrits</h2>
+<p><a href="https://inventivehq.com/tools/developer/neural-network-playground" target="_blank">Ouvrir le Neural Network Playground</a>, et choisissez le dataset <strong>handwritten digits</strong>.</p>
+<p>Le modèle doit reconnaître un chiffre manuscrit à partir des pixels de son image : c’est une classification à <strong>10 classes</strong>, de 0 à 9.</p>
 <ol type="1">
-<li>on mélange le dataset au hasard, et on le découpe en mini-batchs ;</li>
-<li><strong>pour chaque mini-batch</strong> :
-<ol type="a">
-<li>passe avant sur les <span class="math inline">\(B\)</span> exemples du mini-batch</li>
-<li>calcul du coût <span class="math inline">\(J\)</span> sur ces <span class="math inline">\(B\)</span> exemples</li>
-<li>passe arrière : gradients</li>
-<li>mise à jour des <strong>paramètres</strong></li>
-</ol></li>
+<li>Avant de lancer l’entraînement : combien de neurones doit avoir la couche de sortie ? Que représente chacun d’eux ?</li>
+<li>Lancez l’entraînement, puis observez les probabilités données pour quelques chiffres. Le modèle hésite-t-il parfois entre deux chiffres ? Lesquels ?</li>
 </ol>
-<p>Une epoch reste donc bien un parcours complet du dataset, mais elle effectue maintenant <span class="math inline">\(N/B\)</span> mises à jour au lieu d’une seule.</p>
-<p>Le gradient calculé sur un mini-batch n’est qu’une <strong>approximation</strong> du gradient calculé sur tout le dataset. C’est un avantage autant qu’un défaut : ce bruit aide à s’échapper des minima locaux.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Astuce
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La <strong>taille de batch</strong> <span class="math inline">\(B\)</span> est un hyperparamètre de plus.</p>
-<ul>
-<li>Petit <span class="math inline">\(B\)</span> : des mises à jour nombreuses mais bruitées.</li>
-<li>Grand <span class="math inline">\(B\)</span> : des gradients précis, mais peu de mises à jour et beaucoup de mémoire.</li>
-</ul>
-</div>
-</div>
 </section>
-<section id="techniques-pour-éviter-le-surapprentissage" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="techniques-pour-éviter-le-surapprentissage"><span class="header-section-number">2.2</span> Techniques pour éviter le surapprentissage</h2>
-<section id="régularisation" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="régularisation"><span class="header-section-number">2.2.1</span> Régularisation</h3>
-<p>Pour éviter le <strong>surapprentissage (overfitting)</strong>, on peut utiliser des techniques de <strong>régularisation (regularization)</strong>.</p>
-<ul>
-<li><strong>L1 et L2</strong> ajoutent des termes de pénalité à la fonction de coût.
-<ul>
-<li>cela limite le nombre de paramètres du modèle et encourage des modèles plus simples</li>
-</ul></li>
-<li><strong>Dropout</strong> désactive certains poids aléatoirement durant les étapes d’entraînement. Cela encourage le réseau à trouver d’autres chemins, ce qui réduit sa dépendance à certaines caractéristiques.</li>
-</ul>
-</section>
-<section id="early-stopping" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="early-stopping"><span class="header-section-number">2.2.2</span> Early stopping</h3>
-<p>Nous avons vu au TP2 comment arrêter l’entraînement lorsque que le coût du dataset de validation augmente. On peut ajouter temps de <strong>patience</strong> pour être sûr que le coût continue bien à augmenter. Il peut parfois augmenter pendant quelques itérations puis redescendre.</p>
-</section>
-<section id="plus-dexemples" class="level3" data-number="2.2.3">
-<h3 data-number="2.2.3" class="anchored" data-anchor-id="plus-dexemples"><span class="header-section-number">2.2.3</span> Plus d’exemples</h3>
-<p>Lorsque le dataset augmente, un ŕéseau sera moins enclin à sur apprendre, car il devrait “apprendre” par cœur trop d’exemples.</p>
-</section>
-</section>
-<section id="théorème-dapproximation-universelle" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="théorème-dapproximation-universelle"><span class="header-section-number">2.3</span> Théorème d’approximation universelle</h2>
-<p>Nous avons constaté de manière expérimentale que nous pouvions approximer un réseau de neurones à une courbe. Lorsque la courbe devient plus “tordue”, il suffit d’ajouter des neurones pour ajouter des “plis” à notre modèle.</p>
-<p>Le <a href="https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27approximation_universelle">théorème d’approximation universelle</a> a prouvé formellement qu’un perceptron multi-couches pouvait approximer n’importe quelle fonction.</p>
-</section>
-<section id="autres-types-de-réseaux-de-neurones" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="autres-types-de-réseaux-de-neurones"><span class="header-section-number">2.4</span> Autres types de réseaux de neurones</h2>
-<ul>
-<li>Les <strong>CNN (Convolutional Neural Network)</strong> introduisent des couches de “convolution”. A la différence des couches d’un MLP, ces couches ne sont pas complètement connectées et permettent de traiter efficacement des images ou du son.</li>
-<li>Les <strong>RNN (Recurrent Neural Network)</strong> introduisent une boucle dans leurs connections. Cela permet à une information d’être propagée d’une séquence à une autre et de simuler une sorte de mémoire. Ils sont bien adaptés à l’analyse de séries de données, au traitement de langage et à d’autres problèmes séquentiels.</li>
-</ul>
-</section>
-</section>
-<section id="les-llm" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Les LLM</h1>
-<section id="vue-globale" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="vue-globale"><span class="header-section-number">3.1</span> Vue globale</h2>
-<p>Un modèle de langage est un modèle qui prend en entrée un texte, et qui prédit le <strong>token</strong> suivant. Il assigne une probabilité à chaque token possible avec une probabilité associée.</p>
-<p>Un grand modèle de langage (<strong>Large Language Model - LLM</strong>) est un modèle de langage ayant beaucoup (plusieurs milliards) de paramètres.</p>
+<section id="un-llm-est-un-classifieur-de-tokens" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="un-llm-est-un-classifieur-de-tokens"><span class="header-section-number">1.3</span> Un LLM est un classifieur de tokens</h2>
+<p>Un <strong>modèle de langage</strong> prend en entrée un texte, et prédit le <strong>token</strong> suivant (un morceau de mot, voir plus bas). C’est un classifieur : il y a une classe par token du <strong>vocabulaire</strong>, et il donne une probabilité à chacun.</p>
+<p>Un <strong>grand</strong> modèle de langage est un modèle de langage qui a beaucoup de paramètres : plusieurs milliards.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-llm-next-word" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -908,18 +498,18 @@ Astuce
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-llm-next-word-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Un LLM est un classifieur dont les classes sont tous les tokens du vocabulaire. Le token prédit est ajouté à la séquence d’entrée, et le modèle recommence : c’est ainsi qu’il génère un texte complet.
+Figure&nbsp;2: Un LLM est un classifieur dont les classes sont tous les tokens du vocabulaire. Le token prédit est ajouté à la séquence d’entrée, et le modèle recommence : c’est ainsi qu’il génère un texte complet.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Si l’on ouvre la boîte “LLM”, nous avons les composants principaux suivants :</p>
+<p>Si l’on ouvre la boîte « LLM », on trouve les étapes suivantes :</p>
 <ol type="1">
-<li>le texte est découpé en <strong>tokens</strong>,</li>
-<li>chaque token est transformé en une représentation vectorielle. <strong>(token embedding)</strong>,</li>
-<li>ces vecteurs traversent une pile de <strong>décodeurs (decoders)</strong>. Ces décodeurs utilisent des réseaux de neurones MLP.</li>
-<li>Le <strong>softmax</strong> vu ci-dessus transforme les scores finaux (<strong>logits</strong>) en probabilités.</li>
+<li>le texte est découpé en <strong>tokens</strong> ;</li>
+<li>chaque token est transformé en un vecteur de nombres, son <strong>embedding</strong> ;</li>
+<li>ces vecteurs traversent un très grand réseau de neurones, une pile de <strong>décodeurs (decoders)</strong>, détaillée dans l’<a href="./cours3_annexe.html#decoders">annexe</a> ;</li>
+<li>le <strong>softmax</strong> transforme les scores finaux (<strong>logits</strong>) en probabilités.</li>
 </ol>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -947,7 +537,7 @@ Figure&nbsp;3: Un LLM est un classifieur dont les classes sont tous les tokens d
     e4(["e&lt;sub&gt;4&lt;/sub&gt;"])
   end
 
-  dec[["décodeurs&lt;br/&gt;× N"]]
+  dec[["réseau de neurones&lt;br/&gt;(décodeurs × N)"]]
 
   subgraph logits ["logits z&lt;br/&gt;(un par token du vocabulaire)"]
     direction TB
@@ -1025,16 +615,74 @@ Figure&nbsp;3: Un LLM est un classifieur dont les classes sont tous les tokens d
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-llm-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Les étapes d’un LLM. La sortie est un vecteur de probabilités comme au début du cours. On a une classe <strong>par token du vocabulaire</strong>
+Figure&nbsp;3: Les étapes d’un LLM. La sortie est un vecteur de probabilités comme au début du cours. On a une classe <strong>par token du vocabulaire</strong>
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
+<section id="échantillonnage-sampling" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="échantillonnage-sampling"><span class="header-section-number">1.4</span> Échantillonnage (sampling)</h2>
+<p>Une fois les probabilités calculées, il faut <strong>choisir</strong> le token suivant.</p>
+<ul>
+<li>Prendre toujours le plus probable s’appelle le <strong>décodage glouton (greedy decoding)</strong>. Le texte obtenu est souvent plat et répétitif.</li>
+<li>En pratique, on <strong>tire au hasard</strong> selon les probabilités : « lait » sort 71 fois sur 100, « café » 12 fois sur 100, … C’est l’<strong>échantillonnage (sampling)</strong>. La même question peut donc donner des réponses différentes.</li>
+</ul>
+<p>La <strong>température</strong> (<em>temperature</em>) règle la part de hasard :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Température</th>
+<th>Effet</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>toujours le token le plus probable</td>
+<td>extraire des données, classer, répondre à une question factuelle</td>
+</tr>
+<tr class="even">
+<td>autour de 0,7</td>
+<td>un peu de variété</td>
+<td>usage courant d’un chatbot</td>
+</tr>
+<tr class="odd">
+<td>au-dessus de 1</td>
+<td>les tokens peu probables sortent plus souvent : plus créatif, plus d’erreurs</td>
+<td>brainstorming, texte créatif</td>
+</tr>
+</tbody>
+</table>
+<p>Deux autres réglages retirent les tokens trop improbables <strong>avant</strong> le tirage :</p>
+<ul>
+<li><strong>top-k</strong> : on ne garde que les <em>k</em> tokens les plus probables (par exemple 64) ;</li>
+<li><strong>top-p</strong> : on garde les tokens les plus probables jusqu’à atteindre une probabilité totale <em>p</em> (par exemple 0,95).</li>
+</ul>
+<p>Avec top-k = 3, il ne reste que « lait », « café » et « vin » : un token absurde comme « sable » ne peut plus sortir par malchance. En pratique, on garde les valeurs par défaut de top-k et top-p, et on ne règle que la température.</p>
 </section>
-<section id="tokenization" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Tokenization</h1>
+<section id="activité-la-température" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="activité-la-température"><span class="header-section-number">1.5</span> Activité : la température</h2>
+<p>Cliquez sur ce lien : <a href="./cours3_temperature.html">Activité : la température</a>.</p>
+</section>
+<section id="ce-que-ça-change-pour-vous" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="ce-que-ça-change-pour-vous"><span class="header-section-number">1.6</span> Ce que ça change pour vous</h2>
+<ul>
+<li>Le modèle produit le texte le plus <strong>plausible</strong>, pas le texte <strong>vrai</strong>. Des références d’articles inventées ressemblent à de vraies références : c’est une <strong>hallucination</strong>.</li>
+<li>Choisissez une température basse quand la réponse doit être fiable et reproductible, plus haute pour rédiger.</li>
+<li>Deux appels identiques peuvent donner deux réponses différentes : il faut en tenir compte quand on teste une application.</li>
+</ul>
+</section>
+</section>
+<section id="tokens" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Tokens</h1>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1046,53 +694,18 @@ Important
 </div>
 <div class="callout-body-container callout-body">
 <p>La tokenization transforme un texte en une <strong>liste de tokens</strong>.</p>
-<p>Un <strong>token</strong> est un élément du <strong>vocabulaire</strong> du modèle de langage.</p>
+<p>Un <strong>token</strong> est un élément du <strong>vocabulaire</strong> du modèle de langage : un mot courant, un morceau de mot, un signe de ponctuation.</p>
 </div>
 </div>
-<p>La transformation des mots et signes de ponctuations des documents en tokens permet :</p>
+<p>Découper en morceaux de mots plutôt qu’en mots permet :</p>
 <ul>
-<li>de réduire la taille du vocabulaire.</li>
-<li>d’utiliser souvent les mêmes tokens pour les mots ayant une racine commune.
-<ul>
-<li>tour<em>ner</em>, tour<em>nez</em>, tour<em>nes</em> auront 2 tokens, avec un même token en commun.</li>
-</ul></li>
-<li>de pouvoir représenter tous les mots possibles, y compris les mots rares jamais vus dans le corpus d’entraînement.</li>
+<li>de réduire la taille du vocabulaire : la langue française compte environ 100 000 mots, un vocabulaire de tokens en compte de 32 000 à 200 000, pour <strong>toutes</strong> les langues et le code ;</li>
+<li>de représenter n’importe quel mot, y compris les mots rares ou inventés : ils sont découpés en plusieurs tokens.</li>
 </ul>
-<p>Le but est de réduire les ressources nécessaires à l’entraînement et à l’inférence.</p>
-<p>Si on prenait comme vocabulaire l’ensemble des mots de la langue française, on aurait environ 100000 mots. En utilisant un algorithme de tokenization, on réduit ce nombre à 32000 tokens.</p>
-<p>Pour un texte en anglais, on a environ <em>100 tokens ~= 75 mots</em>.</p>
-<section id="lalgorithme-byte-pair-encoding" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="lalgorithme-byte-pair-encoding"><span class="header-section-number">4.1</span> L’algorithme Byte-Pair encoding</h2>
-<p>L’algorithme <strong>Byte-Pair Encoding (BPE)</strong> permet de créer un vocabulaire de tokens à partir d’un <strong>corpus</strong> de textes. C’était initialement une technique de compression de données.</p>
-<p>Le principe est de partir des caractères individuels puis de <strong>fusionner</strong> les paires de tokens les plus fréquents. Au départ, un token = 1 caractère. Au fur et à mesure des itérations, on crée de nouveaux tokens de plus en plus longs, jusqu’à former des mots complets.</p>
-<ol type="1">
-<li>Initialisation : <strong>découpe chaque mot</strong> du corpus en caractères. Vocabulaire = chaque caractère unique du corpus.
-<ul>
-<li>“hello” devient “h e l l o”.</li>
-</ul></li>
-<li>Fusion itérative :
-<ol type="a">
-<li>compte les <strong>paires adjacentes</strong>.
-<ul>
-<li>Dans “h e l l o”, les paires sont “h e”, “e l”, “l l”, “l o”.</li>
-</ul></li>
-<li>sélectionne la paire <strong>la plus fréquente</strong> (celle qui apparaît le plus souvent dans le corpus).
-<ul>
-<li>Par exemple “l l”.</li>
-</ul></li>
-<li><strong>fusionne</strong> la paire : remplace toutes les occurrences par ce <strong>nouveau token</strong>.
-<ul>
-<li>“l l” sera remplacé par “ll” dans tout le corpus. “h e l l o” devient “h e ll o”, “h e l l” devient “h e ll”.</li>
-</ul></li>
-<li>met à jour le vocabulaire.
-<ul>
-<li>exemple : ajoute “ll” au vocabulaire</li>
-</ul></li>
-</ol></li>
-<li>On s’arrête lorsque le vocabulaire a la taille désirée.</li>
-</ol>
+<p>Pour un texte en anglais, on compte environ <em>100 tokens ≈ 75 mots</em>.</p>
+<p>Le vocabulaire est construit automatiquement à partir d’un grand nombre de textes, avec l’algorithme <strong>BPE (Byte-Pair Encoding)</strong> : on part des caractères, puis on <strong>fusionne</strong> les paires les plus fréquentes, jusqu’à obtenir la taille de vocabulaire voulue. Les mots fréquents finissent en un seul token, les mots rares restent découpés.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1101,7 +714,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Corpus : <strong>bas</strong> (×5), <strong>bar</strong> (×3), <strong>bateau</strong> (×2).</p>
 <table class="caption-top table">
@@ -1150,34 +763,8 @@ Important
 </div>
 </div>
 </div>
-<p>Cet algorithme a plusieurs avantages :</p>
-<ul>
-<li>On peut l’utiliser avec plusieurs langues. Les LLMs utilisent le même vocabulaire pour toutes les langues supportées, y compris du code !</li>
-<li>L’utilisation de la fréquence fait que <strong>les mots les plus courants ont moins de tokens</strong>.</li>
-<li>Les mots rares ont plus de tokens, mais peuvent être représentés.</li>
-<li>On choisit au départ la taille du vocabulaire (c’est un nouvel hyperparamètre !).</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Et les espaces ?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Dans l’exemple ci-dessus, nous avons découpé des mots déjà séparés. En pratique, on <strong>attache l’espace au mot qui le suit</strong> avant de découper en caractères : <em>le bateau</em> devient <code>l e</code> <code>␣ b a t e a u</code> (on note <code>␣</code> l’espace).</p>
-<p>Les tokens produits portent donc leur espace : le vocabulaire contiendra <code>␣bateau</code> et non <code>bateau</code>. Cela évite d’avoir un token “espace” entre chaque mot.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="transformation-en-liste-de-tokenid" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="transformation-en-liste-de-tokenid"><span class="header-section-number">4.2</span> Transformation en liste de tokenID</h2>
-<p>Une fois notre vocabulaire de tokens constitué, nous pouvons transformer n’importe quel texte en entrée en une liste de tokens. Etant donné que le vocabulaire est fixe, chaque token peut être remplacé par son indice dans le tableau de vocabulaire.</p>
+<section id="exemple" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="exemple"><span class="header-section-number">2.1</span> Exemple</h2>
 <p>Prenons un vocabulaire jouet de 10 tokens. L’espace fait partie du token : on le note <code>␣</code> pour le rendre visible.</p>
 <table class="caption-top table">
 <colgroup>
@@ -1265,41 +852,31 @@ Important
 </tbody>
 </table>
 <p>C’est <strong>cette liste d’entiers</strong> <code>[1, 3, 5, 7, 2, 8, 4, 0]</code> qui est donnée au modèle.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Remarques
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>L’espace appartient au token.</strong> <code>le</code> en début de phrase (indice 1) et <code>␣le</code> au milieu (indice 2) sont donc deux tokens différents.</p>
-<p><strong>Un mot rare est découpé en plusieurs tokens.</strong> <em>tapis</em> n’est pas dans le vocabulaire : il est représenté par <code>␣ta</code> + <code>pis</code>. C’est ce qui permet d’écrire n’importe quel mot avec un vocabulaire de taille fixe.</p>
-<p><strong>Ces nombres n’ont aucune signification.</strong> L’indice <code>3</code> (<em>chat</em>) est “plus loin” de <code>9</code> (<em>chien</em>) que de <code>4</code> (<em>pis</em>), alors que <em>chat</em> et <em>chien</em> sont deux mots très proches et que <em>pis</em> n’est même pas un mot. C’est un simple identifiant, comme une clé primaire en base de données.</p>
-<p>Ce dernier point est exactement le problème que les embeddings vont résoudre.</p>
-</div>
-</div>
-</div>
+<p><em>tapis</em> n’est pas dans le vocabulaire : il est découpé en <code>␣ta</code> + <code>pis</code>.</p>
 </section>
-<section id="activité-openai-tokenizer" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="activité-openai-tokenizer"><span class="header-section-number">4.3</span> Activité : OpenAI tokenizer</h2>
+<section id="activité-openai-tokenizer" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="activité-openai-tokenizer"><span class="header-section-number">2.2</span> Activité : OpenAI tokenizer</h2>
 <p><a href="https://platform.openai.com/tokenizer">Activité : essayez le tokenizer d’OpenAI</a>.</p>
 <ul>
-<li>essayez un texte en français, puis le même texte traduit en anglais. Que constatez-vous ?</li>
-<li>répétez plusieurs fois le même mot. Où sont passés les espaces ?</li>
-<li>cliquez sur “Token IDS” pour voir la conversion en IDs</li>
+<li>Essayez un texte en français, puis le même texte traduit en anglais. Combien de tokens de plus en français ?</li>
+<li>Répétez plusieurs fois le même mot. Où sont passés les espaces ?</li>
+<li>Tapez « arrière-grand-mère » : en combien de tokens est-il découpé ? Cela explique-t-il l’erreur de l’activité « pièges » ?</li>
+<li>Cliquez sur « Token IDs » pour voir la conversion en identifiants.</li>
+</ul>
+</section>
+<section id="ce-que-ça-change-pour-vous-1" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="ce-que-ça-change-pour-vous-1"><span class="header-section-number">2.3</span> Ce que ça change pour vous</h2>
+<ul>
+<li>Les API des LLMs sont <strong>facturées au token</strong>, avec un prix pour les tokens en entrée (votre texte) et un prix pour les tokens en sortie (la réponse). Un même texte coûte plus cher en français qu’en anglais.</li>
+<li>Les limites des modèles (taille du texte accepté, longueur de la réponse) sont exprimées en tokens.</li>
+<li>Le modèle ne voit pas les lettres, il voit des tokens : compter les lettres d’un mot, l’écrire à l’envers ou faire un long calcul chiffre par chiffre lui est difficile.</li>
 </ul>
 </section>
 </section>
-<section id="embeddings" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Embeddings</h1>
-<p>Nous avons vu que les réseaux de neurones prennent en entrée un vecteur <span class="math inline">\(x\)</span> de caractéristiques (features) afin de pouvoir prédire une sortie <span class="math inline">\(\hat{y}\)</span>. Comment peut-on transformer nos tokenID pour pouvoir les utiliser commee entrée d’un réseau de neurones ?</p>
+<section id="embeddings" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Embeddings</h1>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1308,218 +885,16 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse show">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>On pourrait se dire naivement : <em>“j’ai un vecteur de tokenIDs, je vais l’envoyer dans un gros réseau de neurones avec pleins de couches, et il va me sortir le tokenID qui suit”</em>. Mais ça ne peut pas fonctionner : chaque tokenID est juste une entrée dans un dictionnaire. À la différence d’une surface ou d’une longitude, ce chiffre n’a pas de signification. Si je fais des additions et multiplications sur ces IDs, ça ne donnera rien.</p>
 </div>
 </div>
 </div>
-<section id="one-hot-vectors" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="one-hot-vectors"><span class="header-section-number">5.1</span> One-hot vectors</h2>
-<p>La première étape est de transformer le <code>tokenID</code> en <strong>one-hot vector</strong>, comme on l’a fait pour la sortie des tâches de classifications.</p>
-<p>Chaque tokenID devient un <strong>vecteur de <span class="math inline">\(V\)</span> dimensions</strong>, où <span class="math inline">\(V\)</span> est la taille du vocabulaire : que des 0, sauf un 1 à la position correspondant à l’indice du token. Pour <code>␣chat</code>, d’indice 3, dans notre vocabulaire de <span class="math inline">\(V = 10\)</span> tokens :</p>
-<p><span class="math display">\[
-\mathrm{onehot}(3) =
-\begin{pmatrix} 0 &amp; 0 &amp; 0 &amp; \underset{\substack{\uparrow \\ \text{indice 3}}}{1} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{pmatrix}
-\]</span></p>
-<p>Avec cette représentation, les tokens sont équidistants.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Une ligne par token
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Jusqu’ici, un exemple était un vecteur <strong>colonne</strong> <span class="math inline">\(\mathbf{x}\)</span>, et une couche calculait <span class="math inline">\(\mathbf{W}\mathbf{x}\)</span>.</p>
-<p>À partir de maintenant, nous traitons une <strong>séquence</strong> de tokens. On les empile <strong>en lignes</strong>, comme les lignes d’un tableau de données : une ligne par token.</p>
-<p>Les multiplications s’écrivent donc dans l’autre sens : <span class="math inline">\(\mathbf{X}\mathbf{W}\)</span> au lieu de <span class="math inline">\(\mathbf{W}\mathbf{x}\)</span>. C’est la convention de PyTorch, et celle de la plupart des articles et tutoriels sur les LLMs.</p>
-</div>
-</div>
-<p>Notre exemple de phrase devient une matrice <span class="math inline">\(\mathbf{X}\)</span> de dimensions <span class="math inline">\(T \times V\)</span>, où <span class="math inline">\(T\)</span> est le <strong>nombre de tokens de la phrase</strong> : une ligne par token.</p>
-<p><span class="math display">\[
-\mathbf{X} \in \{0, 1\}^{\,T \times V}
-\qquad\text{ici}\qquad
-T = 8 \;\text{(tokens de la phrase)}
-\qquad
-V = 10 \;\text{(vocabulaire)}
-\]</span></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><span class="math inline">\(T = 8\)</span> ↓ &nbsp;<span class="math inline">\(V = 10\)</span> →</th>
-<th style="text-align: center;">0 <code>.</code></th>
-<th style="text-align: center;">1 <code>le</code></th>
-<th style="text-align: center;">2 <code>␣le</code></th>
-<th style="text-align: center;">3 <code>␣chat</code></th>
-<th style="text-align: center;">4 <code>pis</code></th>
-<th style="text-align: center;">5 <code>␣dort</code></th>
-<th style="text-align: center;">6 <code>␣mange</code></th>
-<th style="text-align: center;">7 <code>␣sur</code></th>
-<th style="text-align: center;">8 <code>␣ta</code></th>
-<th style="text-align: center;">9 <code>␣chien</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>le</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td><code>␣chat</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td><code>␣dort</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td><code>␣sur</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td><code>␣le</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td><code>␣ta</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td><code>pis</code></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td><code>.</code></td>
-<td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-</tbody>
-</table>
-<p>Chaque ligne contient exactement <strong>un seul 1</strong> : c’est le token présent à cette position. La colonne 6 (<code>␣mange</code>) et la colonne 9 (<code>␣chien</code>) ne contiennent que des 0 : ces tokens du vocabulaire n’apparaissent pas dans la phrase.</p>
-</section>
-<section id="matrice-dembedding" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="matrice-dembedding"><span class="header-section-number">5.2</span> Matrice d’embedding</h2>
-<p>La première couche d’un LLM est exactement comme une couche cachée d’un MLP, mais sans fonction d’activation.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\mathbf{E} = \mathbf{X} \mathbf{W}_e
-\]</span></p>
-<ul>
-<li><span class="math inline">\(D\)</span> : <strong>dimension de l’embedding</strong> (encore un nouvel hyperparamètre !)</li>
-<li><span class="math inline">\(T\)</span> : nombre de tokens du texte</li>
-<li><span class="math inline">\(\mathbf{W}_e\)</span> : matrice d’embedding, de dimensions <span class="math inline">\(V \times D\)</span>. Une ligne par token du vocabulaire</li>
-<li><span class="math inline">\(\mathbf{E}\)</span> : embeddings de la phrase, de dimensions <span class="math inline">\(T \times D\)</span>. Une ligne par token de la phrase</li>
-</ul>
-<p>Ni biais, ni fonction d’activation.</p>
-<p>La matrice d’embedding <span class="math inline">\(\mathbf{W}_e\)</span> fait partie des paramètres du modèle, ses poids sont ajustés lors de l’entraînement.</p>
-</div>
-</div>
-<p>Cette couche permet de transformer notre matrice <span class="math inline">\(X\)</span> qui est énorme et quasi-vide <strong>(sparse)</strong> en une matrice <strong>dense</strong>, et qui <strong>rapproche les tokens selon leur sémantique</strong>.</p>
-<p>On multiplie <span class="math inline">\(\mathbf{X}\)</span>, de dimensions <span class="math inline">\(T \times V\)</span>, par <span class="math inline">\(\mathbf{W}_e\)</span>, de dimensions <span class="math inline">\(V \times D\)</span> : la dimension <span class="math inline">\(V\)</span> est commune aux deux, elle disparaît du résultat.</p>
-<p><span class="math display">\[
-\underbrace{(T \times V)}_{\mathbf{X}} \cdot \underbrace{(V \times D)}_{\mathbf{W}_e} = \underbrace{(T \times D)}_{\mathbf{E}}
-\]</span></p>
-<p>On passe donc de <span class="math inline">\(V\)</span> colonnes (une par token du <strong>vocabulaire</strong>) à <span class="math inline">\(D\)</span> colonnes : le nombre de lignes, lui, ne change pas, on a toujours un token de la <strong>phrase</strong> par ligne.</p>
-</section>
-<section id="exemple" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="exemple"><span class="header-section-number">5.3</span> Exemple</h2>
-<p>Reprenons notre vocabulaire de <span class="math inline">\(V = 10\)</span> tokens, avec des embeddings de dimension <span class="math inline">\(D = 4\)</span>. Après entraînement du modèle, on pourrait obtenir la matrice <span class="math inline">\(\mathbf{W}_e\)</span> de dimensions <span class="math inline">\(10 \times 4\)</span> suivante :</p>
+<section id="matrice-dembedding" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="matrice-dembedding"><span class="header-section-number">3.1</span> Matrice d’embedding</h2>
+<p>Chaque token du vocabulaire reçoit un <strong>vecteur de nombres</strong>, son <strong>embedding</strong>. Ces vecteurs sont rangés dans la <strong>matrice d’embedding</strong> <span class="math inline">\(\mathbf{W}_e\)</span> : une ligne par token du vocabulaire. Comme les poids d’un réseau de neurones, ces nombres sont tirés au hasard, puis ajustés pendant l’entraînement.</p>
+<p>Voici ce qu’on pourrait obtenir avec notre vocabulaire jouet, et des vecteurs de 4 nombres :</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1603,125 +978,39 @@ Important
 </tr>
 </tbody>
 </table>
-<p>En multipliant <span class="math inline">\(\mathbf{X}\)</span> (<span class="math inline">\(8 \times 10\)</span>) par cette matrice, on récupère la ligne de chaque token de la phrase, dans l’ordre. On obtient <span class="math inline">\(\mathbf{E}\)</span>, de dimensions <span class="math inline">\(8 \times 4\)</span> :</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th><span class="math inline">\(\mathbf{E}\)</span></th>
-<th style="text-align: right;"></th>
-<th style="text-align: right;"></th>
-<th style="text-align: right;"></th>
-<th style="text-align: right;"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>le</code></td>
-<td style="text-align: right;">-0,03</td>
-<td style="text-align: right;">0,04</td>
-<td style="text-align: right;">0,88</td>
-<td style="text-align: right;">-0,12</td>
-</tr>
-<tr class="even">
-<td><code>␣chat</code></td>
-<td style="text-align: right;">0,82</td>
-<td style="text-align: right;">-0,14</td>
-<td style="text-align: right;">-0,07</td>
-<td style="text-align: right;">0,03</td>
-</tr>
-<tr class="odd">
-<td><code>␣dort</code></td>
-<td style="text-align: right;">-0,09</td>
-<td style="text-align: right;">0,79</td>
-<td style="text-align: right;">0,05</td>
-<td style="text-align: right;">-0,02</td>
-</tr>
-<tr class="even">
-<td><code>␣sur</code></td>
-<td style="text-align: right;">0,01</td>
-<td style="text-align: right;">0,07</td>
-<td style="text-align: right;">0,74</td>
-<td style="text-align: right;">0,15</td>
-</tr>
-<tr class="odd">
-<td><code>␣le</code></td>
-<td style="text-align: right;">-0,05</td>
-<td style="text-align: right;">0,02</td>
-<td style="text-align: right;">0,91</td>
-<td style="text-align: right;">-0,09</td>
-</tr>
-<tr class="even">
-<td><code>␣ta</code></td>
-<td style="text-align: right;">0,09</td>
-<td style="text-align: right;">-0,18</td>
-<td style="text-align: right;">0,14</td>
-<td style="text-align: right;">0,71</td>
-</tr>
-<tr class="odd">
-<td><code>pis</code></td>
-<td style="text-align: right;">0,05</td>
-<td style="text-align: right;">-0,22</td>
-<td style="text-align: right;">0,11</td>
-<td style="text-align: right;">0,76</td>
-</tr>
-<tr class="even">
-<td><code>.</code></td>
-<td style="text-align: right;">-0,11</td>
-<td style="text-align: right;">-0,05</td>
-<td style="text-align: right;">0,62</td>
-<td style="text-align: right;">0,08</td>
-</tr>
-</tbody>
-</table>
-<p>Plus aucun 0 : la matrice est <strong>dense</strong>. Par ailleurs, les nombres ont maintenant une signification :</p>
+<p>Les nombres ont maintenant une signification :</p>
 <ul>
-<li><code>␣chat</code> et <code>␣chien</code> ont des valeurs proches dans <span class="math inline">\(\mathbf{W}_e\)</span> : le modèle a appris que ces deux mots s’emploient dans les mêmes contextes.</li>
+<li><code>␣chat</code> et <code>␣chien</code> ont des valeurs proches : le modèle a appris que ces deux mots s’emploient dans les mêmes contextes.</li>
 <li><code>le</code> et <code>␣le</code> aussi : le modèle a appris tout seul que ce sont deux écritures du même mot.</li>
 <li><code>␣dort</code> et <code>␣mange</code> se ressemblent également (deux verbes), et sont loin des deux précédents.</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>Ces valeurs sont inventées pour l’exemple, et <span class="math inline">\(D = 4\)</span> est minuscule : un vrai modèle utilise <span class="math inline">\(D = 4096\)</span> ou plus.</p>
-<p>Par ailleurs, les colonnes de <span class="math inline">\(\mathbf{W}_e\)</span> <strong>ne sont pas interprétables</strong> une par une. On ne peut pas dire “la colonne 1 code le fait d’être un animal” : le sens est réparti sur l’ensemble des <span class="math inline">\(D\)</span> dimensions.</p>
-</div>
-</div>
-</div>
+<p>Ces valeurs sont inventées pour l’exemple : un vrai modèle utilise des vecteurs de plusieurs milliers de nombres.</p>
 </section>
-<section id="similarité-sémantique" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="similarité-sémantique"><span class="header-section-number">5.4</span> Similarité sémantique</h2>
+<section id="similarité-sémantique" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="similarité-sémantique"><span class="header-section-number">3.2</span> Similarité sémantique</h2>
 <p>Lorsqu’une matrice d’embeddings est entraînée sur de nombreux exemples, elle possède des propriétés intéressantes. Elle capture d’une certaine manière <strong>le sens d’un mot</strong>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>similarité cosinus (cosine similarity)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>La similarité cosinus permet de comparer deux vecteurs d’embeddings.</p>
-<p><span class="math display">\[
-\mathrm{sim}(\mathbf{u}, \mathbf{v}) = \cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\lVert \mathbf{u} \rVert \; \lVert \mathbf{v} \rVert} = \frac{\sum_{i=1}^{D} u_i v_i}{\sqrt{\sum_{i=1}^{D} u_i^2} \; \sqrt{\sum_{i=1}^{D} v_i^2}}
-\]</span></p>
-<p><span class="math inline">\(\mathbf{u}\)</span> et <span class="math inline">\(\mathbf{v}\)</span> sont deux lignes de la matrice d’embeddings, et <span class="math inline">\(\theta\)</span> l’angle entre elles. C’est le <strong>produit scalaire de u par v</strong>, qu’on divise par les <strong>normes (longueurs)</strong> pour ne mesurer que l’<strong>angle</strong> entre les deux vecteurs, et non leur longueur. Le résultat est donc toujours entre -1 et 1 :</p>
+<p>Pour comparer deux embeddings, on utilise la <strong>similarité cosinus (cosine similarity)</strong> : elle mesure l’<strong>angle</strong> <span class="math inline">\(\theta\)</span> entre les deux vecteurs, sans tenir compte de leur longueur. Le résultat est toujours entre -1 et 1 :</p>
 <ul>
 <li><strong>1</strong> : même direction, les deux tokens ont le même sens</li>
 <li><strong>0</strong> : vecteurs perpendiculaires, aucun rapport entre les deux tokens</li>
 <li><strong>-1</strong> : directions opposées</li>
 </ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>La formule (facultatif)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+\mathrm{sim}(\mathbf{u}, \mathbf{v}) = \cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\lVert \mathbf{u} \rVert \; \lVert \mathbf{v} \rVert} = \frac{\sum_{i=1}^{D} u_i v_i}{\sqrt{\sum_{i=1}^{D} u_i^2} \; \sqrt{\sum_{i=1}^{D} v_i^2}}
+\]</span></p>
+<p><span class="math inline">\(\mathbf{u}\)</span> et <span class="math inline">\(\mathbf{v}\)</span> sont deux lignes de la matrice d’embeddings, et <span class="math inline">\(\theta\)</span> l’angle entre elles. C’est le <strong>produit scalaire de u par v</strong>, qu’on divise par les <strong>normes (longueurs)</strong> pour ne mesurer que l’<strong>angle</strong> entre les deux vecteurs, et non leur longueur.</p>
 </div>
 </div>
 </div>
@@ -1843,10 +1132,10 @@ Note
 .cs-note { font-size: 11px; fill: var(--cs-soft); font-family: inherit; }
 </style>
 <p>Ici l’angle <span class="math inline">\(\theta\)</span> vaut 40°, donc <span class="math inline">\(\mathrm{sim}(u, v) = \cos(40°) \approx 0{,}77\)</span> : les deux tokens ont des sens proches.</p>
-<p>Diviser par les normes <span class="math inline">\(\lVert u \rVert\)</span> et <span class="math inline">\(\lVert v \rVert\)</span> revient à ramener les deux vecteurs à la <strong>longueur 1</strong> (schéma de droite) : leur longueur d’origine disparaît, seule leur <strong>direction</strong> compte. La <strong>similarité</strong> se lit alors directement sur le schéma : c’est la <strong>projection</strong> d’un vecteur sur l’autre, entre 0 et 1 ici.</p>
+<p>Le schéma de droite ramène les deux vecteurs à la <strong>longueur 1</strong> : seule leur <strong>direction</strong> compte. La similarité se lit alors directement : c’est la <strong>projection</strong> d’un vecteur sur l’autre.</p>
 </section>
-<section id="activité" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="activité"><span class="header-section-number">5.5</span> Activité</h2>
+<section id="activité-word-embeddings" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="activité-word-embeddings"><span class="header-section-number">3.3</span> Activité : word embeddings</h2>
 <p><a href="https://www.mlvisualization.com/visualizations/word-embeddings">Word Embeddings visualization</a></p>
 <p>Cliquez sur le lien ci-dessus, choisissez un <em>Mode</em>, puis cliquez sur <em>“Play”</em>.</p>
 <ul>
@@ -1864,219 +1153,33 @@ Note
 </ul></li>
 </ul>
 </section>
-<section id="autres-usages" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="autres-usages"><span class="header-section-number">5.6</span> Autres usages</h2>
-<section id="rag" class="level3" data-number="5.6.1">
-<h3 data-number="5.6.1" class="anchored" data-anchor-id="rag"><span class="header-section-number">5.6.1</span> RAG</h3>
-<p>Nous utiliserons ces propriétés plus tard lorsque nous étudierons les systèmes <strong>RAG (Retrieval-Augmented Generation)</strong>, qui permettent à un LLM de répondre à des questions en utilisant <em>vos</em> documents.</p>
-<p>Jusqu’ici, nous avons calculé l’embedding d’un <strong>token</strong>. On sait aussi calculer l’embedding d’un <strong>texte entier</strong> (un paragraphe, une page) sous la forme d’un unique vecteur qui représente son sens global.</p>
-<p>Un RAG compare alors l’embedding de votre question à ceux de vos documents pour retrouver les plus pertinents : c’est une <strong>recherche sémantique</strong> (<em>semantic search</em>), et non une recherche par mots-clés.</p>
-<p>La question <em>“comment arrêter de payer ?”</em> retrouvera un document intitulé <em>“Résiliation de votre abonnement”</em>, alors qu’ils n’ont <strong>aucun mot en commun</strong>. Nous y reviendrons en détail dans un prochain cours.</p>
-</section>
-<section id="images" class="level3" data-number="5.6.2">
-<h3 data-number="5.6.2" class="anchored" data-anchor-id="images"><span class="header-section-number">5.6.2</span> Images</h3>
-<p>Le principe ne se limite pas au texte. Certains modèles (comme CLIP) placent les images <strong>et</strong> les textes dans le <strong>même espace d’embedding</strong> : l’embedding d’une photo de chat se retrouve proche de l’embedding du texte <em>“un chat sur un tapis”</em>.</p>
-<p>C’est ce qui permet de rechercher des images en langage naturel, ou de construire des RAG multimodaux.</p>
+<section id="ce-que-ça-change-pour-vous-2" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="ce-que-ça-change-pour-vous-2"><span class="header-section-number">3.4</span> Ce que ça change pour vous</h2>
+<p>On sait aussi calculer l’embedding d’un <strong>texte entier</strong> (une phrase, un paragraphe, une page) : un seul vecteur qui représente son sens global.</p>
+<p>Pour retrouver les documents qui répondent à une question, on compare l’embedding de la question à ceux des documents : c’est une <strong>recherche sémantique</strong> (<em>semantic search</em>), et non une recherche par mots-clés. La question <em>“comment arrêter de payer ?”</em> retrouvera un document intitulé <em>“Résiliation de votre abonnement”</em>, alors qu’ils n’ont <strong>aucun mot en commun</strong>.</p>
+<p>C’est la base des systèmes <strong>RAG (Retrieval-Augmented Generation)</strong>, qui permettent à un LLM de répondre en utilisant <em>vos</em> documents. Nous y reviendrons en détail dans un prochain cours.</p>
+<p>Le principe ne se limite pas au texte : certains modèles (comme CLIP) placent les images <strong>et</strong> les textes dans le <strong>même espace d’embedding</strong>. L’embedding d’une photo de chat se retrouve proche de l’embedding du texte <em>“un chat sur un tapis”</em> : on peut rechercher des images en langage naturel.</p>
 </section>
 </section>
-</section>
-<section id="décodeurs" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Décodeurs</h1>
-<p>Ouvrons maintenant la boîte “décodeurs” dans le diagramme de la vue globale. Ces décodeurs faisaient initialement partie de l’architecture <strong>transformer</strong>, publiée par Google en 2017 dans l’article <a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a>.</p>
-<p>Cette architecture était conçue pour la <strong>traduction</strong> de texte, et comprenait deux parties : un <strong>encodeur</strong> (<em>encoder</em>), qui lit la phrase source en entier, et un <strong>décodeur</strong> (<em>decoder</em>), qui génère la traduction token par token.</p>
-<p>Les LLMs modernes (GPT, Llama, Mistral, Claude) ont supprimé l’encodeur : ce sont des modèles <strong>decoder-only</strong>. Leur tâche n’est plus de transformer un texte en un autre, mais de <strong>continuer</strong> un texte.</p>
-<p>TODO parler de mid-journey</p>
-<section id="la-pile-de-décodeurs" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="la-pile-de-décodeurs"><span class="header-section-number">6.1</span> La pile de décodeurs</h2>
-<p>Un LLM empile le <strong>même bloc décodeur</strong> un grand nombre de fois : 32 fois pour Llama 3 8B, 80 fois pour les plus gros modèles.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div id="fig-decoder-stack" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-decoder-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div>
-<pre class="mermaid mermaid-js" data-label="fig-decoder-stack">flowchart LR
-  emb(["embeddings&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × D&lt;/i&gt;&lt;/small&gt;"])
-  d1["décodeur 1"]
-  d2["décodeur 2"]
-  dots(["⋮"])
-  dN["décodeur N"]
-  head["couche de sortie&lt;br/&gt;(dernière ligne)&lt;br/&gt;&lt;small&gt;&lt;i&gt;D × V&lt;/i&gt;&lt;/small&gt;"]
-  out(["logits z&lt;br/&gt;&lt;small&gt;&lt;i&gt;1 × V&lt;/i&gt;&lt;/small&gt;"])
-
-  emb --&gt; d1
-  d1 --&gt; d2
-  d2 --&gt; dots
-  dots --&gt; dN
-  dN --&gt; head
-  head --&gt; out
-
-  classDef vector fill:#e3edf8,stroke:#2f6fb0,stroke-width:2px,color:#2c2c2a;
-  classDef step fill:#fbeae2,stroke:#c4562c,stroke-width:2px,color:#2c2c2a;
-  classDef scores fill:#e7e3f7,stroke:#5b52c4,stroke-width:2px,color:#2c2c2a;
-  class emb,dots vector;
-  class d1,d2,dN,head step;
-  class out scores;
-</pre>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decoder-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: La pile de décodeurs
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Chaque décodeur reçoit et renvoie une matrice des mêmes dimensions <span class="math inline">\(T \times D\)</span> : on peut donc les empiler autant de fois que l’on veut. Seule la couche de sortie change les dimensions : elle ne garde que la <strong>dernière ligne</strong>, celle du dernier token, et produit un logit par token du vocabulaire.</p>
-<p>Cette dernière ligne suffit pour prédire le token suivant : en traversant les décodeurs, elle a récupéré l’information de <strong>toute la phrase</strong>, grâce au mécanisme d’attention que nous allons voir.</p>
-</section>
-<section id="zoom-sur-un-bloc-décodeur" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="zoom-sur-un-bloc-décodeur"><span class="header-section-number">6.2</span> Zoom sur un bloc décodeur</h2>
-<p>Chaque bloc enchaîne deux traitements : une <strong>multi-head attention</strong>, qui fait circuler l’information <strong>entre les tokens</strong>, puis un <strong>MLP</strong>, qui traite chaque token <strong>indépendamment</strong>.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div id="fig-decoder-block" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-decoder-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div>
-<pre class="mermaid mermaid-js" data-label="fig-decoder-block">flowchart LR
-  xin(["entrée H&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × D&lt;/i&gt;&lt;/small&gt;"])
-  n1["RMSNorm"]
-
-  subgraph heads ["multi-head attention"]
-    direction TB
-    h1["head 1"]
-    h2["head 2"]
-    hdots(["⋮"])
-    hh["head h"]
-  end
-
-  concat["concaténation&lt;br/&gt;+ W&lt;sub&gt;O&lt;/sub&gt;"]
-  add1(("+"))
-  n2["RMSNorm"]
-  mlp["MLP"]
-  add2(("+"))
-  xout(["sortie&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × D&lt;/i&gt;&lt;/small&gt;"])
-
-  xin --&gt; n1
-  n1 --&gt; h1
-  n1 --&gt; h2
-  n1 --&gt; hdots
-  n1 --&gt; hh
-  h1 --&gt; concat
-  h2 --&gt; concat
-  hdots --&gt; concat
-  hh --&gt; concat
-  concat --&gt; add1
-  add1 --&gt; n2
-  n2 --&gt; mlp
-  mlp --&gt; add2
-  add2 --&gt; xout
-
-  xin -. "résiduel" .-&gt; add1
-  add1 -. "résiduel" .-&gt; add2
-
-  classDef vector fill:#e3edf8,stroke:#2f6fb0,stroke-width:2px,color:#2c2c2a;
-  classDef step fill:#fbeae2,stroke:#c4562c,stroke-width:2px,color:#2c2c2a;
-  classDef proba fill:#e0f0e9,stroke:#12805f,stroke-width:2px,color:#2c2c2a;
-  class xin,xout vector;
-  class n1,n2,mlp,concat step;
-  class h1,h2,hdots,hh step;
-  class add1,add2 proba;
-
-  style heads fill:none,stroke:#d8d6cd,stroke-dasharray:4 4;
-</pre>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decoder-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Un bloc décodeur
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Les <span class="math inline">\(h\)</span> <strong>attention heads</strong> travaillent <strong>en parallèle</strong> sur la même entrée, chacune apprenant à repérer un type de relation différent entre les tokens.</p>
-<p>Les sorties des <span class="math inline">\(h\)</span> heads sont ensuite concaténées, puis multipliées par <span class="math inline">\(\mathbf{W}_O\)</span>.</p>
-<p>Les <strong>connexions résiduelles</strong> (en pointillés) ajoutent l’entrée au résultat de chaque sous-couche : l’information d’origine n’est jamais perdue.</p>
-<p>Le <strong>MLP</strong> est le réseau de neurones vu au CM2, appliqué à chaque token séparément.</p>
-<p><strong>RMSNorm</strong> est une fonction de mise à l’échelle, semblable à celle que l’on a utilisée pendant les TPs.</p>
-</section>
-</section>
-<section id="attention" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Attention</h1>
-<p>Le <strong>mécanisme d’attention</strong> est une couche spécialisée d’un réseau de neurones. C’est LE concept clé qui a déclenché l’explosion de l’utilisation des LLMs. Ce mécanisme permet à chaque token d’un texte de se référer plus ou moins fortement à d’autres tokens qui le précèdent.</p>
-<p>Par exemple, dans la phrase <em>“le chat boit du lait”</em>, le token <code>boit</code> va avoir un lien assez fort avec <code>chat</code>, qui est le sujet du verbe. Grâce à ce lien, <code>boit</code> récupère de l’information sur <code>chat</code> : à la sortie de la couche, il ne représente plus le verbe “boire” en général, mais <em>“boire, avec un chat comme sujet”</em>.</p>
-<section id="zoom-sur-une-attention-head" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="zoom-sur-une-attention-head"><span class="header-section-number">7.1</span> Zoom sur une attention head</h2>
-<p>Notons <span class="math inline">\(\mathbf{H}\)</span> l’entrée du bloc décodeur, de dimensions <span class="math inline">\(T \times D\)</span> : une ligne par token.</p>
-<p>Pour le <strong>premier</strong> décodeur, <span class="math inline">\(\mathbf{H} = \mathbf{E}\)</span>, notre matrice d’embeddings. Pour les suivants, c’est la sortie du décodeur précédent : ce ne sont plus les embeddings de départ, mais les dimensions restent les mêmes.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div id="fig-attention-head" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-attention-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div>
-<pre class="mermaid mermaid-js" data-label="fig-attention-head">flowchart TB
-  x(["entrée H&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × D&lt;/i&gt;&lt;/small&gt;"])
-
-  q["Q = H W&lt;sub&gt;Q&lt;/sub&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × d&lt;sub&gt;h&lt;/sub&gt;&lt;/i&gt;&lt;/small&gt;"]
-  k["K = H W&lt;sub&gt;K&lt;/sub&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × d&lt;sub&gt;h&lt;/sub&gt;&lt;/i&gt;&lt;/small&gt;"]
-  v["V = H W&lt;sub&gt;V&lt;/sub&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × d&lt;sub&gt;h&lt;/sub&gt;&lt;/i&gt;&lt;/small&gt;"]
-
-  rq["RoPE"]
-  rk["RoPE"]
-
-  sc["scores&lt;br/&gt;Q K&lt;sup&gt;T&lt;/sup&gt; / √d&lt;sub&gt;h&lt;/sub&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × T&lt;/i&gt;&lt;/small&gt;"]
-  msm["masque causal&lt;br/&gt;+ softmax"]
-  a(["&lt;b&gt;matrice d'attention A&lt;/b&gt;&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × T&lt;/i&gt;&lt;/small&gt;"])
-  mul["A V"]
-  o(["sortie de la head&lt;br/&gt;&lt;small&gt;&lt;i&gt;T × d&lt;sub&gt;h&lt;/sub&gt;&lt;/i&gt;&lt;/small&gt;"])
-
-  x --&gt; q
-  x --&gt; k
-  x --&gt; v
-  q --&gt; rq
-  k --&gt; rk
-  rq --&gt; sc
-  rk --&gt; sc
-  sc --&gt; msm
-  msm --&gt; a
-  a --&gt; mul
-  v --&gt; mul
-  mul --&gt; o
-
-  classDef vector fill:#e3edf8,stroke:#2f6fb0,stroke-width:2px,color:#2c2c2a;
-  classDef step fill:#fbeae2,stroke:#c4562c,stroke-width:2px,color:#2c2c2a;
-  classDef scores fill:#e7e3f7,stroke:#5b52c4,stroke-width:2px,color:#2c2c2a;
-  classDef proba fill:#e0f0e9,stroke:#12805f,stroke-width:2px,color:#2c2c2a;
-  classDef attn fill:#c3e6d7,stroke:#12805f,stroke-width:3.5px,color:#2c2c2a;
-  class x,o vector;
-  class q,k,v,mul step;
-  class rq,rk,sc scores;
-  class msm proba;
-  class a attn;
-
-  %% The attention matrix is the object the whole head is built around.
-  linkStyle 8,9 stroke:#12805f,stroke-width:2.5px;
-</pre>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-attention-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Une attention head
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="matrice-dattention" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="matrice-dattention"><span class="header-section-number">7.2</span> Matrice d’attention</h2>
-<p>Ces relations entre tokens sont calculées dans une <strong>matrice d’attention</strong>. Notons <span class="math inline">\(T\)</span> le nombre de tokens du texte. La matrice d’attention <span class="math inline">\(A\)</span> aura une taille <span class="math inline">\(T \times T\)</span>.</p>
-<p>Sur la phrase <em>“le chat boit du lait”</em>, <span class="math inline">\(T = 5\)</span>. Une head qui aurait appris à <strong>relier un verbe à son sujet</strong> pourrait produire la matrice suivante :</p>
+<section id="le-contexte" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Le contexte</h1>
+<section id="lattention" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="lattention"><span class="header-section-number">4.1</span> L’attention</h2>
+<p>Pour prédire le token suivant, le modèle doit tenir compte de <strong>tout le texte</strong> qui précède, pas seulement du dernier mot. C’est le rôle du <strong>mécanisme d’attention</strong> (<em>attention</em>), le cœur de l’architecture <strong>transformer</strong> publiée en 2017 : c’est elle qui a permis l’explosion des LLMs.</p>
+<p>Chaque token va chercher de l’information dans les tokens qui le <strong>précèdent</strong>. Dans <em>“le chat boit du lait”</em>, le token <code>boit</code> regarde surtout <code>chat</code>, son sujet : à la sortie, il ne représente plus le verbe “boire” en général, mais <em>“boire, avec un chat comme sujet”</em>.</p>
+<p>Ces liens se lisent dans une <strong>matrice d’attention</strong> : une ligne par token qui cherche, sa <strong>requête (query)</strong>, et une colonne par token regardé, sa <strong>clé (key)</strong>.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>query ↓ &nbsp;key →</th>
+<th>query (cherche) ↓ &nbsp;key (regardé) →</th>
 <th style="text-align: center;"><code>le</code></th>
 <th style="text-align: center;"><code>chat</code></th>
 <th style="text-align: center;"><code>boit</code></th>
@@ -2127,66 +1230,32 @@ Figure&nbsp;7: Une attention head
 </tr>
 </tbody>
 </table>
-<p>On garde la convention habituelle : une ligne par token de la phrase. La ligne est le token qui <strong>cherche</strong>, la colonne le token <strong>regardé</strong>. La case <span class="math inline">\(\mathbf{A}_{ij}\)</span> répond donc à la question : <em>quelle part de son attention le token <span class="math inline">\(i\)</span> accorde-t-il au token <span class="math inline">\(j\)</span> ?</em></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Observations
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
 <ul>
-<li>la ligne <code>boit</code> place <strong>0,85</strong> sur la colonne <code>chat</code> : c’est le lien sujet / verbe de notre exemple. Les autres lignes n’ont pas de sujet à chercher, elles restent sur leur propre diagonale</li>
-<li>chaque <strong>ligne</strong> somme à 1 : un token répartit une quantité fixe d’attention entre les tokens qu’il regarde</li>
-<li>le triangle de 0 en haut à droite vient du <strong>masque causal</strong> : un token ne peut regarder que lui-même et ceux qui le précèdent. La première ligne n’a donc aucun choix, elle vaut toujours 1,00.</li>
+<li>La ligne <code>boit</code> place <strong>0,85</strong> sur la colonne <code>chat</code> : c’est le lien sujet / verbe.</li>
+<li>Chaque ligne somme à 1 : un token répartit son attention entre les tokens qu’il regarde.</li>
+<li>Le triangle de 0 en haut à droite : un token ne peut pas regarder les tokens qui le <strong>suivent</strong>, puisque le modèle écrit de gauche à droite.</li>
 </ul>
-</div>
-</div>
-</div>
+<p>Pour les curieux : <a href="./cours3_attention.html">Activité - Le mécanisme d’attention</a>, et le détail du calcul dans l’<a href="./cours3_annexe.html#attention">annexe</a>.</p>
 </section>
-<section id="query-key" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="query-key"><span class="header-section-number">7.3</span> Query, Key</h2>
-<p>Le calcul de la matrice d’attention se fait à l’aide de 2 matrices de paramètres <span class="math inline">\(\mathbf{W}_Q\)</span>, <span class="math inline">\(\mathbf{W}_K\)</span>. Chaque head possède ses <strong>propres</strong> <span class="math inline">\(\mathbf{W}_Q\)</span>, <span class="math inline">\(\mathbf{W}_K\)</span>, apprises indépendamment.</p>
-<p>On calcule d’abord <span class="math inline">\(\mathbf{Q}\)</span> et <span class="math inline">\(\mathbf{K}\)</span> :</p>
+<section id="la-fenêtre-de-contexte-context-window" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="la-fenêtre-de-contexte-context-window"><span class="header-section-number">4.2</span> La fenêtre de contexte (context window)</h2>
+<p>La <strong>fenêtre de contexte</strong> est le nombre maximal de tokens que le modèle peut lire en une fois : les consignes, les documents fournis, l’historique de la conversation <strong>et</strong> la réponse.</p>
+<p>La matrice d’attention a une ligne et une colonne par token : <strong>doubler</strong> la longueur du texte <strong>quadruple</strong> sa taille, et donc le coût du calcul. C’est pour cela que la fenêtre de contexte est limitée.</p>
+</section>
+<section id="ce-que-ça-change-pour-vous-3" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="ce-que-ça-change-pour-vous-3"><span class="header-section-number">4.3</span> Ce que ça change pour vous</h2>
 <ul>
-<li><span class="math inline">\(\mathbf{Q} = \mathbf{H} \mathbf{W}_Q\)</span> (<em>query</em>) : ce que le token <strong>cherche</strong> dans les autres tokens.
-<ul>
-<li>Par exemple : « je cherche le token juste avant moi », ou « je suis un adjectif, je cherche le nom que je qualifie ».</li>
-</ul></li>
-<li><span class="math inline">\(\mathbf{K} = \mathbf{H} \mathbf{W}_K\)</span> (<em>key</em>) : ce que le token <strong>propose</strong>, l’étiquette qu’il présente aux autres.
-<ul>
-<li>Par exemple : « je suis le token en position 2 », ou « je suis un nom commun, masculin singulier ».</li>
-</ul></li>
+<li><strong>Le modèle n’a pas de mémoire.</strong> Pour poursuivre une conversation, un chatbot renvoie <strong>tout l’historique</strong> au modèle à chaque message. Plus la conversation est longue, plus chaque réponse coûte cher.</li>
+<li>Tout ce que le modèle doit savoir pour répondre (documents, consignes, exemples) doit tenir dans la fenêtre de contexte. Quand les documents sont trop nombreux, on ne lui donne que les plus pertinents : c’est encore le RAG.</li>
 </ul>
-<p>Une <strong>Q</strong>uery et une <strong>K</strong>ey se <strong>répondent</strong> quand leurs vecteurs pointent dans la même direction : le score du couple est leur produit scalaire <span class="math inline">\(\mathbf{q}_i \cdot \mathbf{k}_j\)</span>. Sur la phrase <em>« le chat gris boit du lait froid »</em>, la query de <code>gris</code> (« je cherche un nom ») donne un score élevé avec la key de <code>chat</code> (« je suis un nom »), et un score faible avec celle de <code>boit</code>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Dimensions des matrices
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p><span class="math inline">\(D\)</span> est la dimension de l’embedding, c’est un hyperparamètre.</p>
-<p><span class="math inline">\(T\)</span> est le nombre de tokens du texte en entrée.</p>
-<p>Chaque head travaille sur une <strong>partie</strong> de l’embedding seulement : on note <span class="math inline">\(d_h = D / h\)</span> sa dimension. En concaténant les <span class="math inline">\(h\)</span> heads, on retrouve bien les <span class="math inline">\(D\)</span> dimensions du départ.</p>
-<p>Les trois matrices ont donc les mêmes dimensions, <span class="math inline">\(D \times d_h\)</span> : elles <strong>réduisent</strong> chaque vecteur de <span class="math inline">\(D\)</span> à <span class="math inline">\(d_h\)</span> dimensions.</p>
-<p><span class="math display">\[
-\underbrace{(T \times D)}_{\mathbf{H}} \cdot \underbrace{(D \times d_h)}_{\mathbf{W}_Q} = \underbrace{(T \times d_h)}_{\mathbf{Q}}
-\]</span></p>
-</div>
-</div>
-</div>
-<p>La formule pour calculer la matrice d’attention est la suivante :</p>
+</section>
+</section>
+<section id="tp3-utiliser-un-llm" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> TP3 — Utiliser un LLM</h1>
+<p>Suivez la procédure de la <a href="./tp3.html">page du TP3</a> pour exécuter le notebook <code>tp3_llm.ipynb</code> sur un GPU de Kaggle.</p>
+</section>
+<section id="points-à-retenir" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Points à retenir</h1>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2197,106 +1266,16 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\mathbf{A} = \mathrm{softmax}_{\text{ligne}}\!\left( \frac{\mathbf{Q} \mathbf{K}^\top}{\sqrt{d_h}} + \mathbf{M} \right)
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\mathbf{Q} \mathbf{K}^\top\)</span> : <strong>tous</strong> les produits scalaires entre une query et une key. La case <span class="math inline">\((i, j)\)</span> contient <span class="math inline">\(\mathbf{q}_i \cdot \mathbf{k}_j\)</span>, le score du couple</li>
-<li><span class="math inline">\(\sqrt{d_h}\)</span> : sans cette division, les produits scalaires grandiraient avec le nombre de dimensions, et le softmax saturerait</li>
-<li><span class="math inline">\(\mathbf{M}\)</span> : le <strong>masque causal</strong>, qui met <span class="math inline">\(-\infty\)</span> dans les cases où la key est <strong>après</strong> la query. Il empêche un token de regarder ceux qui le suivent. C’est ce qui rend le modèle capable de générer du texte de gauche à droite.</li>
-<li>le softmax est appliqué <strong>ligne par ligne</strong> : chaque ligne de <span class="math inline">\(\mathbf{A}\)</span> somme à 1</li>
-<li>La taille de <span class="math inline">\(\mathbf{A}\)</span> ne dépend que du <strong>nombre de tokens</strong>.</li>
-</ul>
-<p><span class="math display">\[
-\underbrace{(T \times d_h)}_{\mathbf{Q}} \cdot \underbrace{(d_h \times T)}_{\mathbf{K}^\top} = \underbrace{(T \times T)}_{\mathbf{A}}
-\]</span></p>
+<ol type="1">
+<li>Un LLM prédit le <strong>token suivant</strong>, avec une probabilité pour chaque token du vocabulaire. On tire au hasard selon ces probabilités, et la <strong>température</strong> règle ce hasard.</li>
+<li>Un LLM lit et écrit des <strong>tokens</strong>, pas des mots ni des lettres. Les API sont facturées au token.</li>
+<li>Un <strong>embedding</strong> transforme un token ou un texte en vecteur : des sens proches donnent des vecteurs proches. C’est la base de la recherche sémantique et du RAG.</li>
+<li>Le modèle ne voit que sa <strong>fenêtre de contexte</strong>, et n’a pas de mémoire d’un appel à l’autre.</li>
+</ol>
 </div>
 </div>
-<p>La ligne <span class="math inline">\(i\)</span> est le token qui cherche (sa query), la colonne <span class="math inline">\(j\)</span> le token regardé (sa key). La case <span class="math inline">\(\mathbf{A}_{ij}\)</span> répond donc à la question : <em>quelle part de son attention le token <span class="math inline">\(i\)</span> accorde-t-il au token <span class="math inline">\(j\)</span> ?</em></p>
-</section>
-<section id="value" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="value"><span class="header-section-number">7.4</span> Value</h2>
-<p>Une fois la matrice d’attention calculée, on l’utilise pour modifier la “value” de chaque token.</p>
-<p>On calcule :</p>
-<ul>
-<li><span class="math inline">\(\mathbf{V} = \mathbf{H} \mathbf{W}_V\)</span> (<em>value</em>) : ce que le token <strong>transmet</strong> s’il est retenu
-<ul>
-<li>Par exemple, la value de <code>chat</code> : « je suis un animal, au singulier ». Elle est calculée avant l’attention, donc elle ne parle que de <code>chat</code>.</li>
-</ul></li>
-<li>Puis la sortie de l’attention head :</li>
-</ul>
-<p><span class="math display">\[
-\text{sortie} = \mathbf{A} \mathbf{V}
-\]</span></p>
-<p>La sortie est de dimensions <span class="math inline">\(T \times d_h\)</span> :</p>
-<p><span class="math display">\[
-\underbrace{(T \times T)}_{\mathbf{A}} \cdot \underbrace{(T \times d_h)}_{\mathbf{V}} = \underbrace{(T \times d_h)}_{\text{sortie}}
-\]</span></p>
-<p>On retrouve exactement la structure d’une couche cachée : une <strong>somme pondérée</strong>, sans biais ni fonction d’activation, comme la couche d’embedding du début du chapitre.</p>
-<p>La matrice d’attention joue le rôle de la matrice de poids, à une différence près : ses coefficients ne sont pas des paramètres appris une fois pour toutes, ils sont <strong>recalculés pour chaque phrase</strong>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Sur l’exemple
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>Avec la matrice d’attention <span class="math inline">\(A\)</span> ci-dessus, la ligne <code>boit</code> donne :</p>
-<p><span class="math display">\[
-\text{sortie}(\text{boit}) = 0{,}85 \cdot \mathbf{v}_{\text{chat}} + 0{,}10 \cdot \mathbf{v}_{\text{boit}} + 0{,}05 \cdot \mathbf{v}_{\text{le}}
-\]</span></p>
-<p>C’est seulement ici qu’apparaît le rôle de sujet.</p>
-<p>La value de <code>chat</code> ne disait que « un animal, au singulier », mais c’est la ligne <code>boit</code> qui est allée la chercher. En sortie, “boit” ne représente plus le verbe “boire” en général, mais “boire, avec un animal singulier comme sujet”.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="rope" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="rope"><span class="header-section-number">7.5</span> RoPE</h2>
-<p><strong>RoPE</strong> (<em>Rotary Position Embedding</em>) encode la <strong>position</strong> de chaque token.</p>
-<p>Jusqu’ici, rien dans le modèle ne distingue <em>“le chat mange la souris”</em> de <em>“la souris mange le chat”</em> : les deux phrases contiennent les mêmes embeddings.</p>
-<p>RoPE fait tourner les vecteurs <span class="math inline">\(\mathbf{Q}\)</span> et <span class="math inline">\(\mathbf{K}\)</span> d’un angle proportionnel à la position du token, ce qui rend le score entre deux tokens dépendant de leur <strong>distance</strong>.</p>
-<p>Il n’est appliqué qu’à <span class="math inline">\(\mathbf{Q}\)</span> et <span class="math inline">\(\mathbf{K}\)</span>, car la position n’intervient que dans le calcul des scores.</p>
-</section>
-<section id="activité-1" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="activité-1"><span class="header-section-number">7.6</span> Activité</h2>
-<p><a href="./cours3_attention.html">Activité - Le mécanisme d’attention</a></p>
-</section>
-<section id="points-à-retenir" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="points-à-retenir"><span class="header-section-number">7.7</span> Points à retenir</h2>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p>Le but principal du mécanisme d’<strong>attention</strong> est que chaque token puisse trouver de l’information pertinente dans les autres tokens, en extrayant leur valeur. Il fait cela en comparant son vecteur <strong>Query</strong> avec les vecteurs <strong>Key</strong> des autres tokens. Le <strong>masque causal</strong> modifie l’attention pour empêcher de regarder les tokens futurs, c.-à-d.&nbsp;les tokens suivants.</p></li>
-<li><p>Comme souvent avec le deep learning, il est difficile de savoir exactement ce que chaque couche fait exactement, mais on a une idée générale :</p>
-<ul>
-<li>Les premières couches se focalisent sur des propriétés et des patterns de bas niveau, comme la grammaire, la syntaxe, des associations de mots simples.</li>
-<li>Les couches plus hautes comprennent des relations et des abstractions de plus haut niveau, comme la structure du discours, des relations sémantiques, un sens dépendant du contexte.</li>
-</ul></li>
-<li><p>Le nombre de tokens <span class="math inline">\(T\)</span> est le seul nombre qui varie selon le texte en entrée. <strong>Aucune matrice de poids ne dépend de <span class="math inline">\(T\)</span></strong>. Le même modèle traite une phrase de 5 tokens ou de 50 000 sans changer un seul paramètre.</p></li>
-<li><p>La matrice d’attention <span class="math inline">\(\mathbf{A}\)</span> est en <span class="math inline">\(T \times T\)</span> : <strong>doubler</strong> la longueur du texte <strong>quadruple</strong> le coût de l’attention. C’est la raison d’être de la <strong>fenêtre de contexte</strong> (<em>context window</em>), la longueur maximale acceptée par un modèle.</p></li>
-</ul>
-</div>
-</div>
-<!-- TODO
-https://inventivehq.com/tools/developer/neural-network-playground?utm_source=chatgpt.com
--->
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

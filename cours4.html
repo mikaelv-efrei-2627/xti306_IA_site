@@ -77,6 +77,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -272,7 +301,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#développer-une-application-llm" id="toc-développer-une-application-llm" class="nav-link" data-scroll-target="#développer-une-application-llm"><span class="header-section-number">2</span> Développer une application LLM</a>
   <ul class="collapse">
   <li><a href="#choix-du-modèle" id="toc-choix-du-modèle" class="nav-link" data-scroll-target="#choix-du-modèle"><span class="header-section-number">2.1</span> Choix du modèle</a></li>
-  <li><a href="#echantillonage-sampling" id="toc-echantillonage-sampling" class="nav-link" data-scroll-target="#echantillonage-sampling"><span class="header-section-number">2.2</span> Echantillonage (sampling)</a></li>
   </ul></li>
   <li><a href="#draft" id="toc-draft" class="nav-link" data-scroll-target="#draft"><span class="header-section-number">3</span> Draft</a></li>
   </ul>
@@ -307,7 +335,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="comment-un-llm-est-il-entraîné" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Comment un LLM est-il entraîné ?</h1>
-<p>Nous avons vu lors du TP3 que l’on pouvait entraîner un modèle de langage soi-même avec un <strong>corpus</strong> et quelques GPUs. Mais le modèle résultant a peu de paramètres, n’est pas performant et est spécialisé dans un langage et un style d’écriture.</p>
+<p>On peut entraîner un petit modèle de langage soi-même, avec un <strong>corpus</strong> de textes et quelques GPUs (voir le TP3b, facultatif, dans l’<a href="./cours3_annexe.html#tp3b">annexe du CM3</a>). Mais le modèle résultant a peu de paramètres, n’est pas performant et est spécialisé dans un langage et un style d’écriture.</p>
 <p>En pratique, très peu de personnes ont l’occasion d’entraîner complètement un LLM. Ce chapitre permet de :</p>
 <ul>
 <li>comprendre les enjeux liés à l’entraînement : consommation électrique, origine des données, biais</li>
@@ -634,6 +662,28 @@ ul.task-list li input[type="checkbox"] {
 <li>ne sait pas encore converser avec un utilisateur pour répondre à des questions</li>
 <li>n’est pas contrôlé et peut générer du contenu raciste, dangereux, injurieux</li>
 </ul>
+<p><strong>Auto-supervisé</strong> veut dire que les étiquettes sont gratuites : la cible est simplement le <strong>token suivant</strong> du texte. Une phrase de <span class="math inline">\(T\)</span> tokens fournit donc <span class="math inline">\(T\)</span> exemples d’un coup, avec la cible décalée d’un cran :</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>entrée</th>
+<th><code>le</code></th>
+<th><code>␣chat</code></th>
+<th><code>␣boit</code></th>
+<th><code>␣du</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>cible</strong></td>
+<td><code>␣chat</code></td>
+<td><code>␣boit</code></td>
+<td><code>␣du</code></td>
+<td><code>␣lait</code></td>
+</tr>
+</tbody>
+</table>
+<p>Pas besoin d’annotation humaine : n’importe quel texte (pages web, livres, code) devient un dataset d’entraînement. C’est ce qui permet d’entraîner les LLMs sur des milliers de milliards de tokens. Le détail (fonction de coût, code PyTorch) est dans l’<a href="./cours3_annexe.html#training">annexe du CM3</a>.</p>
 </section>
 <section id="post-entraînement-post-training" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="post-entraînement-post-training"><span class="header-section-number">1.2.2</span> Post-entraînement (Post-training)</h3>
@@ -863,14 +913,10 @@ Note
 </ul></li>
 </ul>
 </section>
-<section id="echantillonage-sampling" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="echantillonage-sampling"><span class="header-section-number">2.2</span> Echantillonage (sampling)</h2>
-</section>
 </section>
 <section id="draft" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Draft</h1>
 <ul>
-<li>temperature, top-k etc</li>
 <li>based pre-trained / instruct post-trained</li>
 <li>fine-tune</li>
 <li>hiérarchie : context &gt; RAG &gt; finetuning Look at bookmarks in the book, copy/paste/translate/summarize</li>
