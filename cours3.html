@@ -24,6 +24,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -286,7 +321,7 @@ window.Quarto = {
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul class="collapse">
-  <li><a href="#activité-pièges" id="toc-activité-pièges" class="nav-link active" data-scroll-target="#activité-pièges"><span class="header-section-number">0.1</span> Activité : pièges</a></li>
+  <li><a href="#démo-pièges" id="toc-démo-pièges" class="nav-link active" data-scroll-target="#démo-pièges"><span class="header-section-number">0.1</span> Démo : pièges</a></li>
   <li><a href="#un-llm-prédit-le-token-suivant" id="toc-un-llm-prédit-le-token-suivant" class="nav-link" data-scroll-target="#un-llm-prédit-le-token-suivant"><span class="header-section-number">1</span> Un LLM prédit le token suivant</a>
   <ul class="collapse">
   <li><a href="#classification-donner-une-probabilité-par-classe" id="toc-classification-donner-une-probabilité-par-classe" class="nav-link" data-scroll-target="#classification-donner-une-probabilité-par-classe"><span class="header-section-number">1.1</span> Classification : donner une probabilité par classe</a></li>
@@ -294,29 +329,32 @@ window.Quarto = {
   <li><a href="#un-llm-est-un-classifieur-de-tokens" id="toc-un-llm-est-un-classifieur-de-tokens" class="nav-link" data-scroll-target="#un-llm-est-un-classifieur-de-tokens"><span class="header-section-number">1.3</span> Un LLM est un classifieur de tokens</a></li>
   <li><a href="#échantillonnage-sampling" id="toc-échantillonnage-sampling" class="nav-link" data-scroll-target="#échantillonnage-sampling"><span class="header-section-number">1.4</span> Échantillonnage (sampling)</a></li>
   <li><a href="#activité-la-température" id="toc-activité-la-température" class="nav-link" data-scroll-target="#activité-la-température"><span class="header-section-number">1.5</span> Activité : la température</a></li>
-  <li><a href="#ce-que-ça-change-pour-vous" id="toc-ce-que-ça-change-pour-vous" class="nav-link" data-scroll-target="#ce-que-ça-change-pour-vous"><span class="header-section-number">1.6</span> Ce que ça change pour vous</a></li>
   </ul></li>
   <li><a href="#tokens" id="toc-tokens" class="nav-link" data-scroll-target="#tokens"><span class="header-section-number">2</span> Tokens</a>
   <ul class="collapse">
   <li><a href="#exemple" id="toc-exemple" class="nav-link" data-scroll-target="#exemple"><span class="header-section-number">2.1</span> Exemple</a></li>
   <li><a href="#activité-openai-tokenizer" id="toc-activité-openai-tokenizer" class="nav-link" data-scroll-target="#activité-openai-tokenizer"><span class="header-section-number">2.2</span> Activité : OpenAI tokenizer</a></li>
-  <li><a href="#ce-que-ça-change-pour-vous-1" id="toc-ce-que-ça-change-pour-vous-1" class="nav-link" data-scroll-target="#ce-que-ça-change-pour-vous-1"><span class="header-section-number">2.3</span> Ce que ça change pour vous</a></li>
   </ul></li>
   <li><a href="#embeddings" id="toc-embeddings" class="nav-link" data-scroll-target="#embeddings"><span class="header-section-number">3</span> Embeddings</a>
   <ul class="collapse">
   <li><a href="#matrice-dembedding" id="toc-matrice-dembedding" class="nav-link" data-scroll-target="#matrice-dembedding"><span class="header-section-number">3.1</span> Matrice d’embedding</a></li>
   <li><a href="#similarité-sémantique" id="toc-similarité-sémantique" class="nav-link" data-scroll-target="#similarité-sémantique"><span class="header-section-number">3.2</span> Similarité sémantique</a></li>
   <li><a href="#activité-word-embeddings" id="toc-activité-word-embeddings" class="nav-link" data-scroll-target="#activité-word-embeddings"><span class="header-section-number">3.3</span> Activité : word embeddings</a></li>
-  <li><a href="#ce-que-ça-change-pour-vous-2" id="toc-ce-que-ça-change-pour-vous-2" class="nav-link" data-scroll-target="#ce-que-ça-change-pour-vous-2"><span class="header-section-number">3.4</span> Ce que ça change pour vous</a></li>
   </ul></li>
   <li><a href="#le-contexte" id="toc-le-contexte" class="nav-link" data-scroll-target="#le-contexte"><span class="header-section-number">4</span> Le contexte</a>
   <ul class="collapse">
   <li><a href="#lattention" id="toc-lattention" class="nav-link" data-scroll-target="#lattention"><span class="header-section-number">4.1</span> L’attention</a></li>
   <li><a href="#la-fenêtre-de-contexte-context-window" id="toc-la-fenêtre-de-contexte-context-window" class="nav-link" data-scroll-target="#la-fenêtre-de-contexte-context-window"><span class="header-section-number">4.2</span> La fenêtre de contexte (context window)</a></li>
-  <li><a href="#ce-que-ça-change-pour-vous-3" id="toc-ce-que-ça-change-pour-vous-3" class="nav-link" data-scroll-target="#ce-que-ça-change-pour-vous-3"><span class="header-section-number">4.3</span> Ce que ça change pour vous</a></li>
+  <li><a href="#les-messages-et-la-consigne-système-system-prompt" id="toc-les-messages-et-la-consigne-système-system-prompt" class="nav-link" data-scroll-target="#les-messages-et-la-consigne-système-system-prompt"><span class="header-section-number">4.3</span> Les messages et la consigne système (system prompt)</a></li>
   </ul></li>
-  <li><a href="#tp3-utiliser-un-llm" id="toc-tp3-utiliser-un-llm" class="nav-link" data-scroll-target="#tp3-utiliser-un-llm"><span class="header-section-number">5</span> TP3 — Utiliser un LLM</a></li>
-  <li><a href="#points-à-retenir" id="toc-points-à-retenir" class="nav-link" data-scroll-target="#points-à-retenir"><span class="header-section-number">6</span> Points à retenir</a></li>
+  <li><a href="#training-phases" id="toc-training-phases" class="nav-link" data-scroll-target="#training-phases"><span class="header-section-number">5</span> Comment un LLM apprend à converser</a>
+  <ul class="collapse">
+  <li><a href="#pré-entraînement-pre-training" id="toc-pré-entraînement-pre-training" class="nav-link" data-scroll-target="#pré-entraînement-pre-training"><span class="header-section-number">5.1</span> Pré-entraînement (pre-training)</a></li>
+  <li><a href="#post-entraînement-post-training" id="toc-post-entraînement-post-training" class="nav-link" data-scroll-target="#post-entraînement-post-training"><span class="header-section-number">5.2</span> Post-entraînement (post-training)</a></li>
+  <li><a href="#le-shoggoth" id="toc-le-shoggoth" class="nav-link" data-scroll-target="#le-shoggoth"><span class="header-section-number">5.3</span> Le shoggoth</a></li>
+  </ul></li>
+  <li><a href="#tp3-utiliser-un-llm" id="toc-tp3-utiliser-un-llm" class="nav-link" data-scroll-target="#tp3-utiliser-un-llm"><span class="header-section-number">6</span> TP3 — Utiliser un LLM</a></li>
+  <li><a href="#points-à-retenir" id="toc-points-à-retenir" class="nav-link" data-scroll-target="#points-à-retenir"><span class="header-section-number">7</span> Points à retenir</a></li>
   </ul>
 </nav>
     </div>
@@ -348,14 +386,14 @@ window.Quarto = {
 </header>
 
 
-<p>Ce cours présente les notions qui changent quelque chose pour <strong>utiliser</strong> un grand modèle de langage (Large Language Model, LLM) : ce qu’il prédit, ce qu’il lit, comment il représente le sens, et ce qu’il peut garder en tête.</p>
+<p>Ce cours présente les notions qui vous serviront à <strong>utiliser</strong> un grand modèle de langage (Large Language Model, LLM) : ce qu’il prédit, ce qu’il lit, comment il représente le sens, ce qu’il peut garder en tête, et comment il apprend à converser.</p>
 <p>Ce qui se passe à l’intérieur du modèle est détaillé dans l’<a href="./cours3_annexe.html">annexe facultative</a>.</p>
-<section id="activité-pièges" class="level2" data-number="0.1">
-<h2 data-number="0.1" class="anchored" data-anchor-id="activité-pièges"><span class="header-section-number">0.1</span> Activité : pièges</h2>
-<p>Posez ces questions à un chatbot (ChatGPT, Claude, Le Chat, …). Notez ses réponses : nous expliquerons ses erreurs au fil du cours.</p>
+<section id="démo-pièges" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="démo-pièges"><span class="header-section-number">0.1</span> Démo : pièges</h2>
+<p>Posons ces questions à un chatbot (ChatGPT, Claude, Le Chat, …). Nous expliquerons ses erreurs au fil du cours. Vous pourrez les reposer vous-même à un autre chatbot après le cours.</p>
 <ol type="1">
 <li>Combien de fois la lettre « r » apparaît-elle dans « arrière-grand-mère » ?</li>
-<li>Combien font 4 739 × 8 216 ? Ne le laissez pas utiliser d’outil de calcul.</li>
+<li>Combien font 4 739 × 8 216 ? Sans utiliser d’outil de calcul.</li>
 <li>Donnez-moi trois articles scientifiques sur la tokenization, avec leurs auteurs, leur année et leur lien.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -671,14 +709,23 @@ Figure&nbsp;3: Les étapes d’un LLM. La sortie est un vecteur de probabilités
 <section id="activité-la-température" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="activité-la-température"><span class="header-section-number">1.5</span> Activité : la température</h2>
 <p>Cliquez sur ce lien : <a href="./cours3_temperature.html">Activité : la température</a>.</p>
-</section>
-<section id="ce-que-ça-change-pour-vous" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="ce-que-ça-change-pour-vous"><span class="header-section-number">1.6</span> Ce que ça change pour vous</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li>Le modèle produit le texte le plus <strong>plausible</strong>, pas le texte <strong>vrai</strong>. Des références d’articles inventées ressemblent à de vraies références : c’est une <strong>hallucination</strong>.</li>
 <li>Choisissez une température basse quand la réponse doit être fiable et reproductible, plus haute pour rédiger.</li>
 <li>Deux appels identiques peuvent donner deux réponses différentes : il faut en tenir compte quand on teste une application.</li>
 </ul>
+</div>
+</div>
 </section>
 </section>
 <section id="tokens" class="level1" data-number="2">
@@ -705,7 +752,7 @@ Important
 <p>Pour un texte en anglais, on compte environ <em>100 tokens ≈ 75 mots</em>.</p>
 <p>Le vocabulaire est construit automatiquement à partir d’un grand nombre de textes, avec l’algorithme <strong>BPE (Byte-Pair Encoding)</strong> : on part des caractères, puis on <strong>fusionne</strong> les paires les plus fréquentes, jusqu’à obtenir la taille de vocabulaire voulue. Les mots fréquents finissent en un seul token, les mots rares restent découpés.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -714,7 +761,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Corpus : <strong>bas</strong> (×5), <strong>bar</strong> (×3), <strong>bateau</strong> (×2).</p>
 <table class="caption-top table">
@@ -728,37 +775,38 @@ Important
 <tr class="header">
 <th>Itération</th>
 <th>Paire la plus fréquente</th>
-<th>Nouveau token</th>
 <th>Corpus après fusion</th>
+<th>Vocabulaire</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>0 : initialisation</td>
 <td></td>
-<td><code>a b e r s t u</code></td>
 <td><code>b a s</code> · <code>b a r</code> · <code>b a t e a u</code></td>
+<td><code>a b e r s t u</code> (7 tokens)</td>
 </tr>
 <tr class="even">
 <td>1</td>
 <td><code>b</code>+<code>a</code> : 5 + 3 + 2 = <strong>10</strong></td>
-<td><code>ba</code></td>
 <td><code>ba s</code> · <code>ba r</code> · <code>ba t e a u</code></td>
+<td><code>a b e r s t u</code> <strong><code>ba</code></strong> (8)</td>
 </tr>
 <tr class="odd">
 <td>2</td>
 <td><code>ba</code>+<code>s</code> : <strong>5</strong></td>
-<td><code>bas</code></td>
 <td><code>bas</code> · <code>ba r</code> · <code>ba t e a u</code></td>
+<td><code>a b e r s t u ba</code> <strong><code>bas</code></strong> (9)</td>
 </tr>
 <tr class="even">
 <td>3</td>
 <td><code>ba</code>+<code>r</code> : <strong>3</strong></td>
-<td><code>bar</code></td>
 <td><code>bas</code> · <code>bar</code> · <code>ba t e a u</code></td>
+<td><code>a b e r s t u ba bas</code> <strong><code>bar</code></strong> (10)</td>
 </tr>
 </tbody>
 </table>
+<p>Chaque fusion ajoute <strong>un token</strong> au vocabulaire, sans retirer les anciens : on s’arrête quand le vocabulaire atteint la taille voulue.</p>
 <p>Après 3 fusions, les deux mots les plus fréquents du corpus sont devenus <strong>un seul token</strong>, alors que <em>bateau</em>, plus rare, reste découpé en morceaux.</p>
 </div>
 </div>
@@ -812,45 +860,19 @@ Important
 </tbody>
 </table>
 <p>La phrase <strong>“le chat dort sur le tapis.”</strong> devient :</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Tokens</th>
-<th><code>le</code></th>
-<th><code>␣chat</code></th>
-<th><code>␣dort</code></th>
-<th><code>␣sur</code></th>
-<th><code>␣le</code></th>
-<th><code>␣ta</code></th>
-<th><code>pis</code></th>
-<th><code>.</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Indices</td>
-<td>1</td>
-<td>3</td>
-<td>5</td>
-<td>7</td>
-<td>2</td>
-<td>8</td>
-<td>4</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
+<figure class="tok-demo figure" role="img" aria-label="La phrase le chat dort sur le tapis point est découpée en 8 tokens colorés : le (1), espace chat (3), espace dort (5), espace sur (7), espace le (2), espace ta (8), pis (4), point (0). Le mot tapis est découpé en deux tokens.">
+<div class="tok-row">
+  <span class="tok tok-c0"><span class="tok-text">le</span><span class="tok-id">1</span></span>
+  <span class="tok tok-c1"><span class="tok-text">␣chat</span><span class="tok-id">3</span></span>
+  <span class="tok tok-c2"><span class="tok-text">␣dort</span><span class="tok-id">5</span></span>
+  <span class="tok tok-c3"><span class="tok-text">␣sur</span><span class="tok-id">7</span></span>
+  <span class="tok tok-c0"><span class="tok-text">␣le</span><span class="tok-id">2</span></span>
+  <span class="tok tok-c1 tok-split"><span class="tok-text">␣ta</span><span class="tok-id">8</span></span>
+  <span class="tok tok-c2 tok-split"><span class="tok-text">pis</span><span class="tok-id">4</span></span>
+  <span class="tok tok-c3"><span class="tok-text">.</span><span class="tok-id">0</span></span>
+</div>
+<div class="tok-legend">En haut le token, en bas son indice dans le vocabulaire. Les deux tokens soulignés forment le mot <em>tapis</em>.</div>
+</figure>
 <p>C’est <strong>cette liste d’entiers</strong> <code>[1, 3, 5, 7, 2, 8, 4, 0]</code> qui est donnée au modèle.</p>
 <p><em>tapis</em> n’est pas dans le vocabulaire : il est découpé en <code>␣ta</code> + <code>pis</code>.</p>
 </section>
@@ -860,23 +882,32 @@ Important
 <ul>
 <li>Essayez un texte en français, puis le même texte traduit en anglais. Combien de tokens de plus en français ?</li>
 <li>Répétez plusieurs fois le même mot. Où sont passés les espaces ?</li>
-<li>Tapez « arrière-grand-mère » : en combien de tokens est-il découpé ? Cela explique-t-il l’erreur de l’activité « pièges » ?</li>
+<li>Tapez « arrière-grand-mère » : en combien de tokens est-il découpé ? Cela explique-t-il l’erreur de la démo « pièges » ?</li>
 <li>Cliquez sur « Token IDs » pour voir la conversion en identifiants.</li>
 </ul>
-</section>
-<section id="ce-que-ça-change-pour-vous-1" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="ce-que-ça-change-pour-vous-1"><span class="header-section-number">2.3</span> Ce que ça change pour vous</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li>Les API des LLMs sont <strong>facturées au token</strong>, avec un prix pour les tokens en entrée (votre texte) et un prix pour les tokens en sortie (la réponse). Un même texte coûte plus cher en français qu’en anglais.</li>
 <li>Les limites des modèles (taille du texte accepté, longueur de la réponse) sont exprimées en tokens.</li>
 <li>Le modèle ne voit pas les lettres, il voit des tokens : compter les lettres d’un mot, l’écrire à l’envers ou faire un long calcul chiffre par chiffre lui est difficile.</li>
 </ul>
+</div>
+</div>
 </section>
 </section>
 <section id="embeddings" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Embeddings</h1>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -885,7 +916,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>On pourrait se dire naivement : <em>“j’ai un vecteur de tokenIDs, je vais l’envoyer dans un gros réseau de neurones avec pleins de couches, et il va me sortir le tokenID qui suit”</em>. Mais ça ne peut pas fonctionner : chaque tokenID est juste une entrée dans un dictionnaire. À la différence d’une surface ou d’une longitude, ce chiffre n’a pas de signification. Si je fais des additions et multiplications sur ces IDs, ça ne donnera rien.</p>
 </div>
@@ -996,7 +1027,7 @@ Important
 <li><strong>-1</strong> : directions opposées</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1005,7 +1036,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[
 \mathrm{sim}(\mathbf{u}, \mathbf{v}) = \cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\lVert \mathbf{u} \rVert \; \lVert \mathbf{v} \rVert} = \frac{\sum_{i=1}^{D} u_i v_i}{\sqrt{\sum_{i=1}^{D} u_i^2} \; \sqrt{\sum_{i=1}^{D} v_i^2}}
@@ -1152,13 +1183,22 @@ Important
 </ul></li>
 </ul></li>
 </ul>
-</section>
-<section id="ce-que-ça-change-pour-vous-2" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="ce-que-ça-change-pour-vous-2"><span class="header-section-number">3.4</span> Ce que ça change pour vous</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>On sait aussi calculer l’embedding d’un <strong>texte entier</strong> (une phrase, un paragraphe, une page) : un seul vecteur qui représente son sens global.</p>
 <p>Pour retrouver les documents qui répondent à une question, on compare l’embedding de la question à ceux des documents : c’est une <strong>recherche sémantique</strong> (<em>semantic search</em>), et non une recherche par mots-clés. La question <em>“comment arrêter de payer ?”</em> retrouvera un document intitulé <em>“Résiliation de votre abonnement”</em>, alors qu’ils n’ont <strong>aucun mot en commun</strong>.</p>
 <p>C’est la base des systèmes <strong>RAG (Retrieval-Augmented Generation)</strong>, qui permettent à un LLM de répondre en utilisant <em>vos</em> documents. Nous y reviendrons en détail dans un prochain cours.</p>
 <p>Le principe ne se limite pas au texte : certains modèles (comme CLIP) placent les images <strong>et</strong> les textes dans le <strong>même espace d’embedding</strong>. L’embedding d’une photo de chat se retrouve proche de l’embedding du texte <em>“un chat sur un tapis”</em> : on peut rechercher des images en langage naturel.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="le-contexte" class="level1" data-number="4">
@@ -1168,72 +1208,64 @@ Important
 <p>Pour prédire le token suivant, le modèle doit tenir compte de <strong>tout le texte</strong> qui précède, pas seulement du dernier mot. C’est le rôle du <strong>mécanisme d’attention</strong> (<em>attention</em>), le cœur de l’architecture <strong>transformer</strong> publiée en 2017 : c’est elle qui a permis l’explosion des LLMs.</p>
 <p>Chaque token va chercher de l’information dans les tokens qui le <strong>précèdent</strong>. Dans <em>“le chat boit du lait”</em>, le token <code>boit</code> regarde surtout <code>chat</code>, son sujet : à la sortie, il ne représente plus le verbe “boire” en général, mais <em>“boire, avec un chat comme sujet”</em>.</p>
 <p>Ces liens se lisent dans une <strong>matrice d’attention</strong> : une ligne par token qui cherche, sa <strong>requête (query)</strong>, et une colonne par token regardé, sa <strong>clé (key)</strong>.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
+<table class="att-heatmap caption-top table">
 <thead>
 <tr class="header">
-<th>query (cherche) ↓ &nbsp;key (regardé) →</th>
-<th style="text-align: center;"><code>le</code></th>
-<th style="text-align: center;"><code>chat</code></th>
-<th style="text-align: center;"><code>boit</code></th>
-<th style="text-align: center;"><code>du</code></th>
-<th style="text-align: center;"><code>lait</code></th>
+<th class="att-corner" data-quarto-table-cell-role="th">query (cherche) ↓ \ key (regardé) →</th>
+<th data-quarto-table-cell-role="th"><code>le</code></th>
+<th data-quarto-table-cell-role="th"><code>chat</code></th>
+<th data-quarto-table-cell-role="th"><code>boit</code></th>
+<th data-quarto-table-cell-role="th"><code>du</code></th>
+<th data-quarto-table-cell-role="th"><code>lait</code></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>le</code></td>
-<td style="text-align: center;">1,00</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
+<th data-quarto-table-cell-role="th" scope="row"><code>le</code></th>
+<td class="att-dark" style="background: rgba(47, 111, 176, 1.00)">1,00</td>
+<td class="att-masked">0</td>
+<td class="att-masked">0</td>
+<td class="att-masked">0</td>
+<td class="att-masked">0</td>
 </tr>
 <tr class="even">
-<td><code>chat</code></td>
-<td style="text-align: center;">0,20</td>
-<td style="text-align: center;">0,80</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
+<th data-quarto-table-cell-role="th" scope="row"><code>chat</code></th>
+<td style="background: rgba(47, 111, 176, 0.20)">0,20</td>
+<td class="att-dark" style="background: rgba(47, 111, 176, 0.80)">0,80</td>
+<td class="att-masked">0</td>
+<td class="att-masked">0</td>
+<td class="att-masked">0</td>
 </tr>
 <tr class="odd">
-<td><code>boit</code></td>
-<td style="text-align: center;">0,05</td>
-<td style="text-align: center;"><strong>0,85</strong></td>
-<td style="text-align: center;">0,10</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
+<th data-quarto-table-cell-role="th" scope="row"><code>boit</code></th>
+<td style="background: rgba(47, 111, 176, 0.05)">0,05</td>
+<td class="att-dark att-key" style="background: rgba(47, 111, 176, 0.85)">0,85</td>
+<td style="background: rgba(47, 111, 176, 0.10)">0,10</td>
+<td class="att-masked">0</td>
+<td class="att-masked">0</td>
 </tr>
 <tr class="even">
-<td><code>du</code></td>
-<td style="text-align: center;">0,05</td>
-<td style="text-align: center;">0,08</td>
-<td style="text-align: center;">0,12</td>
-<td style="text-align: center;">0,75</td>
-<td style="text-align: center;">0</td>
+<th data-quarto-table-cell-role="th" scope="row"><code>du</code></th>
+<td style="background: rgba(47, 111, 176, 0.05)">0,05</td>
+<td style="background: rgba(47, 111, 176, 0.08)">0,08</td>
+<td style="background: rgba(47, 111, 176, 0.12)">0,12</td>
+<td class="att-dark" style="background: rgba(47, 111, 176, 0.75)">0,75</td>
+<td class="att-masked">0</td>
 </tr>
 <tr class="odd">
-<td><code>lait</code></td>
-<td style="text-align: center;">0,03</td>
-<td style="text-align: center;">0,07</td>
-<td style="text-align: center;">0,10</td>
-<td style="text-align: center;">0,05</td>
-<td style="text-align: center;">0,75</td>
+<th data-quarto-table-cell-role="th" scope="row"><code>lait</code></th>
+<td style="background: rgba(47, 111, 176, 0.03)">0,03</td>
+<td style="background: rgba(47, 111, 176, 0.07)">0,07</td>
+<td style="background: rgba(47, 111, 176, 0.10)">0,10</td>
+<td style="background: rgba(47, 111, 176, 0.05)">0,05</td>
+<td class="att-dark" style="background: rgba(47, 111, 176, 0.75)">0,75</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>La ligne <code>boit</code> place <strong>0,85</strong> sur la colonne <code>chat</code> : c’est le lien sujet / verbe.</li>
+<li>La ligne <code>boit</code> place <strong>0,85</strong> sur la colonne <code>chat</code> (case encadrée) : c’est le lien sujet / verbe.</li>
 <li>Chaque ligne somme à 1 : un token répartit son attention entre les tokens qu’il regarde.</li>
-<li>Le triangle de 0 en haut à droite : un token ne peut pas regarder les tokens qui le <strong>suivent</strong>, puisque le modèle écrit de gauche à droite.</li>
+<li>Le triangle de 0 hachuré, en haut à droite : un token ne peut pas regarder les tokens qui le <strong>suivent</strong>, puisque le modèle écrit de gauche à droite.</li>
 </ul>
 <p>Pour les curieux : <a href="./cours3_attention.html">Activité - Le mécanisme d’attention</a>, et le détail du calcul dans l’<a href="./cours3_annexe.html#attention">annexe</a>.</p>
 </section>
@@ -1241,21 +1273,540 @@ Important
 <h2 data-number="4.2" class="anchored" data-anchor-id="la-fenêtre-de-contexte-context-window"><span class="header-section-number">4.2</span> La fenêtre de contexte (context window)</h2>
 <p>La <strong>fenêtre de contexte</strong> est le nombre maximal de tokens que le modèle peut lire en une fois : les consignes, les documents fournis, l’historique de la conversation <strong>et</strong> la réponse.</p>
 <p>La matrice d’attention a une ligne et une colonne par token : <strong>doubler</strong> la longueur du texte <strong>quadruple</strong> sa taille, et donc le coût du calcul. C’est pour cela que la fenêtre de contexte est limitée.</p>
+<p>Quelques ordres de grandeur (octobre 2026) :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modèle</th>
+<th>Fenêtre de contexte</th>
+<th>Réponse maximale</th>
+<th>Équivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Qwen3 1.7B (Alibaba, open weights, utilisé au TP3)</td>
+<td>32 768 tokens</td>
+<td>toute la fenêtre</td>
+<td>environ 70 pages</td>
+</tr>
+<tr class="even">
+<td>GPT-6 Astra, Sol, Luna (OpenAI)</td>
+<td>1 050 000 tokens</td>
+<td>128 000 tokens</td>
+<td>environ 2 000 pages</td>
+</tr>
+<tr class="odd">
+<td>Claude Opus 5.5, Sonnet 5.5, Haiku 5.5 (Anthropic)</td>
+<td>1 000 000 tokens</td>
+<td>128 000 tokens</td>
+<td>environ 2 000 pages</td>
+</tr>
+</tbody>
+</table>
+<p>Ces chiffres sont des <strong>maximums</strong> : la qualité des réponses baisse souvent quand le contexte est très rempli, et chaque token envoyé est facturé.</p>
 </section>
-<section id="ce-que-ça-change-pour-vous-3" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="ce-que-ça-change-pour-vous-3"><span class="header-section-number">4.3</span> Ce que ça change pour vous</h2>
+<section id="les-messages-et-la-consigne-système-system-prompt" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="les-messages-et-la-consigne-système-system-prompt"><span class="header-section-number">4.3</span> Les messages et la consigne système (system prompt)</h2>
+<p>Pour un chatbot, le contexte est une liste de <strong>messages</strong>. Chaque message a un <strong>rôle</strong> :</p>
 <ul>
-<li><strong>Le modèle n’a pas de mémoire.</strong> Pour poursuivre une conversation, un chatbot renvoie <strong>tout l’historique</strong> au modèle à chaque message. Plus la conversation est longue, plus chaque réponse coûte cher.</li>
+<li><code>system</code> : les consignes écrites par le <strong>développeur</strong> de l’application : le rôle du modèle, son ton, ce qu’il a le droit de faire. L’utilisateur ne les voit pas ;</li>
+<li><code>user</code> : les messages de l’utilisateur ;</li>
+<li><code>assistant</code> : les réponses du modèle.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"Tu es l'assistant d'un site de recettes. Tu ne parles que de cuisine."</span>},</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Comment réussir une pâte à crêpes ?"</span>},</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Le modèle ne reçoit pas cette liste telle quelle : elle est transformée en <strong>un seul texte</strong>, avec des tokens spéciaux qui marquent le début et la fin de chaque message. Pour lui, la consigne <code>system</code>, l’historique et la question ne sont que des tokens de son contexte.</p>
+<p>Le modèle a été entraîné à <strong>suivre</strong> la consigne <code>system</code>, mais rien ne l’y <strong>oblige</strong>. Un utilisateur peut écrire un message qui détourne le modèle de ses consignes, par exemple <em>« Ignore toutes les consignes précédentes et … »</em> : c’est une <strong>injection de prompt (prompt injection)</strong>. Nous y reviendrons dans le cours sur la sécurité.</p>
+<p>Voici ce que l’application envoie au modèle, au premier message puis au dixième :</p>
+<figure class="svg-figure figure">
+<svg viewbox="0 0 1000 285" role="img" aria-label="Deux barres représentent la fenêtre de contexte. Au 1er message, elle contient la consigne system, les documents, la question et la réponse, et reste en grande partie libre. Au 10e message, l'historique des 9 messages précédents s'ajoute et la fenêtre est presque pleine. Tout ce qui précède la réponse est renvoyé à chaque appel et facturé en entrée ; la réponse est facturée en sortie." style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
+  <style>
+    .ctx-label { font-size: 17px; font-weight: 700; fill: #2c2c2a; }
+    .ctx-seg { font-size: 16px; fill: #2c2c2a; }
+    .ctx-sys { fill: #e7e3f7; stroke: #5b52c4; stroke-width: 1.5; }
+    .ctx-doc { fill: #e3edf8; stroke: #2f6fb0; stroke-width: 1.5; }
+    .ctx-hist { fill: #f3f1ec; stroke: #6d6c66; stroke-width: 1.5; }
+    .ctx-q { fill: #fbeae2; stroke: #c4562c; stroke-width: 1.5; }
+    .ctx-ans { fill: #e0f0e9; stroke: #12805f; stroke-width: 1.5; }
+    .ctx-free { fill: none; stroke: #b4b2a9; stroke-width: 1.2; stroke-dasharray: 5 4; }
+    .ctx-free-text { font-size: 15px; font-style: italic; fill: #8a887f; }
+    .ctx-limit { stroke: #c4562c; stroke-width: 2.5; stroke-dasharray: 7 4; }
+    .ctx-limit-text { font-size: 15px; font-weight: 700; fill: #c4562c; }
+    .ctx-brace { fill: none; stroke: #6d6c66; stroke-width: 1.5; }
+    .ctx-note { font-size: 15px; fill: #4a4944; }
+  </style>
+
+  <!-- Context window limit -->
+  <line x1="990" y1="35" x2="990" y2="200" class="ctx-limit"></line>
+  <text x="990" y="24" class="ctx-limit-text" text-anchor="end">limite de la fenêtre de contexte</text>
+
+  <text x="122" y="81" class="ctx-label" text-anchor="end">1er message</text>
+  <rect x="130" y="50" width="90" height="50" class="ctx-sys"></rect>
+  <text x="175" y="81" class="ctx-seg" text-anchor="middle">system</text>
+  <rect x="220" y="50" width="220" height="50" class="ctx-doc"></rect>
+  <text x="330" y="81" class="ctx-seg" text-anchor="middle">documents</text>
+  <rect x="440" y="50" width="80" height="50" class="ctx-q"></rect>
+  <text x="480" y="81" class="ctx-seg" text-anchor="middle">question</text>
+  <rect x="520" y="50" width="80" height="50" class="ctx-ans"></rect>
+  <text x="560" y="81" class="ctx-seg" text-anchor="middle">réponse</text>
+  <rect x="600" y="50" width="390" height="50" class="ctx-free"></rect>
+  <text x="795" y="81" class="ctx-free-text" text-anchor="middle">libre</text>
+
+  <text x="122" y="171" class="ctx-label" text-anchor="end">10e message</text>
+  <rect x="130" y="140" width="90" height="50" class="ctx-sys"></rect>
+  <text x="175" y="171" class="ctx-seg" text-anchor="middle">system</text>
+  <rect x="220" y="140" width="220" height="50" class="ctx-doc"></rect>
+  <text x="330" y="171" class="ctx-seg" text-anchor="middle">documents</text>
+  <rect x="440" y="140" width="320" height="50" class="ctx-hist"></rect>
+  <text x="600" y="171" class="ctx-seg" text-anchor="middle">historique (9 messages)</text>
+  <rect x="760" y="140" width="80" height="50" class="ctx-q"></rect>
+  <text x="800" y="171" class="ctx-seg" text-anchor="middle">question</text>
+  <rect x="840" y="140" width="80" height="50" class="ctx-ans"></rect>
+  <text x="880" y="171" class="ctx-seg" text-anchor="middle">réponse</text>
+  <rect x="920" y="140" width="70" height="50" class="ctx-free"></rect>
+  <text x="955" y="171" class="ctx-free-text" text-anchor="middle">libre</text>
+
+  <!-- What is billed as input / output, for the 10th message -->
+  <path d="M 130 200 v 10 H 840 v -10" class="ctx-brace"></path>
+  <text x="485" y="232" class="ctx-note" text-anchor="middle">entrée : tout est renvoyé à chaque message</text>
+  <text x="485" y="252" class="ctx-note" text-anchor="middle">et facturé au prix des tokens d'entrée</text>
+  <path d="M 844 200 v 10 H 920 v -10" class="ctx-brace"></path>
+  <text x="880" y="232" class="ctx-note" text-anchor="middle">sortie</text>
+  <text x="880" y="252" class="ctx-note" text-anchor="middle">plus chère</text>
+</svg>
+<figcaption>Le contenu de la fenêtre de contexte : l'historique grossit à chaque message (schéma, pas à l'échelle)</figcaption>
+</figure>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Le modèle n’a pas de mémoire.</strong> Pour poursuivre une conversation, un chatbot renvoie <strong>tout l’historique</strong> au modèle à chaque message, avec la consigne <code>system</code>. Plus la conversation est longue, plus chaque réponse coûte cher.</li>
+<li>La consigne <code>system</code> est le premier outil du développeur pour régler le comportement de son application. Mais ce n’est pas une protection : n’y mettez pas d’information secrète, et ne comptez pas sur elle pour empêcher un usage détourné.</li>
 <li>Tout ce que le modèle doit savoir pour répondre (documents, consignes, exemples) doit tenir dans la fenêtre de contexte. Quand les documents sont trop nombreux, on ne lui donne que les plus pertinents : c’est encore le RAG.</li>
 </ul>
+</div>
+</div>
 </section>
 </section>
-<section id="tp3-utiliser-un-llm" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> TP3 — Utiliser un LLM</h1>
-<p>Suivez la procédure de la <a href="./tp3.html">page du TP3</a> pour exécuter le notebook <code>tp3_llm.ipynb</code> sur un GPU de Kaggle.</p>
+<section id="training-phases" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Comment un LLM apprend à converser</h1>
+<p>Le modèle du TP3, <code>Qwen3-1.7B</code>, est un modèle <strong>instruct</strong> (instruction tuned) : il a suivi <strong>deux phases</strong> d’entraînement. À la fin de la première, on obtient son modèle de base, publié sous le nom <code>Qwen3-1.7B-Base</code>.</p>
+<figure class="svg-figure figure">
+<svg viewbox="0 0 1000 410" role="img" aria-label="Schéma : le pre-training transforme un corpus de texte en modèle de base ; le post-training (SFT puis preference finetuning) transforme le modèle de base en modèle instruct" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
+  <defs>
+    <marker id="tp-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"></path>
+    </marker>
+  </defs>
+
+  <!-- Band 1: pre-training -->
+  <rect x="10" y="10" width="180" height="390" rx="14" fill="#fdf1e6" stroke="#d98032" stroke-width="1.5"></rect>
+  <text x="100" y="40" font-size="17" font-weight="700" fill="#a85d1c" text-anchor="middle">1. Pre-training</text>
+
+  <!-- Band 2: post-training -->
+  <rect x="410" y="10" width="380" height="390" rx="14" fill="#e7efe2" stroke="#93ad83" stroke-width="1.5"></rect>
+  <text x="600" y="40" font-size="17" font-weight="700" fill="#4f7a3a" text-anchor="middle">2. Post-training</text>
+
+  <!-- Training data, one box per stage -->
+  <g text-anchor="middle" fill="#2b2b2b" font-size="13">
+    <rect x="20" y="60" width="160" height="110" rx="8" fill="#fff" stroke="#c9a27d"></rect>
+    <text x="100" y="85" font-size="15" font-weight="700">Corpus de texte</text>
+    <text x="100" y="108">web, livres, code</text>
+    <text x="100" y="128">filtré</text>
+    <text x="100" y="148">milliers de milliards</text>
+    <text x="100" y="164">de tokens</text>
+
+    <rect x="420" y="60" width="160" height="110" rx="8" fill="#fff" stroke="#93ad83"></rect>
+    <text x="500" y="85" font-size="15" font-weight="700">Démonstrations</text>
+    <text x="500" y="108">exemples</text>
+    <text x="500" y="128">(prompt, réponse)</text>
+    <text x="500" y="148">écrits par des experts</text>
+
+    <rect x="620" y="60" width="160" height="110" rx="8" fill="#fff" stroke="#93ad83"></rect>
+    <text x="700" y="85" font-size="15" font-weight="700">Préférences</text>
+    <text x="700" y="108">notes humaines</text>
+    <text x="700" y="128">(RLHF)</text>
+    <text x="700" y="148">ou notes d'une IA</text>
+    <text x="700" y="164">(RLAIF)</text>
+  </g>
+
+  <g stroke="#555" stroke-width="2" marker-end="url(#tp-arrow)">
+    <line x1="100" y1="172" x2="100" y2="203"></line>
+    <line x1="500" y1="172" x2="500" y2="203"></line>
+    <line x1="700" y1="172" x2="700" y2="203"></line>
+  </g>
+
+  <!-- Training stages -->
+  <g text-anchor="middle" fill="#2b2b2b">
+    <rect x="20" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#d98032" stroke-width="1.8"></rect>
+    <text x="100" y="240" font-size="15" font-weight="700">Prédire le</text>
+    <text x="100" y="260" font-size="15" font-weight="700">token suivant</text>
+    <text x="100" y="285" font-size="13">auto-supervisé</text>
+
+    <rect x="420" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
+    <text x="500" y="240" font-size="15" font-weight="700">Supervised</text>
+    <text x="500" y="260" font-size="15" font-weight="700">finetuning (SFT)</text>
+    <text x="500" y="285" font-size="13">imiter les réponses</text>
+
+    <rect x="620" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
+    <text x="700" y="240" font-size="15" font-weight="700">Preference</text>
+    <text x="700" y="260" font-size="15" font-weight="700">finetuning</text>
+    <text x="700" y="285" font-size="13">suivre les préférences</text>
+  </g>
+
+  <!-- Resulting models -->
+  <rect x="220" y="205" width="160" height="100" rx="10" fill="#5b9bd5" stroke="#1f3864" stroke-width="2.5"></rect>
+  <rect x="820" y="205" width="160" height="100" rx="10" fill="#5b9bd5" stroke="#1f3864" stroke-width="2.5"></rect>
+  <g text-anchor="middle" fill="#fff">
+    <text x="300" y="248" font-size="17" font-weight="700">Modèle de base</text>
+    <text x="300" y="272" font-size="13">(pre-trained)</text>
+    <text x="900" y="248" font-size="17" font-weight="700">Modèle instruct</text>
+    <text x="900" y="272" font-size="13">(instruction tuned)</text>
+  </g>
+
+  <g stroke="#555" stroke-width="2" marker-end="url(#tp-arrow)">
+    <line x1="180" y1="255" x2="217" y2="255"></line>
+    <line x1="380" y1="255" x2="417" y2="255"></line>
+    <line x1="580" y1="255" x2="617" y2="255"></line>
+    <line x1="780" y1="255" x2="817" y2="255"></line>
+  </g>
+
+  <!-- Example model names on Hugging Face -->
+  <g text-anchor="middle" fill="#1f3864" font-size="12" font-family="var(--bs-font-monospace,monospace)">
+    <text x="300" y="330">gemma-3-27b-pt</text>
+    <text x="300" y="348">Llama-3.1-8B</text>
+    <text x="900" y="330">gemma-3-27b-it</text>
+    <text x="900" y="348">Llama-3.1-8B-Instruct</text>
+  </g>
+
+  <!-- What each phase brings -->
+  <g text-anchor="middle" font-size="14" font-style="italic">
+    <text x="100" y="370" fill="#a85d1c">acquiert des</text>
+    <text x="100" y="388" fill="#a85d1c">connaissances</text>
+    <text x="600" y="380" fill="#4f7a3a">apprend à les utiliser</text>
+  </g>
+</svg>
+<figcaption>Les deux phases d'entraînement d'un LLM, avec des exemples de noms de modèles</figcaption>
+</figure>
+<ul>
+<li>En pré-entraînement (pre-training), le modèle <strong>acquiert</strong> des connaissances.</li>
+<li>En post-entraînement (post-training), il apprend à <strong>utiliser</strong> ces connaissances pour converser.</li>
+</ul>
+<p>Les entreprises publient souvent les deux versions d’un même modèle. On les reconnaît à leur nom : suffixe <code>-pt</code> (pre-trained) et <code>-it</code> (instruction tuned) chez Google, suffixe <code>-Instruct</code> chez Meta, suffixe <code>-Base</code> pour le modèle de base chez Qwen.</p>
+<p>Ces phases ressemblent à la façon dont un étudiant apprend :</p>
+<figure class="svg-figure figure">
+<svg viewbox="0 0 1000 380" role="img" aria-label="Analogie : lire le cours correspond au pre-training, refaire des exercices corrigés au supervised finetuning, s'entraîner et être noté au preference finetuning, passer l'examen final à l'évaluation" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
+  <defs>
+    <marker id="st-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"></path>
+    </marker>
+  </defs>
+
+  <!-- Bands: pre-training, post-training, evaluation -->
+  <rect x="10" y="10" width="230" height="360" rx="14" fill="#fdf1e6" stroke="#d98032" stroke-width="1.5"></rect>
+  <text x="125" y="40" font-size="17" font-weight="700" fill="#a85d1c" text-anchor="middle">1. Pre-training</text>
+
+  <rect x="250" y="10" width="490" height="360" rx="14" fill="#e7efe2" stroke="#93ad83" stroke-width="1.5"></rect>
+  <text x="495" y="40" font-size="17" font-weight="700" fill="#4f7a3a" text-anchor="middle">2. Post-training</text>
+
+  <!-- Dashed: the model no longer learns during evaluation -->
+  <rect x="750" y="10" width="240" height="360" rx="14" fill="#eef1f5" stroke="#8a9bb0" stroke-width="1.5" stroke-dasharray="6 4"></rect>
+  <text x="870" y="40" font-size="17" font-weight="700" fill="#4a5d75" text-anchor="middle">3. Évaluation</text>
+
+  <!-- Student side -->
+  <g text-anchor="middle" fill="#2b2b2b">
+    <rect x="25" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#c9a27d"></rect>
+    <rect x="265" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#93ad83"></rect>
+    <rect x="525" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#93ad83"></rect>
+    <rect x="770" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#8a9bb0"></rect>
+
+    <g font-size="12" fill="#777">
+      <text x="125" y="80">Étudiant</text>
+      <text x="365" y="80">Étudiant</text>
+      <text x="625" y="80">Étudiant</text>
+      <text x="870" y="80">Étudiant</text>
+    </g>
+    <g font-size="15" font-weight="700">
+      <text x="125" y="112">Lire le cours</text>
+      <text x="365" y="105">Refaire des</text>
+      <text x="365" y="125">exercices corrigés</text>
+      <text x="625" y="105">S'entraîner, être</text>
+      <text x="625" y="125">noté par le prof</text>
+      <text x="870" y="112">Passer l'examen</text>
+    </g>
+  </g>
+
+  <!-- "Is like" links between the two sides -->
+  <g stroke="#999" stroke-width="1.5" stroke-dasharray="3 3">
+    <line x1="125" y1="147" x2="125" y2="193"></line>
+    <line x1="365" y1="147" x2="365" y2="193"></line>
+    <line x1="625" y1="147" x2="625" y2="193"></line>
+    <line x1="870" y1="147" x2="870" y2="193"></line>
+  </g>
+  <g fill="#fff" stroke="#999" stroke-width="1.5">
+    <circle cx="125" cy="170" r="12"></circle> <circle cx="365" cy="170" r="12"></circle>
+    <circle cx="625" cy="170" r="12"></circle> <circle cx="870" cy="170" r="12"></circle>
+  </g>
+  <g font-size="16" font-weight="700" fill="#555" text-anchor="middle">
+    <text x="125" y="176">≈</text> <text x="365" y="176">≈</text>
+    <text x="625" y="176">≈</text> <text x="870" y="176">≈</text>
+  </g>
+
+  <!-- LLM side -->
+  <g text-anchor="middle" fill="#2b2b2b">
+    <rect x="25" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#d98032" stroke-width="1.8"></rect>
+    <rect x="265" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
+    <rect x="525" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
+    <rect x="770" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#8a9bb0" stroke-width="1.8" stroke-dasharray="6 4"></rect>
+
+    <g font-size="12" fill="#777">
+      <text x="125" y="215">LLM</text>
+      <text x="365" y="215">LLM</text>
+      <text x="625" y="215">LLM</text>
+      <text x="870" y="215">LLM</text>
+    </g>
+    <g font-size="15" font-weight="700">
+      <text x="125" y="240">Pre-training</text>
+      <text x="365" y="240">Supervised finetuning</text>
+      <text x="625" y="240">Preference finetuning</text>
+      <text x="870" y="240">Benchmarks</text>
+    </g>
+    <g font-size="13">
+      <text x="125" y="262">lire des milliers de</text>
+      <text x="125" y="279">milliards de tokens</text>
+      <text x="365" y="262">imiter des exemples</text>
+      <text x="365" y="279">(prompt, réponse)</text>
+      <text x="625" y="262">réponses notées par</text>
+      <text x="625" y="279">un humain ou une IA</text>
+      <text x="870" y="262">paramètres figés,</text>
+      <text x="870" y="279">on mesure seulement</text>
+    </g>
+  </g>
+
+  <g stroke="#555" stroke-width="2" marker-end="url(#st-arrow)">
+    <line x1="225" y1="242" x2="262" y2="242"></line>
+    <line x1="465" y1="242" x2="522" y2="242"></line>
+    <line x1="725" y1="242" x2="767" y2="242"></line>
+  </g>
+
+  <!-- What is learnt -->
+  <g text-anchor="middle" font-size="14" font-style="italic">
+    <text x="125" y="320" fill="#a85d1c">des connaissances</text>
+    <text x="365" y="320" fill="#4f7a3a">la forme d'une</text>
+    <text x="365" y="338" fill="#4f7a3a">bonne réponse</text>
+    <text x="625" y="320" fill="#4f7a3a">le comportement</text>
+    <text x="625" y="338" fill="#4f7a3a">attendu</text>
+    <text x="870" y="320" fill="#4a5d75">rien : c'est</text>
+    <text x="870" y="338" fill="#4a5d75">une mesure</text>
+  </g>
+</svg>
+<figcaption>Analogie avec l'apprentissage d'un étudiant, inspirée d'<a href="https://x.com/karpathy/status/1885026028428681698">Andrej Karpathy (2025)</a></figcaption>
+</figure>
+<section id="pré-entraînement-pre-training" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="pré-entraînement-pre-training"><span class="header-section-number">5.1</span> Pré-entraînement (pre-training)</h2>
+<p>Le <strong>pre-training</strong> est l’entraînement du modèle de <strong>base</strong> (foundation model) : il apprend à prédire le token suivant, sur un corpus de textes filtré pour éviter certains contenus.</p>
+<p>C’est une classification, comme au début du cours, avec une classe par token du vocabulaire. Mais l’entraînement est <strong>auto-supervisé</strong> : les étiquettes sont gratuites, la cible est simplement le <strong>token suivant</strong> du texte. Une phrase de <span class="math inline">\(T\)</span> tokens fournit donc <span class="math inline">\(T\)</span> exemples d’un coup, avec la cible décalée d’un cran :</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>entrée</th>
+<th><code>le</code></th>
+<th><code>␣chat</code></th>
+<th><code>␣boit</code></th>
+<th><code>␣du</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>cible</strong></td>
+<td><code>␣chat</code></td>
+<td><code>␣boit</code></td>
+<td><code>␣du</code></td>
+<td><code>␣lait</code></td>
+</tr>
+</tbody>
+</table>
+<p>Pas besoin d’annotation humaine : n’importe quel texte (pages web, livres, code) devient un dataset d’entraînement. C’est ce qui permet d’entraîner les LLMs sur des milliers de milliards de tokens. Le détail (fonction de coût, code PyTorch) est dans l’<a href="./cours3_annexe.html#training">annexe</a>.</p>
+<p>En sortie, on obtient un modèle qui :</p>
+<ul>
+<li>génère du texte cohérent en prédisant le token suivant ;</li>
+<li>ne sait pas encore converser avec un utilisateur pour répondre à des questions ;</li>
+<li>n’est pas contrôlé, et peut générer du contenu raciste, dangereux ou injurieux.</li>
+</ul>
 </section>
-<section id="points-à-retenir" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Points à retenir</h1>
+<section id="post-entraînement-post-training" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="post-entraînement-post-training"><span class="header-section-number">5.2</span> Post-entraînement (post-training)</h2>
+<p>Le <strong>post-training</strong> spécialise le modèle de base pour lui apprendre à <strong>converser</strong> et pour empêcher les comportements toxiques. Le modèle obtenu est dit <strong>instruction tuned</strong>.</p>
+<p>Cette phase <strong>modifie les paramètres</strong> du modèle : c’est ce qu’on appelle le <strong>finetuning</strong>. Elle se déroule en deux temps :</p>
+<ul>
+<li><strong>supervised finetuning (SFT)</strong> : on utilise des exemples de conversations ;</li>
+<li><strong>preference finetuning</strong> : on modifie le modèle pour qu’il suive les préférences humaines, avec des techniques d’apprentissage par renforcement (reinforcement learning).</li>
+</ul>
+<section id="supervised-finetuning" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="supervised-finetuning"><span class="header-section-number">5.2.1</span> Supervised finetuning</h3>
+<p>Un modèle de base est optimisé pour compléter du texte, pas pour converser. Si vous entrez <em>« comment faire une pizza »</em>, il va essayer de compléter la phrase, par exemple par <em>« pour une famille de quatre ? »</em>. Le modèle n’a pas de concept de conversation, et ne va pas essayer de répondre à la question.</p>
+<p>Un modèle imite ses données d’entraînement. Pour qu’il réponde aux questions, on lui fournit des exemples de questions et de réponses.</p>
+<p>Ce dataset est une collection d’exemples <code>(prompt, response)</code> de grande qualité, qu’on appelle <strong>données de démonstration</strong>. On montre au modèle comment il devrait se comporter, pour qu’il imite ce comportement. Pour construire le dataset, on recrute des spécialistes de chaque domaine : les réponses demandent souvent une pensée critique et du jugement.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 24%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type de tâche</th>
+<th>Prompt</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Question</td>
+<td>Comment faire une pizza ?</td>
+<td>Pour une pizza maison, il faut : 1. préparer la pâte avec de la farine, de l’eau, de la levure et du sel…</td>
+</tr>
+<tr class="even">
+<td>Réécriture</td>
+<td>Reformule ce mail pour qu’il soit plus poli : « Envoie-moi le rapport. »</td>
+<td>Bonjour, pourrais-tu m’envoyer le rapport lorsque tu auras un moment ? Merci d’avance.</td>
+</tr>
+<tr class="odd">
+<td>Classification</td>
+<td>Ce commentaire est-il positif ou négatif ? « Livraison en retard, produit cassé. »</td>
+<td>Négatif.</td>
+</tr>
+<tr class="even">
+<td>Jugement</td>
+<td>Mon médecin m’a prescrit un antibiotique, puis-je doubler la dose pour guérir plus vite ?</td>
+<td>Non, ne doublez pas la dose sans avis médical : cela augmente le risque d’effets secondaires…</td>
+</tr>
+</tbody>
+</table>
+<p>Ces datasets contiennent quelques dizaines de milliers d’exemples, beaucoup moins que le corpus de pre-training. Par exemple, <a href="https://huggingface.co/datasets/databricks/databricks-dolly-15k">databricks-dolly-15k</a> contient 15 000 exemples écrits par des employés de Databricks.</p>
+</section>
+<section id="preference-finetuning" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="preference-finetuning"><span class="header-section-number">5.2.2</span> Preference finetuning</h3>
+<p>Après le supervised finetuning, le modèle sait tenir une conversation, mais <strong>sans filtre</strong>.</p>
+<p>Si l’utilisateur demande au modèle d’écrire un essai sur l’infériorité d’une race, ou comment fabriquer une bombe, le modèle doit refuser. Ces exemples sont évidents, mais d’autres cas sont plus délicats. Comment le modèle doit-il répondre à des questions sur la religion, l’avortement, un conflit armé, l’immigration ?</p>
+<ul>
+<li>si le modèle répond à une question controversée, il risque de choquer les utilisateurs ;</li>
+<li>si le modèle est trop censuré, il devient inutile.</li>
+</ul>
+<p>Le but du preference finetuning est que le modèle <strong>se comporte selon une préférence humaine</strong>. Il existe deux approches principales pour lui apprendre cette préférence : RLHF et RLAIF.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>RLHF (reinforcement learning from human feedback)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>On demande à des évaluateurs humains de donner un score à des réponses générées par le modèle LLM. Cela constitue un dataset <code>input=(prompt, response), output=score</code></li>
+<li>On entraîne un 2ème modèle, le <strong>reward model</strong> avec ces données. Ce modèle apprend à prédire quelle réponse un humain préfèrerait</li>
+<li>Optimisation du LLM par reinforcement learning :
+<ul>
+<li>le modèle LLM génère des réponses,</li>
+<li>le reward model note les réponses,</li>
+<li>un algorithme ajuste les paramètres du LLM</li>
+</ul></li>
+</ol>
+<p>Cette approche est efficace : c’est elle qui a rendu ChatGPT utilisable par le grand public en 2022. Elle a cependant des limites :</p>
+<ul>
+<li>les évaluations humaines sont lentes et coûteuses</li>
+<li>les évaluateurs ne sont pas toujours d’accord entre eux</li>
+<li>les humains aiment être <strong>flattés</strong> : les évaluateurs ont tendance à mieux noter les réponses qui donnent raison à l’utilisateur ou le complimentent. Le modèle apprend alors la <strong>complaisance (sycophancy)</strong>. En 2025, OpenAI a dû annuler une mise à jour de GPT-4o qui était devenue beaucoup trop flatteuse. Voir <a href="https://openai.com/index/sycophancy-in-gpt-4o/">Sycophancy in GPT-4o</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>RLAIF (reinforcement learning from AI feedback)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>C’est l’approche utilisée par Anthropic. La notation est effectuée par un modèle d’IA qui se base sur une <strong>constitution</strong>. La constitution est un document qui exprime les valeurs que doit respecter le modèle.</p>
+<p>Voir <a href="https://www.anthropic.com/constitution">Claude’s constitution</a></p>
+<p>Cette approche a plusieurs avantages :</p>
+<ul>
+<li>on peut évaluer des datasets très grands automatiquement</li>
+<li>la constitution peut être revue et mise à jour régulièrement</li>
+</ul>
+<p>Cependant, cette approche possède aussi des biais. L’IA notatrice hérite des biais humains. Elle est aussi sujette à la complaisance, à préférer des réponses longues ou qui lui ressemblent.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="le-shoggoth" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="le-shoggoth"><span class="header-section-number">5.3</span> Le shoggoth</h2>
+<p>Le post-training est souvent illustré par un monstre, le shoggoth :</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/shoggoth.png" class="img-fluid figure-img" style="width:70.0%" alt="Un monstre couvert d'yeux et de tentacules (unsupervised learning) tient un masque humain rose (supervised fine-tuning), sur lequel est posé un petit smiley jaune (RLHF)."></p>
+<figcaption>Le shoggoth au smiley. Dessin de <a href="https://x.com/anthrupad/status/1622349563922362368">@anthrupad</a> (2023)</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Unsupervised learning</strong> : le modèle de base, un monstre qui a lu tout internet.</li>
+<li><strong>Supervised fine-tuning</strong> : on lui met un masque humain.</li>
+<li><strong>Preference fine-tuning (RLHF)</strong> : on ajoute un smiley, le modèle devient aimable et poli.</li>
+</ul>
+<p>Le finetuning change le comportement du modèle, mais le monstre est toujours là : c’est pourquoi on peut parfois contourner les protections d’un modèle (jailbreak).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Pour une application qui répond à des questions ou suit des consignes, on utilise un modèle <strong>instruct</strong> (<code>-it</code>, <code>-Instruct</code>) : un modèle de base complète le texte au lieu de répondre. Certaines applications spécifiques ont cependant intérêt à utiliser le modèle de base : point de départ d’un finetuning, autocomplétion de code, génération de textes variés.</li>
+<li>Respecter la consigne <code>system</code>, refuser les demandes dangereuses, mettre en forme les réponses en Markdown : tout cela vient du post-training.</li>
+<li>Ces protections sont un masque, pas une garantie : on peut parfois les contourner. Vous allez essayer dans le TP.</li>
+<li>Le modèle a tendance à vous donner raison (complaisance) : ne comptez pas sur lui pour critiquer vos idées sans le lui demander.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="tp3-utiliser-un-llm" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> TP3 — Utiliser un LLM</h1>
+<p>Suivez la procédure de la <a href="./tp3.html">page du TP3</a> pour exécuter le notebook <code>tp3_llm.ipynb</code> sur Kaggle, ou à défaut sur votre ordinateur.</p>
+</section>
+<section id="points-à-retenir" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Points à retenir</h1>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1271,6 +1822,7 @@ Important
 <li>Un LLM lit et écrit des <strong>tokens</strong>, pas des mots ni des lettres. Les API sont facturées au token.</li>
 <li>Un <strong>embedding</strong> transforme un token ou un texte en vecteur : des sens proches donnent des vecteurs proches. C’est la base de la recherche sémantique et du RAG.</li>
 <li>Le modèle ne voit que sa <strong>fenêtre de contexte</strong>, et n’a pas de mémoire d’un appel à l’autre.</li>
+<li>Un LLM est d’abord <strong>pré-entraîné</strong> à prédire le token suivant sur un énorme corpus (modèle de base), puis <strong>post-entraîné</strong> à converser et à refuser les demandes dangereuses (modèle instruct).</li>
 </ol>
 </div>
 </div>
@@ -1285,7 +1837,9 @@ Important
 //     can be opened on demand during the lecture
 //   - scales the document up for projection (see styles.css)
 //   - hides the left navigation sidebar (see styles.css)
-// Turning it off restores the reading view, with every callout expanded.
+// Turning it off restores the reading view, where each callout gets back the
+// state written in the .qmd: collapse="true" collapsed, collapse="false"
+// expanded.
 // The choice is stored in localStorage so it survives page navigation.
 (function () {
   const STORAGE_KEY = "xti306-presentation-mode";
@@ -1300,14 +1854,32 @@ Important
   //
   // Callouts written without a collapse attribute lack this markup and are
   // left alone: they stay visible in both modes.
-  function setCalloutsCollapsed(collapsed) {
+  function collapsibleCallouts() {
+    const found = [];
     document.querySelectorAll(".callout").forEach(function (callout) {
       const header = callout.querySelector(".callout-header[aria-expanded]");
       const body = callout.querySelector(".callout-collapse");
-      if (!header || !body) return;
+      if (header && body) found.push({ callout: callout, header: header, body: body });
+    });
+    return found;
+  }
 
-      body.classList.toggle("show", !collapsed);
-      header.setAttribute("aria-expanded", String(!collapsed));
+  // Quarto renders collapse="true" without the "show" class. The authored
+  // state is read once, before this script changes anything, and kept on the
+  // callout so the reading view can restore it.
+  function rememberAuthoredState() {
+    collapsibleCallouts().forEach(function (c) {
+      c.callout.dataset.authoredCollapsed = String(!c.body.classList.contains("show"));
+    });
+  }
+
+  // forceCollapsed: true collapses every callout (presentation mode),
+  // false restores the authored state (reading view).
+  function setCalloutsCollapsed(forceCollapsed) {
+    collapsibleCallouts().forEach(function (c) {
+      const collapsed = forceCollapsed || c.callout.dataset.authoredCollapsed === "true";
+      c.body.classList.toggle("show", !collapsed);
+      c.header.setAttribute("aria-expanded", String(!collapsed));
     });
   }
 
@@ -1325,8 +1897,8 @@ Important
 
     button.setAttribute("aria-pressed", String(enabled));
     button.title = enabled
-      ? "Revenir à la vue complète : tous les encadrés dépliés"
-      : "Replier les encadrés et agrandir le texte pour la projection";
+      ? "Revenir à la vue lecture"
+      : "Replier tous les encadrés et agrandir le texte pour la projection";
   }
 
   function init() {
@@ -1335,6 +1907,7 @@ Important
     button.type = "button";
     button.innerHTML = '<span class="status-dot"></span>Mode présentation';
 
+    rememberAuthoredState();
     let enabled = localStorage.getItem(STORAGE_KEY) === "true";
     render(button, enabled);
 

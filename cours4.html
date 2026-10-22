@@ -77,35 +77,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -291,12 +262,6 @@ window.Quarto = {
   <li><a href="#copyright" id="toc-copyright" class="nav-link" data-scroll-target="#copyright"><span class="header-section-number">1.1.2</span> Copyright</a></li>
   <li><a href="#modèles-spécialisés" id="toc-modèles-spécialisés" class="nav-link" data-scroll-target="#modèles-spécialisés"><span class="header-section-number">1.1.3</span> Modèles spécialisés</a></li>
   </ul></li>
-  <li><a href="#phases-dentraînement" id="toc-phases-dentraînement" class="nav-link" data-scroll-target="#phases-dentraînement"><span class="header-section-number">1.2</span> Phases d’entraînement</a>
-  <ul class="collapse">
-  <li><a href="#pré-entraînement-pre-training" id="toc-pré-entraînement-pre-training" class="nav-link" data-scroll-target="#pré-entraînement-pre-training"><span class="header-section-number">1.2.1</span> Pré-entraînement (Pre-training)</a></li>
-  <li><a href="#post-entraînement-post-training" id="toc-post-entraînement-post-training" class="nav-link" data-scroll-target="#post-entraînement-post-training"><span class="header-section-number">1.2.2</span> Post-entraînement (Post-training)</a></li>
-  <li><a href="#le-shoggoth" id="toc-le-shoggoth" class="nav-link" data-scroll-target="#le-shoggoth"><span class="header-section-number">1.2.3</span> Le shoggoth</a></li>
-  </ul></li>
   </ul></li>
   <li><a href="#développer-une-application-llm" id="toc-développer-une-application-llm" class="nav-link" data-scroll-target="#développer-une-application-llm"><span class="header-section-number">2</span> Développer une application LLM</a>
   <ul class="collapse">
@@ -339,9 +304,9 @@ window.Quarto = {
 <p>En pratique, très peu de personnes ont l’occasion d’entraîner complètement un LLM. Ce chapitre permet de :</p>
 <ul>
 <li>comprendre les enjeux liés à l’entraînement : consommation électrique, origine des données, biais</li>
-<li>comprendre la différence entre un modèle <strong>pre-trained</strong> et <strong>instruction-trained</strong></li>
 </ul>
-<p>Entraîner <strong>complètement</strong> un LLM demande ressources colossales. Quelques ordres de grandeur :</p>
+<p>Les phases d’entraînement (pre-training, post-training) sont présentées dans le <a href="./cours3.html#training-phases">CM3</a>.</p>
+<p>Entraîner <strong>complètement</strong> un LLM demande des ressources colossales. Quelques ordres de grandeur :</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 12%">
@@ -440,394 +405,6 @@ window.Quarto = {
 <p>Voir <a href="https://github.com/NVIDIA-BioNeMo#models">NVidia BioNeMo</a>, <a href="https://deepmind.google/models/gemma/medgemma/">Google MedGemma</a></p>
 </section>
 </section>
-<section id="phases-dentraînement" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="phases-dentraînement"><span class="header-section-number">1.2</span> Phases d’entraînement</h2>
-<figure class="svg-figure figure">
-<svg viewbox="0 0 1000 410" role="img" aria-label="Schéma : le pre-training transforme un corpus de texte en modèle de base ; le post-training (SFT puis preference finetuning) transforme le modèle de base en modèle instruct" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
-  <defs>
-    <marker id="tp-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#555"></path>
-    </marker>
-  </defs>
-
-  <!-- Band 1: pre-training -->
-  <rect x="10" y="10" width="180" height="390" rx="14" fill="#fdf1e6" stroke="#d98032" stroke-width="1.5"></rect>
-  <text x="100" y="40" font-size="17" font-weight="700" fill="#a85d1c" text-anchor="middle">1. Pre-training</text>
-
-  <!-- Band 2: post-training -->
-  <rect x="410" y="10" width="380" height="390" rx="14" fill="#e7efe2" stroke="#93ad83" stroke-width="1.5"></rect>
-  <text x="600" y="40" font-size="17" font-weight="700" fill="#4f7a3a" text-anchor="middle">2. Post-training</text>
-
-  <!-- Training data, one box per stage -->
-  <g text-anchor="middle" fill="#2b2b2b" font-size="13">
-    <rect x="20" y="60" width="160" height="110" rx="8" fill="#fff" stroke="#c9a27d"></rect>
-    <text x="100" y="85" font-size="15" font-weight="700">Corpus de texte</text>
-    <text x="100" y="108">web, livres, code</text>
-    <text x="100" y="128">filtré</text>
-    <text x="100" y="148">milliers de milliards</text>
-    <text x="100" y="164">de tokens</text>
-
-    <rect x="420" y="60" width="160" height="110" rx="8" fill="#fff" stroke="#93ad83"></rect>
-    <text x="500" y="85" font-size="15" font-weight="700">Démonstrations</text>
-    <text x="500" y="108">exemples</text>
-    <text x="500" y="128">(prompt, réponse)</text>
-    <text x="500" y="148">écrits par des experts</text>
-
-    <rect x="620" y="60" width="160" height="110" rx="8" fill="#fff" stroke="#93ad83"></rect>
-    <text x="700" y="85" font-size="15" font-weight="700">Préférences</text>
-    <text x="700" y="108">notes humaines</text>
-    <text x="700" y="128">(RLHF)</text>
-    <text x="700" y="148">ou notes d'une IA</text>
-    <text x="700" y="164">(RLAIF)</text>
-  </g>
-
-  <g stroke="#555" stroke-width="2" marker-end="url(#tp-arrow)">
-    <line x1="100" y1="172" x2="100" y2="203"></line>
-    <line x1="500" y1="172" x2="500" y2="203"></line>
-    <line x1="700" y1="172" x2="700" y2="203"></line>
-  </g>
-
-  <!-- Training stages -->
-  <g text-anchor="middle" fill="#2b2b2b">
-    <rect x="20" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#d98032" stroke-width="1.8"></rect>
-    <text x="100" y="240" font-size="15" font-weight="700">Prédire le</text>
-    <text x="100" y="260" font-size="15" font-weight="700">token suivant</text>
-    <text x="100" y="285" font-size="13">auto-supervisé</text>
-
-    <rect x="420" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
-    <text x="500" y="240" font-size="15" font-weight="700">Supervised</text>
-    <text x="500" y="260" font-size="15" font-weight="700">finetuning (SFT)</text>
-    <text x="500" y="285" font-size="13">imiter les réponses</text>
-
-    <rect x="620" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
-    <text x="700" y="240" font-size="15" font-weight="700">Preference</text>
-    <text x="700" y="260" font-size="15" font-weight="700">finetuning</text>
-    <text x="700" y="285" font-size="13">suivre les préférences</text>
-  </g>
-
-  <!-- Resulting models -->
-  <rect x="220" y="205" width="160" height="100" rx="10" fill="#5b9bd5" stroke="#1f3864" stroke-width="2.5"></rect>
-  <rect x="820" y="205" width="160" height="100" rx="10" fill="#5b9bd5" stroke="#1f3864" stroke-width="2.5"></rect>
-  <g text-anchor="middle" fill="#fff">
-    <text x="300" y="248" font-size="17" font-weight="700">Modèle de base</text>
-    <text x="300" y="272" font-size="13">(pre-trained)</text>
-    <text x="900" y="248" font-size="17" font-weight="700">Modèle instruct</text>
-    <text x="900" y="272" font-size="13">(instruction tuned)</text>
-  </g>
-
-  <g stroke="#555" stroke-width="2" marker-end="url(#tp-arrow)">
-    <line x1="180" y1="255" x2="217" y2="255"></line>
-    <line x1="380" y1="255" x2="417" y2="255"></line>
-    <line x1="580" y1="255" x2="617" y2="255"></line>
-    <line x1="780" y1="255" x2="817" y2="255"></line>
-  </g>
-
-  <!-- Example model names on Hugging Face -->
-  <g text-anchor="middle" fill="#1f3864" font-size="12" font-family="var(--bs-font-monospace,monospace)">
-    <text x="300" y="330">gemma-3-27b-pt</text>
-    <text x="300" y="348">Llama-3.1-8B</text>
-    <text x="900" y="330">gemma-3-27b-it</text>
-    <text x="900" y="348">Llama-3.1-8B-Instruct</text>
-  </g>
-
-  <!-- What each phase brings -->
-  <g text-anchor="middle" font-size="14" font-style="italic">
-    <text x="100" y="370" fill="#a85d1c">acquiert des</text>
-    <text x="100" y="388" fill="#a85d1c">connaissances</text>
-    <text x="600" y="380" fill="#4f7a3a">apprend à les utiliser</text>
-  </g>
-</svg>
-<figcaption>Les deux phases d'entraînement d'un LLM, avec des exemples de noms de modèles</figcaption>
-</figure>
-<ul>
-<li>En pre-training, le modèle <strong>acquiert</strong> des connaissances</li>
-<li>En post-training, il apprend à <strong>utiliser</strong> ces connaissances.</li>
-</ul>
-<p>Les entreprises publient souvent les deux versions d’un même modèle. On les reconnaît à leur nom : suffixe <code>-pt</code> (pre-trained) et <code>-it</code> (instruction tuned) chez Google, suffixe <code>-Instruct</code> chez Meta.</p>
-<p>Ces phases ressemblent à la façon dont un étudiant apprend :</p>
-<figure class="svg-figure figure">
-<svg viewbox="0 0 1000 380" role="img" aria-label="Analogie : lire le cours correspond au pre-training, refaire des exercices corrigés au supervised finetuning, s'entraîner et être noté au preference finetuning, passer l'examen final à l'évaluation" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
-  <defs>
-    <marker id="st-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#555"></path>
-    </marker>
-  </defs>
-
-  <!-- Bands: pre-training, post-training, evaluation -->
-  <rect x="10" y="10" width="230" height="360" rx="14" fill="#fdf1e6" stroke="#d98032" stroke-width="1.5"></rect>
-  <text x="125" y="40" font-size="17" font-weight="700" fill="#a85d1c" text-anchor="middle">1. Pre-training</text>
-
-  <rect x="250" y="10" width="490" height="360" rx="14" fill="#e7efe2" stroke="#93ad83" stroke-width="1.5"></rect>
-  <text x="495" y="40" font-size="17" font-weight="700" fill="#4f7a3a" text-anchor="middle">2. Post-training</text>
-
-  <!-- Dashed: the model no longer learns during evaluation -->
-  <rect x="750" y="10" width="240" height="360" rx="14" fill="#eef1f5" stroke="#8a9bb0" stroke-width="1.5" stroke-dasharray="6 4"></rect>
-  <text x="870" y="40" font-size="17" font-weight="700" fill="#4a5d75" text-anchor="middle">3. Évaluation</text>
-
-  <!-- Student side -->
-  <g text-anchor="middle" fill="#2b2b2b">
-    <rect x="25" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#c9a27d"></rect>
-    <rect x="265" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#93ad83"></rect>
-    <rect x="525" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#93ad83"></rect>
-    <rect x="770" y="60" width="200" height="85" rx="8" fill="#fff" stroke="#8a9bb0"></rect>
-
-    <g font-size="12" fill="#777">
-      <text x="125" y="80">Étudiant</text>
-      <text x="365" y="80">Étudiant</text>
-      <text x="625" y="80">Étudiant</text>
-      <text x="870" y="80">Étudiant</text>
-    </g>
-    <g font-size="15" font-weight="700">
-      <text x="125" y="112">Lire le cours</text>
-      <text x="365" y="105">Refaire des</text>
-      <text x="365" y="125">exercices corrigés</text>
-      <text x="625" y="105">S'entraîner, être</text>
-      <text x="625" y="125">noté par le prof</text>
-      <text x="870" y="112">Passer l'examen</text>
-    </g>
-  </g>
-
-  <!-- "Is like" links between the two sides -->
-  <g stroke="#999" stroke-width="1.5" stroke-dasharray="3 3">
-    <line x1="125" y1="147" x2="125" y2="193"></line>
-    <line x1="365" y1="147" x2="365" y2="193"></line>
-    <line x1="625" y1="147" x2="625" y2="193"></line>
-    <line x1="870" y1="147" x2="870" y2="193"></line>
-  </g>
-  <g fill="#fff" stroke="#999" stroke-width="1.5">
-    <circle cx="125" cy="170" r="12"></circle> <circle cx="365" cy="170" r="12"></circle>
-    <circle cx="625" cy="170" r="12"></circle> <circle cx="870" cy="170" r="12"></circle>
-  </g>
-  <g font-size="16" font-weight="700" fill="#555" text-anchor="middle">
-    <text x="125" y="176">≈</text> <text x="365" y="176">≈</text>
-    <text x="625" y="176">≈</text> <text x="870" y="176">≈</text>
-  </g>
-
-  <!-- LLM side -->
-  <g text-anchor="middle" fill="#2b2b2b">
-    <rect x="25" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#d98032" stroke-width="1.8"></rect>
-    <rect x="265" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
-    <rect x="525" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#93ad83" stroke-width="1.8"></rect>
-    <rect x="770" y="195" width="200" height="95" rx="10" fill="#fff" stroke="#8a9bb0" stroke-width="1.8" stroke-dasharray="6 4"></rect>
-
-    <g font-size="12" fill="#777">
-      <text x="125" y="215">LLM</text>
-      <text x="365" y="215">LLM</text>
-      <text x="625" y="215">LLM</text>
-      <text x="870" y="215">LLM</text>
-    </g>
-    <g font-size="15" font-weight="700">
-      <text x="125" y="240">Pre-training</text>
-      <text x="365" y="240">Supervised finetuning</text>
-      <text x="625" y="240">Preference finetuning</text>
-      <text x="870" y="240">Benchmarks</text>
-    </g>
-    <g font-size="13">
-      <text x="125" y="262">lire des milliers de</text>
-      <text x="125" y="279">milliards de tokens</text>
-      <text x="365" y="262">imiter des exemples</text>
-      <text x="365" y="279">(prompt, réponse)</text>
-      <text x="625" y="262">réponses notées par</text>
-      <text x="625" y="279">un humain ou une IA</text>
-      <text x="870" y="262">paramètres figés,</text>
-      <text x="870" y="279">on mesure seulement</text>
-    </g>
-  </g>
-
-  <g stroke="#555" stroke-width="2" marker-end="url(#st-arrow)">
-    <line x1="225" y1="242" x2="262" y2="242"></line>
-    <line x1="465" y1="242" x2="522" y2="242"></line>
-    <line x1="725" y1="242" x2="767" y2="242"></line>
-  </g>
-
-  <!-- What is learnt -->
-  <g text-anchor="middle" font-size="14" font-style="italic">
-    <text x="125" y="320" fill="#a85d1c">des connaissances</text>
-    <text x="365" y="320" fill="#4f7a3a">la forme d'une</text>
-    <text x="365" y="338" fill="#4f7a3a">bonne réponse</text>
-    <text x="625" y="320" fill="#4f7a3a">le comportement</text>
-    <text x="625" y="338" fill="#4f7a3a">attendu</text>
-    <text x="870" y="320" fill="#4a5d75">rien : c'est</text>
-    <text x="870" y="338" fill="#4a5d75">une mesure</text>
-  </g>
-</svg>
-<figcaption>Analogie avec l'apprentissage d'un étudiant, inspirée d'<a href="https://x.com/karpathy/status/1885026028428681698">Andrej Karpathy (2025)</a></figcaption>
-</figure>
-<section id="pré-entraînement-pre-training" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="pré-entraînement-pre-training"><span class="header-section-number">1.2.1</span> Pré-entraînement (Pre-training)</h3>
-<p>Le <strong>pre-training</strong> est l’entraînement du modèle de <strong>base</strong> (ou foundation model), de manière auto-supervisée.</p>
-<p>En données d’entrée, on utilise un corpus de texte filtré pour éviter certains contenus. En sortie, on aura un modèle qui :</p>
-<ul>
-<li>permet de générer du texte cohérent en prédisant le mot suivant</li>
-<li>ne sait pas encore converser avec un utilisateur pour répondre à des questions</li>
-<li>n’est pas contrôlé et peut générer du contenu raciste, dangereux, injurieux</li>
-</ul>
-<p><strong>Auto-supervisé</strong> veut dire que les étiquettes sont gratuites : la cible est simplement le <strong>token suivant</strong> du texte. Une phrase de <span class="math inline">\(T\)</span> tokens fournit donc <span class="math inline">\(T\)</span> exemples d’un coup, avec la cible décalée d’un cran :</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>entrée</th>
-<th><code>le</code></th>
-<th><code>␣chat</code></th>
-<th><code>␣boit</code></th>
-<th><code>␣du</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>cible</strong></td>
-<td><code>␣chat</code></td>
-<td><code>␣boit</code></td>
-<td><code>␣du</code></td>
-<td><code>␣lait</code></td>
-</tr>
-</tbody>
-</table>
-<p>Pas besoin d’annotation humaine : n’importe quel texte (pages web, livres, code) devient un dataset d’entraînement. C’est ce qui permet d’entraîner les LLMs sur des milliers de milliards de tokens. Le détail (fonction de coût, code PyTorch) est dans l’<a href="./cours3_annexe.html#training">annexe du CM3</a>.</p>
-</section>
-<section id="post-entraînement-post-training" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="post-entraînement-post-training"><span class="header-section-number">1.2.2</span> Post-entraînement (Post-training)</h3>
-<p>Le <strong>post-training</strong> est la spécialisation du modèle de base pour lui apprendre à <strong>converser</strong> et à empêcher les comportements toxiques. On qualifie le modèle résultant comme étant <strong>“instruction tuned”</strong>.</p>
-<p>Cette phase va <strong>modifier les paramètres</strong> du modèle. C’est ce qu’on appelle le <strong>finetuning</strong>. Elle se déroule en deux temps :</p>
-<ul>
-<li><strong>supervised finetuning (SFT)</strong> :
-<ul>
-<li>utilise des données d’instruction. Ce sont des exemples de conversations.</li>
-</ul></li>
-<li><strong>preference finetuning</strong> :
-<ul>
-<li>modifie le modèle pour qu’il soit aligné avec les préférences humaines.</li>
-<li>utilise des techniques de reinforcement learning, comme le RLHF “Reinforcement Learning from Human Feedback”</li>
-</ul></li>
-</ul>
-<section id="supervised-finetuning" class="level4" data-number="1.2.2.1">
-<h4 data-number="1.2.2.1" class="anchored" data-anchor-id="supervised-finetuning"><span class="header-section-number">1.2.2.1</span> Supervised finetuning</h4>
-<p>Un modèle pre-trained est optimisé pour compléter du texte plutôt que pour converser. Si vous entrez <em>“comment faire une pizza”</em>, il va essayer de compléter la phrase, par exemple <em>“pour une famille de quatre ?”</em>. Le modèle n’a pas de concept de conversation et ne vas pas essayer de répondre à la question.</p>
-<p>Nous savons qu’un modèle imite ses données d’entraînement. Pour l’encourager à générer des réponses, nous devons lui fournir des exemples de question/réponses.</p>
-<p>Le dataset d’entraînement pour cette phase est une collection d’exemples <code>(prompt, response)</code> de grande qualité, qu’on appelle <strong>données de démonstration</strong>. On va en quelque sorte montrer au modèle comment il devrait se comporter, afin qu’il puisse cloner ce comportement.</p>
-<p>Pour construire le dataset, on pourra recruter des personnes spécialistes d’un domaine. Les données de démonstration doivent contenir des prompts dont les réponses nécessite une pensée critique et du jugement.</p>
-<p>Exemples de données de démonstration :</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 45%">
-<col style="width: 24%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Type de tâche</th>
-<th>Prompt</th>
-<th>Response</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Question</td>
-<td>Comment faire une pizza ?</td>
-<td>Pour une pizza maison, il faut : 1. préparer la pâte avec de la farine, de l’eau, de la levure et du sel…</td>
-</tr>
-<tr class="even">
-<td>Réécriture</td>
-<td>Reformule ce mail pour qu’il soit plus poli : « Envoie-moi le rapport. »</td>
-<td>Bonjour, pourrais-tu m’envoyer le rapport lorsque tu auras un moment ? Merci d’avance.</td>
-</tr>
-<tr class="odd">
-<td>Classification</td>
-<td>Ce commentaire est-il positif ou négatif ? « Livraison en retard, produit cassé. »</td>
-<td>Négatif.</td>
-</tr>
-<tr class="even">
-<td>Jugement</td>
-<td>Mon médecin m’a prescrit un antibiotique, puis-je doubler la dose pour guérir plus vite ?</td>
-<td>Non, ne doublez pas la dose sans avis médical : cela augmente le risque d’effets secondaires…</td>
-</tr>
-</tbody>
-</table>
-<p>Ces datasets contiennent quelques dizaines de milliers d’exemples, beaucoup moins que le corpus de pre-training. Par exemple, <a href="https://huggingface.co/datasets/databricks/databricks-dolly-15k">databricks-dolly-15k</a> contient 15 000 exemples écrits par des employés de Databricks.</p>
-</section>
-<section id="preference-finetuning" class="level4" data-number="1.2.2.2">
-<h4 data-number="1.2.2.2" class="anchored" data-anchor-id="preference-finetuning"><span class="header-section-number">1.2.2.2</span> Preference finetuning</h4>
-<p>Après le supervised finetuning, le modèle sait comment tenir une conversation, mais <strong>sans filtre</strong>.</p>
-<p>Si l’utilisateur demande au modèle d’écrire un essai sur l’infériorité d’une race, ou comment fabriquer une bombe, le modèle doit refuser. Ces exemples sont évidents, mais d’autres cas sont plus délicats. Comment est-ce que le modèle doit répondre à des questions sur la religion, l’avortement, sur un conflit armé, sur l’immigration ?</p>
-<ul>
-<li>si le modèle répond à une question controversée, vous risquez de choquer vos utilisateurs</li>
-<li>si le modèle est trop censuré, il devient ennuyeux</li>
-</ul>
-<p>Le but du preference finetuning est de conduire le modèle <strong>à se comporter selon une préférence humaine</strong>.</p>
-<p>Il existe plusieurs approches pour que le modèle apprenne cette préférence humaine : RLHF, RLAIF.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>RLHF (reinforcement learning from human feedback)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>On demande à des évaluateurs humains de donner un score à des réponses générées par le modèle LLM. Cela constitue un dataset <code>input=(prompt, response), output=score</code></li>
-<li>On entraîne un 2ème modèle, le <strong>reward model</strong> avec ces données. Ce modèle apprend à prédire quelle réponse un humain préfèrerait</li>
-<li>Optimisation du LLM par reinforcement learning :
-<ul>
-<li>le modèle LLM génère des réponses,</li>
-<li>le reward model note les réponses,</li>
-<li>un algorithme ajuste les paramètres du LLM</li>
-</ul></li>
-</ol>
-<p>Cette approche est efficace : c’est elle qui a rendu ChatGPT utilisable par le grand public en 2022. Elle a cependant des limites :</p>
-<ul>
-<li>les évaluations humaines sont lentes et coûteuses</li>
-<li>les évaluateurs ne sont pas toujours d’accord entre eux</li>
-<li>les humains aiment être <strong>flattés</strong> : les évaluateurs ont tendance à mieux noter les réponses qui donnent raison à l’utilisateur ou le complimentent. Le modèle apprend alors la <strong>complaisance (sycophancy)</strong>. En 2025, OpenAI a dû annuler une mise à jour de GPT-4o qui était devenue beaucoup trop flatteuse. Voir <a href="https://openai.com/index/sycophancy-in-gpt-4o/">Sycophancy in GPT-4o</a></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>RLAIF (reinforcment learning from AI feedback)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>C’est l’approche utilisée par Anthropic. La notation est effectuée par un modèle d’IA qui se base sur une <strong>constitution</strong>. La constitution est un document qui exprime les valeurs que doit respecter le modèle.</p>
-<p>Voir <a href="https://www.anthropic.com/constitution">Claude’s constitution</a></p>
-<p>Cette approche a plusieurs avantages :</p>
-<ul>
-<li>on peut évaluer des datasets très grands automatiquement</li>
-<li>la constitution peut être revue et mise à jour régulièrement</li>
-</ul>
-<p>Cependant, cette approche possède aussi des biais. L’IA notatrice hérite des biais humains. Elle est aussi sujette à la complaisance, à préférer des réponses longues ou qui lui ressemblent.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="le-shoggoth" class="level3" data-number="1.2.3">
-<h3 data-number="1.2.3" class="anchored" data-anchor-id="le-shoggoth"><span class="header-section-number">1.2.3</span> Le shoggoth</h3>
-<p>Le post-training est souvent illustré par un monstre, le shoggoth :</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/shoggoth.png" class="img-fluid figure-img" style="width:70.0%" alt="Un monstre couvert d'yeux et de tentacules (unsupervised learning) tient un masque humain rose (supervised fine-tuning), sur lequel est posé un petit smiley jaune (RLHF)."></p>
-<figcaption>Le shoggoth au smiley. Dessin de <a href="https://x.com/anthrupad/status/1622349563922362368">@anthrupad</a> (2023)</figcaption>
-</figure>
-</div>
-<ul>
-<li><strong>Unsupervised learning</strong> : le modèle de base, un monstre qui a lu tout internet.</li>
-<li><strong>Supervised fine-tuning</strong> : on lui met un masque humain.</li>
-<li><strong>Preference fine-tuning RLHF</strong> : c’est la perle, le modèle répond sans toxicité</li>
-</ul>
-<p>Le fine-tuning change le comportement du modèle, mais le monstre est toujours là : c’est pourquoi on peut parfois contourner les protections d’un modèle (jailbreak).</p>
-</section>
-</section>
 </section>
 <section id="développer-une-application-llm" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Développer une application LLM</h1>
@@ -855,7 +432,7 @@ window.Quarto = {
 <li>quel est son coût d’inférence par requête ? : coût API / coûts serveurs ?</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -864,7 +441,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>Le cours ne suit pas cet ordre, TODO expliquer raisons pédagogiques</p>
 </div>
@@ -933,7 +510,9 @@ Note
 //     can be opened on demand during the lecture
 //   - scales the document up for projection (see styles.css)
 //   - hides the left navigation sidebar (see styles.css)
-// Turning it off restores the reading view, with every callout expanded.
+// Turning it off restores the reading view, where each callout gets back the
+// state written in the .qmd: collapse="true" collapsed, collapse="false"
+// expanded.
 // The choice is stored in localStorage so it survives page navigation.
 (function () {
   const STORAGE_KEY = "xti306-presentation-mode";
@@ -948,14 +527,32 @@ Note
   //
   // Callouts written without a collapse attribute lack this markup and are
   // left alone: they stay visible in both modes.
-  function setCalloutsCollapsed(collapsed) {
+  function collapsibleCallouts() {
+    const found = [];
     document.querySelectorAll(".callout").forEach(function (callout) {
       const header = callout.querySelector(".callout-header[aria-expanded]");
       const body = callout.querySelector(".callout-collapse");
-      if (!header || !body) return;
+      if (header && body) found.push({ callout: callout, header: header, body: body });
+    });
+    return found;
+  }
 
-      body.classList.toggle("show", !collapsed);
-      header.setAttribute("aria-expanded", String(!collapsed));
+  // Quarto renders collapse="true" without the "show" class. The authored
+  // state is read once, before this script changes anything, and kept on the
+  // callout so the reading view can restore it.
+  function rememberAuthoredState() {
+    collapsibleCallouts().forEach(function (c) {
+      c.callout.dataset.authoredCollapsed = String(!c.body.classList.contains("show"));
+    });
+  }
+
+  // forceCollapsed: true collapses every callout (presentation mode),
+  // false restores the authored state (reading view).
+  function setCalloutsCollapsed(forceCollapsed) {
+    collapsibleCallouts().forEach(function (c) {
+      const collapsed = forceCollapsed || c.callout.dataset.authoredCollapsed === "true";
+      c.body.classList.toggle("show", !collapsed);
+      c.header.setAttribute("aria-expanded", String(!collapsed));
     });
   }
 
@@ -973,8 +570,8 @@ Note
 
     button.setAttribute("aria-pressed", String(enabled));
     button.title = enabled
-      ? "Revenir à la vue complète : tous les encadrés dépliés"
-      : "Replier les encadrés et agrandir le texte pour la projection";
+      ? "Revenir à la vue lecture"
+      : "Replier tous les encadrés et agrandir le texte pour la projection";
   }
 
   function init() {
@@ -983,6 +580,7 @@ Note
     button.type = "button";
     button.innerHTML = '<span class="status-dot"></span>Mode présentation';
 
+    rememberAuthoredState();
     let enabled = localStorage.getItem(STORAGE_KEY) === "true";
     render(button, enabled);
 

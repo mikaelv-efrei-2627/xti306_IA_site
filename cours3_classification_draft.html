@@ -307,7 +307,9 @@ ul.task-list li input[type="checkbox"] {
 //     can be opened on demand during the lecture
 //   - scales the document up for projection (see styles.css)
 //   - hides the left navigation sidebar (see styles.css)
-// Turning it off restores the reading view, with every callout expanded.
+// Turning it off restores the reading view, where each callout gets back the
+// state written in the .qmd: collapse="true" collapsed, collapse="false"
+// expanded.
 // The choice is stored in localStorage so it survives page navigation.
 (function () {
   const STORAGE_KEY = "xti306-presentation-mode";
@@ -322,14 +324,32 @@ ul.task-list li input[type="checkbox"] {
   //
   // Callouts written without a collapse attribute lack this markup and are
   // left alone: they stay visible in both modes.
-  function setCalloutsCollapsed(collapsed) {
+  function collapsibleCallouts() {
+    const found = [];
     document.querySelectorAll(".callout").forEach(function (callout) {
       const header = callout.querySelector(".callout-header[aria-expanded]");
       const body = callout.querySelector(".callout-collapse");
-      if (!header || !body) return;
+      if (header && body) found.push({ callout: callout, header: header, body: body });
+    });
+    return found;
+  }
 
-      body.classList.toggle("show", !collapsed);
-      header.setAttribute("aria-expanded", String(!collapsed));
+  // Quarto renders collapse="true" without the "show" class. The authored
+  // state is read once, before this script changes anything, and kept on the
+  // callout so the reading view can restore it.
+  function rememberAuthoredState() {
+    collapsibleCallouts().forEach(function (c) {
+      c.callout.dataset.authoredCollapsed = String(!c.body.classList.contains("show"));
+    });
+  }
+
+  // forceCollapsed: true collapses every callout (presentation mode),
+  // false restores the authored state (reading view).
+  function setCalloutsCollapsed(forceCollapsed) {
+    collapsibleCallouts().forEach(function (c) {
+      const collapsed = forceCollapsed || c.callout.dataset.authoredCollapsed === "true";
+      c.body.classList.toggle("show", !collapsed);
+      c.header.setAttribute("aria-expanded", String(!collapsed));
     });
   }
 
@@ -347,8 +367,8 @@ ul.task-list li input[type="checkbox"] {
 
     button.setAttribute("aria-pressed", String(enabled));
     button.title = enabled
-      ? "Revenir à la vue complète : tous les encadrés dépliés"
-      : "Replier les encadrés et agrandir le texte pour la projection";
+      ? "Revenir à la vue lecture"
+      : "Replier tous les encadrés et agrandir le texte pour la projection";
   }
 
   function init() {
@@ -357,6 +377,7 @@ ul.task-list li input[type="checkbox"] {
     button.type = "button";
     button.innerHTML = '<span class="status-dot"></span>Mode présentation';
 
+    rememberAuthoredState();
     let enabled = localStorage.getItem(STORAGE_KEY) === "true";
     render(button, enabled);
 

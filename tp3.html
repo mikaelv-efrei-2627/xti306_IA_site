@@ -259,6 +259,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#démarrer-une-session-kaggle" id="toc-démarrer-une-session-kaggle" class="nav-link" data-scroll-target="#démarrer-une-session-kaggle"><span class="header-section-number">3</span> Démarrer une session Kaggle</a></li>
   <li><a href="#connecter-pycharm-à-kaggle" id="toc-connecter-pycharm-à-kaggle" class="nav-link" data-scroll-target="#connecter-pycharm-à-kaggle"><span class="header-section-number">4</span> Connecter PyCharm à Kaggle</a></li>
   <li><a href="#si-la-connexion-pycharm-ne-fonctionne-pas" id="toc-si-la-connexion-pycharm-ne-fonctionne-pas" class="nav-link" data-scroll-target="#si-la-connexion-pycharm-ne-fonctionne-pas"><span class="header-section-number">5</span> Si la connexion PyCharm ne fonctionne pas</a></li>
+  <li><a href="#solution-de-repli-exécuter-le-notebook-sur-votre-ordinateur" id="toc-solution-de-repli-exécuter-le-notebook-sur-votre-ordinateur" class="nav-link" data-scroll-target="#solution-de-repli-exécuter-le-notebook-sur-votre-ordinateur"><span class="header-section-number">6</span> Solution de repli : exécuter le notebook sur votre ordinateur</a></li>
   </ul>
 </nav>
     </div>
@@ -290,7 +291,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Le TP3 utilise un vrai LLM d’environ 5 milliards de paramètres. Il lui faut un GPU : le notebook s’exécute sur <strong>Kaggle</strong>, qui prête gratuitement des GPU, mais vous l’éditez dans <strong>PyCharm</strong>, comme d’habitude.</p>
+<p>Le TP3 utilise un vrai LLM : <strong>Qwen3 1.7B</strong>, un petit modèle de 1,7 milliard de paramètres. Le notebook s’exécute sur <strong>Kaggle</strong>, qui prête gratuitement des GPU, mais vous l’éditez dans <strong>PyCharm</strong>, comme d’habitude. Si Kaggle ne fonctionne pas, le notebook peut aussi s’exécuter sur votre ordinateur, plus lentement (voir la fin de la page).</p>
 <!-- TODO lien d'invitation Classroom50 du TP3 -->
 <section id="récupérer-le-tp" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Récupérer le TP</h1>
@@ -340,7 +341,7 @@ Note
 <li>Dans PyCharm, ouvrez le notebook <code>tp3_llm.ipynb</code>.</li>
 <li>Menu <em>Tools</em>, puis <em>Add Jupyter Connection</em>. Choisissez <em>Connect to Jupyter server using URL</em>, et collez le lien copié sur Kaggle.</li>
 <li>En haut du notebook, choisissez ce serveur dans la liste des serveurs Jupyter.</li>
-<li>Exécutez la première cellule : elle doit afficher <code>True</code> et un GPU <code>Tesla T4</code>.</li>
+<li>Exécutez les deux premières cellules : la seconde doit afficher <code>GPU NVIDIA : Tesla T4</code>.</li>
 </ol>
 <p>Le fichier du notebook reste sur votre ordinateur, dans votre repository : seul le calcul se fait sur Kaggle. Pensez à faire vos <em>commits</em> comme d’habitude.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -365,6 +366,28 @@ Note
 <li>Vérifiez les <em>Session options</em> (GPU et Internet), puis exécutez le notebook sur Kaggle.</li>
 <li>À la fin, menu <em>File</em>, puis <em>Download Notebook</em>. Remplacez le fichier <code>tp3_llm.ipynb</code> de votre repository par celui-ci, puis faites votre <em>commit</em>.</li>
 </ol>
+</section>
+<section id="solution-de-repli-exécuter-le-notebook-sur-votre-ordinateur" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Solution de repli : exécuter le notebook sur votre ordinateur</h1>
+<p>Sans Kaggle, le notebook s’exécute sur votre ordinateur, s’il a au moins 8 Go de mémoire vive. Le modèle est le même : seule la vitesse change.</p>
+<ol type="1">
+<li>Ouvrez <code>requirements.txt</code>, et cliquez sur “pip update from requirements.txt”, comme au <a href="./tp1.html">TP1</a>.</li>
+<li>Ouvrez le notebook <code>tp3_llm.ipynb</code>, et exécutez les cellules dans l’ordre. La cellule qui charge le modèle le télécharge depuis Internet (environ 4 Go) : comptez quelques minutes.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Astuce
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le modèle n’est téléchargé qu’une fois, puis gardé sur le disque. Pour ne pas attendre pendant la séance, exécutez les cellules jusqu’au chargement du modèle <strong>avant le TP</strong>, chez vous.</p>
+</div>
+</div>
+<p>Le notebook utilise automatiquement le GPU de votre ordinateur s’il en a un (NVIDIA, ou Mac récent), et sinon le processeur (CPU) : c’est beaucoup plus lent, mais suffisant pour le TP.</p>
 
 
 </section>
@@ -376,7 +399,9 @@ Note
 //     can be opened on demand during the lecture
 //   - scales the document up for projection (see styles.css)
 //   - hides the left navigation sidebar (see styles.css)
-// Turning it off restores the reading view, with every callout expanded.
+// Turning it off restores the reading view, where each callout gets back the
+// state written in the .qmd: collapse="true" collapsed, collapse="false"
+// expanded.
 // The choice is stored in localStorage so it survives page navigation.
 (function () {
   const STORAGE_KEY = "xti306-presentation-mode";
@@ -391,14 +416,32 @@ Note
   //
   // Callouts written without a collapse attribute lack this markup and are
   // left alone: they stay visible in both modes.
-  function setCalloutsCollapsed(collapsed) {
+  function collapsibleCallouts() {
+    const found = [];
     document.querySelectorAll(".callout").forEach(function (callout) {
       const header = callout.querySelector(".callout-header[aria-expanded]");
       const body = callout.querySelector(".callout-collapse");
-      if (!header || !body) return;
+      if (header && body) found.push({ callout: callout, header: header, body: body });
+    });
+    return found;
+  }
 
-      body.classList.toggle("show", !collapsed);
-      header.setAttribute("aria-expanded", String(!collapsed));
+  // Quarto renders collapse="true" without the "show" class. The authored
+  // state is read once, before this script changes anything, and kept on the
+  // callout so the reading view can restore it.
+  function rememberAuthoredState() {
+    collapsibleCallouts().forEach(function (c) {
+      c.callout.dataset.authoredCollapsed = String(!c.body.classList.contains("show"));
+    });
+  }
+
+  // forceCollapsed: true collapses every callout (presentation mode),
+  // false restores the authored state (reading view).
+  function setCalloutsCollapsed(forceCollapsed) {
+    collapsibleCallouts().forEach(function (c) {
+      const collapsed = forceCollapsed || c.callout.dataset.authoredCollapsed === "true";
+      c.body.classList.toggle("show", !collapsed);
+      c.header.setAttribute("aria-expanded", String(!collapsed));
     });
   }
 
@@ -416,8 +459,8 @@ Note
 
     button.setAttribute("aria-pressed", String(enabled));
     button.title = enabled
-      ? "Revenir à la vue complète : tous les encadrés dépliés"
-      : "Replier les encadrés et agrandir le texte pour la projection";
+      ? "Revenir à la vue lecture"
+      : "Replier tous les encadrés et agrandir le texte pour la projection";
   }
 
   function init() {
@@ -426,6 +469,7 @@ Note
     button.type = "button";
     button.innerHTML = '<span class="status-dot"></span>Mode présentation';
 
+    rememberAuthoredState();
     let enabled = localStorage.getItem(STORAGE_KEY) === "true";
     render(button, enabled);
 

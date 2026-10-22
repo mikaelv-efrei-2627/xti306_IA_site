@@ -222,3 +222,114 @@
   color: var(--accent);
   font-weight: 600;
 }
+
+/* --------------------------------------------------------------------------
+   6. Token chips (CM3, tokenization example)
+   --------------------------------------------------------------------------
+   One chip per token, like the OpenAI tokenizer: the token text on top, its
+   index in the vocabulary below. .tok-c0 to .tok-c3 cycle the colours so that
+   neighbouring tokens are easy to tell apart; .tok-split underlines the
+   tokens that come from a single word.
+   -------------------------------------------------------------------------- */
+
+.tok-demo {
+  margin: 1.2rem 0;
+}
+
+.tok-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.tok {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 2.6rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 6px;
+  border: 1.5px solid;
+  color: #2c2c2a;
+}
+
+.tok-text {
+  font-family: var(--bs-font-monospace, monospace);
+  font-size: 1.1rem;
+  white-space: pre;
+}
+
+.tok-id {
+  font-size: 0.8rem;
+  color: #6d6c66;
+}
+
+.tok-c0 { background: #e3edf8; border-color: #2f6fb0; }
+.tok-c1 { background: #fbeae2; border-color: #c4562c; }
+.tok-c2 { background: #e0f0e9; border-color: #12805f; }
+.tok-c3 { background: #e7e3f7; border-color: #5b52c4; }
+
+.tok-split {
+  box-shadow: 0 4px 0 -1px #c4562c;
+}
+
+.tok-legend {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+/* --------------------------------------------------------------------------
+   7. Attention heatmap (CM3)
+   --------------------------------------------------------------------------
+   The attention weights stay readable as numbers, but each cell is also
+   shaded by its value (inline style, blue with alpha = weight), so the causal
+   triangle and the strongest links stand out without reading the numbers.
+   -------------------------------------------------------------------------- */
+
+.att-heatmap {
+  margin: 1.2rem 0;
+  border-collapse: separate;
+  border-spacing: 3px;
+  font-size: 0.95rem;
+}
+
+.att-heatmap th {
+  padding: 0.3rem 0.6rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.att-heatmap th.att-corner {
+  font-size: 0.8rem;
+  font-weight: normal;
+  color: #6c757d;
+  text-align: left;
+}
+
+.att-heatmap td {
+  min-width: 3.6rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 4px;
+  text-align: center;
+  color: #2c2c2a;
+}
+
+.att-heatmap td.att-dark {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Strongest link of the example (boit -> chat). */
+.att-heatmap td.att-key {
+  outline: 3px solid #c4562c;
+  outline-offset: -1px;
+}
+
+/* Future tokens: hidden by the causal mask. */
+.att-heatmap td.att-masked {
+  color: #b4b2a9;
+  background: repeating-linear-gradient(
+    45deg, #f3f1ec, #f3f1ec 4px, #e9e7e0 4px, #e9e7e0 8px
+  );
+}
