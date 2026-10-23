@@ -310,6 +310,7 @@ window.Quarto = {
   <li><a href="#g" id="toc-g" class="nav-link" data-scroll-target="#g">G</a></li>
   <li><a href="#h" id="toc-h" class="nav-link" data-scroll-target="#h">H</a></li>
   <li><a href="#i" id="toc-i" class="nav-link" data-scroll-target="#i">I</a></li>
+  <li><a href="#j" id="toc-j" class="nav-link" data-scroll-target="#j">J</a></li>
   <li><a href="#l" id="toc-l" class="nav-link" data-scroll-target="#l">L</a></li>
   <li><a href="#m" id="toc-m" class="nav-link" data-scroll-target="#m">M</a></li>
   <li><a href="#n" id="toc-n" class="nav-link" data-scroll-target="#n">N</a></li>
@@ -353,6 +354,7 @@ window.Quarto = {
 <ul>
 <li><strong>CM1</strong> : <a href="./cours1.html">Introduction à l’apprentissage automatique</a></li>
 <li><strong>CM2</strong> : <a href="./cours2.html">Réseaux de neurones</a></li>
+<li><strong>CM3</strong> : <a href="./cours3.html">Utiliser un LLM</a></li>
 <li><strong>Annexe</strong> : <a href="./cours2_matrices.html">Calcul matriciel</a></li>
 </ul>
 <section id="a" class="level2">
@@ -376,7 +378,7 @@ Apprentissage à partir d’exemples qui fournissent à la fois l’entrée et l
 </dd>
 <dt><strong>Apprentissage auto-supervisé</strong> (<em>self-supervised learning</em>)</dt>
 <dd>
-La cible est extraite des données elles-mêmes. C’est ainsi qu’on entraîne un LLM : la cible est le mot suivant du texte, déjà présent dans le corpus. <a href="./cours1.html#dautres-formes-dapprentissage">CM1 · D’autres formes d’apprentissage</a>
+La cible est extraite des données elles-mêmes. C’est ainsi qu’on entraîne un LLM : la cible est le mot suivant du texte, déjà présent dans le corpus. <a href="./cours1.html#dautres-formes-dapprentissage">CM1 · D’autres formes d’apprentissage</a> · <a href="./cours3.html#pré-entraînement-pre-training">CM3 · Pré-entraînement</a>
 </dd>
 <dt><strong>Apprentissage non supervisé</strong> (<em>unsupervised learning</em>)</dt>
 <dd>
@@ -384,7 +386,7 @@ Les exemples n’ont pas de cible : l’algorithme cherche lui-même une structu
 </dd>
 <dt><strong>Apprentissage par renforcement</strong> (<em>reinforcement learning</em>)</dt>
 <dd>
-Pas de cible, mais une récompense obtenue après une suite d’actions. <a href="./cours1.html#dautres-formes-dapprentissage">CM1 · D’autres formes d’apprentissage</a>
+Pas de cible, mais une récompense obtenue après une suite d’actions. Utilisé pour le <em>preference finetuning</em> des LLMs. <a href="./cours1.html#dautres-formes-dapprentissage">CM1 · D’autres formes d’apprentissage</a> · <a href="./cours3.html#post-entraînement-post-training">CM3 · Post-entraînement</a>
 </dd>
 <dt><strong>Architecture</strong></dt>
 <dd>
@@ -394,6 +396,10 @@ Choix de structure d’un réseau : nombre de couches (profondeur) et nombre de 
 <dd>
 Arrêter l’entraînement quand le coût de validation ne s’améliore plus depuis un certain nombre d’epochs (la <strong>patience</strong>), puis garder les paramètres de la meilleure epoch. <a href="./cours2.html#comment-régler-en-pratique">CM2 · Comment régler en pratique</a>
 </dd>
+<dt><strong>Attention</strong> (<em>attention mechanism</em>)</dt>
+<dd>
+Mécanisme qui permet à chaque token d’aller chercher de l’information dans les tokens qui le <strong>précèdent</strong>. C’est le cœur de l’architecture <em>transformer</em>. <a href="./cours3.html#lattention">CM3 · L’attention</a>
+</dd>
 </dl>
 </section>
 <section id="b" class="level2">
@@ -402,6 +408,10 @@ Arrêter l’entraînement quand le coût de validation ne s’améliore plus de
 <dt><strong>Biais</strong> (<em>bias</em>)</dt>
 <dd>
 Le paramètre <span class="math inline">\(b\)</span> d’une transformation linéaire <span class="math inline">\(wx + b\)</span>. Il décale la sortie du neurone. <a href="./cours1.html#transformation-linéaire">CM1 · Transformation linéaire</a>
+</dd>
+<dt><strong>BPE</strong> (<em>Byte-Pair Encoding</em>)</dt>
+<dd>
+Algorithme qui construit le vocabulaire d’un modèle de langage : on part des caractères, puis on fusionne les paires les plus fréquentes jusqu’à atteindre la taille de vocabulaire voulue. <a href="./cours3.html#tokens">CM3 · Tokens</a>
 </dd>
 </dl>
 </section>
@@ -415,6 +425,26 @@ Une des grandeurs décrivant un exemple : surface, nombre de pièces, localisati
 <dt><strong>Cible</strong> (<em>target</em>), ou <strong>étiquette</strong> (<em>label</em>)</dt>
 <dd>
 La sortie <span class="math inline">\(y^{(i)}\)</span> attendue pour l’exemple <span class="math inline">\(i\)</span> : ce que le modèle aurait dû répondre. <a href="./cours1.html#apprentissage-supervisé">CM1 · Apprentissage supervisé</a>
+</dd>
+<dt><strong>Classe</strong> (<em>class</em>)</dt>
+<dd>
+Une des catégories possibles en sortie d’une classification : spam ou non spam, chat ou chien, le chiffre 0 à 9… <a href="./cours3.html#classification">CM3 · Classification</a>
+</dd>
+<dt><strong>Classification</strong></dt>
+<dd>
+Tâche dont la sortie est une <strong>classe</strong>. Le modèle donne une probabilité par classe, et prédit la classe la plus probable. <a href="./cours3.html#classification">CM3 · Classification</a>
+</dd>
+<dt><strong>Complaisance</strong> (<em>sycophancy</em>)</dt>
+<dd>
+Tendance d’un LLM à donner raison à l’utilisateur ou à le flatter. Elle vient en partie du <em>preference finetuning</em> : les évaluateurs notent mieux les réponses flatteuses. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+</dd>
+<dt><strong>Consigne système</strong> (<em>system prompt</em>)</dt>
+<dd>
+Message de rôle <code>system</code>, écrit par le développeur de l’application : rôle du modèle, ton, ce qu’il a le droit de faire. Le modèle est entraîné à la suivre, mais rien ne l’y oblige. <a href="./cours3.html#consigne-système-et-messages">CM3 · Consigne système et messages</a>
+</dd>
+<dt><strong>Constitution</strong></dt>
+<dd>
+Document qui exprime les valeurs que doit respecter un modèle. Utilisée par l’IA notatrice en RLAIF. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
 </dd>
 <dt><strong>Convergence</strong></dt>
 <dd>
@@ -457,15 +487,31 @@ La partie du dataset qui ne sert <strong>jamais</strong> à l’entraînement, m
 <dd>
 Dataset réservé au score final du modèle. Il ne doit jamais servir à régler les hyperparamètres. <a href="./cours2.html#test">CM2 · Test</a>
 </dd>
+<dt><strong>Décodage glouton</strong> (<em>greedy decoding</em>)</dt>
+<dd>
+Choisir toujours le token le plus probable, sans tirage au hasard. Équivaut à une température de 0. Le texte obtenu est souvent plat et répétitif. <a href="./cours3.html#échantillonnage-sampling">CM3 · Échantillonnage</a>
+</dd>
 <dt><strong>Descente de gradient</strong> (<em>gradient descent</em>)</dt>
 <dd>
 Algorithme itératif qui ajuste les paramètres dans la direction opposée au gradient, jusqu’à minimiser le coût. Analogie : le randonneur dans le brouillard. Dans PyTorch : <code>torch.optim.SGD</code>. <a href="./cours1.html#descente-de-gradient-gradient-descent">CM1 · Descente de gradient</a> · <a href="./cours2.html#les-briques">CM2 · Les briques</a>
+</dd>
+<dt><strong>Données de démonstration</strong> (<em>demonstration data</em>)</dt>
+<dd>
+Dataset d’exemples <code>(prompt, réponse)</code> de grande qualité, écrits par des spécialistes, qui sert au <em>supervised finetuning</em>. <a href="./cours3.html#supervised-finetuning">CM3 · Supervised finetuning</a>
 </dd>
 </dl>
 </section>
 <section id="e" class="level2">
 <h2 class="anchored" data-anchor-id="e">E</h2>
 <dl>
+<dt><strong>Échantillonnage</strong> (<em>sampling</em>)</dt>
+<dd>
+Choisir le token suivant en <strong>tirant au hasard</strong> selon les probabilités données par le modèle. La même question peut donc donner des réponses différentes. <a href="./cours3.html#échantillonnage-sampling">CM3 · Échantillonnage</a>
+</dd>
+<dt><strong>Embedding</strong> (<em>plongement</em>)</dt>
+<dd>
+Vecteur de nombres qui représente un token, ou un texte entier. Des sens proches donnent des vecteurs proches. <a href="./cours3.html#embeddings">CM3 · Embeddings</a>
+</dd>
 <dt><strong>Entraînement</strong> (<em>training</em>)</dt>
 <dd>
 Phase pendant laquelle l’algorithme construit <span class="math inline">\(f\)</span> à partir des exemples. Très coûteuse en ressources par rapport à l’inférence. <a href="./cours1.html#lentraînement">CM1 · L’entraînement</a> · <a href="./cours2.html#la-boucle-dentraînement">CM2 · La boucle d’entraînement</a>
@@ -487,6 +533,14 @@ Fonction de coût de la régression : la moyenne des carrés des écarts entre p
 <section id="f" class="level2">
 <h2 class="anchored" data-anchor-id="f">F</h2>
 <dl>
+<dt><strong>Fenêtre de contexte</strong> (<em>context window</em>)</dt>
+<dd>
+Nombre maximal de tokens que le modèle peut lire en une fois : consigne <code>system</code>, documents, historique de la conversation <strong>et</strong> réponse. <a href="./cours3.html#la-fenêtre-de-contexte">CM3 · La fenêtre de contexte</a>
+</dd>
+<dt><strong>Finetuning</strong></dt>
+<dd>
+Entraînement supplémentaire qui <strong>modifie les paramètres</strong> d’un modèle déjà entraîné, pour le spécialiser. <a href="./cours3.html#post-entraînement-post-training">CM3 · Post-entraînement</a>
+</dd>
 <dt><strong>Fonction d’activation</strong></dt>
 <dd>
 Fonction non linéaire <span class="math inline">\(\sigma\)</span> appliquée à la sortie de la transformation linéaire. C’est elle qui permet de « courber » la fonction. Voir <em>ReLU</em>, <em>sigmoïde</em>, <em>tanh</em>. <a href="./cours2.html#sec-neurone-1d">CM2 · Fonction d’activation</a>
@@ -525,6 +579,10 @@ Représentation d’un modèle sous forme de nœuds (neurones) et de flèches (p
 <section id="h" class="level2">
 <h2 class="anchored" data-anchor-id="h">H</h2>
 <dl>
+<dt><strong>Hallucination</strong></dt>
+<dd>
+Réponse plausible mais fausse produite par un LLM, comme une référence d’article inventée. Le modèle produit le texte le plus <strong>plausible</strong>, pas le texte <strong>vrai</strong>. <a href="./cours3.html#activité-la-température">CM3 · Activité : la température</a>
+</dd>
 <dt><strong>Hyperparamètre</strong></dt>
 <dd>
 Variable choisie <strong>manuellement</strong> par l’ingénieur, qui influe sur l’entraînement sans être apprise : taux d’apprentissage, nombre d’epochs, profondeur, largeur, fonction d’activation. <a href="./cours2.html#les-hyperparamètres">CM2 · Les hyperparamètres</a>
@@ -538,6 +596,19 @@ Variable choisie <strong>manuellement</strong> par l’ingénieur, qui influe su
 <dd>
 Phase où le modèle est figé et répond <span class="math inline">\(\hat{y} = f(x)\)</span> à une entrée nouvelle. Bien moins coûteuse que l’entraînement. Dans PyTorch, on la place dans un bloc <code>with torch.no_grad():</code>. <a href="./cours1.html#linférence-inference-ou-prédiction.">CM1 · L’inférence</a> · <a href="./cours2.html#la-boucle-dentraînement">CM2 · La boucle d’entraînement</a>
 </dd>
+<dt><strong>Injection de prompt</strong> (<em>prompt injection</em>)</dt>
+<dd>
+Message qui détourne le modèle de sa consigne <code>system</code>, par exemple <em>« Ignore toutes les consignes précédentes et… »</em>. <a href="./cours3.html#consigne-système-et-messages">CM3 · Consigne système et messages</a>
+</dd>
+</dl>
+</section>
+<section id="j" class="level2">
+<h2 class="anchored" data-anchor-id="j">J</h2>
+<dl>
+<dt><strong>Jailbreak</strong></dt>
+<dd>
+Contourner les protections apprises par un modèle pendant le post-training, pour lui faire produire ce qu’il devrait refuser. <a href="./cours3.html#le-shoggoth">CM3 · Le shoggoth</a>
+</dd>
 </dl>
 </section>
 <section id="l" class="level2">
@@ -549,7 +620,11 @@ Le nombre de neurones <span class="math inline">\(M\)</span> d’une couche. <a 
 </dd>
 <dt><strong>LLM</strong> (<em>Large Language Model</em>, grand modèle de langage)</dt>
 <dd>
-Modèle de langage à plusieurs milliards de paramètres, qui prédit le mot suivant d’un texte. <a href="./cours1.html#panorama">CM1 · Panorama</a>
+Modèle de langage à plusieurs milliards de paramètres, qui prédit le token suivant d’un texte. <a href="./cours1.html#panorama">CM1 · Panorama</a> · <a href="./cours3.html#en-sortie-dun-llm">CM3 · En sortie d’un LLM</a>
+</dd>
+<dt><strong>Logits</strong></dt>
+<dd>
+Scores bruts produits par la dernière couche du réseau, un par classe. Le softmax les transforme en probabilités. <a href="./cours3.html#en-sortie-dun-llm">CM3 · En sortie d’un LLM</a>
 </dd>
 </dl>
 </section>
@@ -560,6 +635,22 @@ Modèle de langage à plusieurs milliards de paramètres, qui prédit le mot sui
 <dd>
 Tableau rectangulaire de nombres. <span class="math inline">\(a_{ij}\)</span> est l’élément de la ligne <span class="math inline">\(i\)</span> et de la colonne <span class="math inline">\(j\)</span>. <a href="./cours2_matrices.html#définition">Annexe · Définition</a>
 </dd>
+<dt><strong>Matrice d’attention</strong></dt>
+<dd>
+Tableau qui montre combien chaque token regarde les autres : une ligne par token qui cherche (sa <strong>requête</strong>, <em>query</em>), une colonne par token regardé (sa <strong>clé</strong>, <em>key</em>). Chaque ligne somme à 1. <a href="./cours3.html#lattention">CM3 · L’attention</a>
+</dd>
+<dt><strong>Matrice d’embedding</strong> (<em>embedding matrix</em>)</dt>
+<dd>
+Matrice <span class="math inline">\(\mathbf{W}_e\)</span> qui contient l’embedding de chaque token du vocabulaire, une ligne par token. Ses valeurs sont apprises pendant l’entraînement, comme des poids. <a href="./cours3.html#matrice-dembedding">CM3 · Matrice d’embedding</a>
+</dd>
+<dt><strong>Mémoire</strong> (des chatbots)</dt>
+<dd>
+Fonction de certains chatbots qui ajoute au contexte des extraits de vos anciennes conversations. Le modèle n’apprend rien : c’est seulement du texte dans la fenêtre de contexte. <a href="./cours3.html#consigne-système-et-messages">CM3 · Consigne système et messages</a>
+</dd>
+<dt><strong>Message</strong> et <strong>rôle</strong></dt>
+<dd>
+Le contexte d’un chatbot est une liste de messages. Chaque message a un rôle : <code>system</code> (consignes du développeur), <code>user</code> (l’utilisateur) ou <code>assistant</code> (le modèle). <a href="./cours3.html#consigne-système-et-messages">CM3 · Consigne système et messages</a>
+</dd>
 <dt><strong>MLP</strong> (<em>multilayer perceptron</em>, perceptron multicouche)</dt>
 <dd>
 Réseau formé uniquement de couches entièrement connectées, où l’information ne circule que vers l’avant. <a href="./cours2.html#définition">CM2 · Apprentissage profond</a>
@@ -567,6 +658,18 @@ Réseau formé uniquement de couches entièrement connectées, où l’informati
 <dt><strong>Modèle</strong> (<em>model</em>)</dt>
 <dd>
 Fonction <span class="math inline">\(f\)</span> qui transforme une entrée en une sortie : <span class="math inline">\(y = f(x)\)</span>. Dans PyTorch, une classe qui hérite de <code>nn.Module</code>. <a href="./cours1.html#modèle">CM1 · Modèle</a> · <a href="./cours2.html#les-briques">CM2 · Les briques</a>
+</dd>
+<dt><strong>Modèle de base</strong> (<em>base model</em>, <em>foundation model</em>, ou <em>pre-trained</em>)</dt>
+<dd>
+Modèle obtenu à la fin du pré-entraînement. Il complète du texte, mais ne sait pas converser. Suffixes <code>-Base</code> ou <code>-pt</code> dans le nom. <a href="./cours3.html#pré-entraînement-pre-training">CM3 · Pré-entraînement</a>
+</dd>
+<dt><strong>Modèle de langage</strong> (<em>language model</em>)</dt>
+<dd>
+Modèle qui prend en entrée un texte et prédit le token suivant. C’est un classifieur, avec une classe par token du vocabulaire. <a href="./cours3.html#en-sortie-dun-llm">CM3 · En sortie d’un LLM</a>
+</dd>
+<dt><strong>Modèle instruct</strong> (<em>instruction tuned</em>)</dt>
+<dd>
+Modèle de base qui a suivi le post-training : il sait converser et refuser les demandes dangereuses. Suffixes <code>-Instruct</code> ou <code>-it</code> dans le nom. <a href="./cours3.html#training-phases">CM3 · Phases d’entraînement</a>
 </dd>
 </dl>
 </section>
@@ -606,9 +709,21 @@ Premier modèle de neurone artificiel, inventé dans les années 1950. Ses limit
 <dd>
 Le paramètre <span class="math inline">\(w\)</span> qui multiplie une entrée. Un neurone a un poids par caractéristique. <a href="./cours1.html#transformation-linéaire">CM1 · Transformation linéaire</a> · <a href="./cours2.html#une-couche-cachée-avec-2-dimensions">CM2 · Une couche cachée avec 2 dimensions</a>
 </dd>
+<dt><strong>Post-entraînement</strong> (<em>post-training</em>)</dt>
+<dd>
+Seconde phase d’entraînement d’un LLM : on spécialise le modèle de base pour qu’il converse et évite les comportements toxiques. Elle comprend le SFT puis le <em>preference finetuning</em>. <a href="./cours3.html#post-entraînement-post-training">CM3 · Post-entraînement</a>
+</dd>
 <dt><strong>Pré-activation</strong></dt>
 <dd>
 La valeur <span class="math inline">\(z = wx + b\)</span>, sortie de la transformation linéaire avant la fonction d’activation. <a href="./cours2.html#un-neurone-avec-une-dimension">CM2 · Un neurone avec une dimension</a>
+</dd>
+<dt><strong>Pré-entraînement</strong> (<em>pre-training</em>)</dt>
+<dd>
+Première phase d’entraînement d’un LLM : prédire le token suivant sur un énorme corpus de textes (des milliers de milliards de tokens). Le modèle y acquiert ses connaissances. <a href="./cours3.html#pré-entraînement-pre-training">CM3 · Pré-entraînement</a>
+</dd>
+<dt><strong>Preference finetuning</strong></dt>
+<dd>
+Seconde étape du post-training : on ajuste le modèle pour qu’il se comporte selon une préférence humaine, avec de l’apprentissage par renforcement. Voir <em>RLHF</em>, <em>RLAIF</em>. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
 </dd>
 <dt><strong>Profondeur</strong> (<em>depth</em>)</dt>
 <dd>
@@ -623,6 +738,14 @@ Bibliothèque Python qui calcule automatiquement les pentes, quel que soit le mo
 <section id="r" class="level2">
 <h2 class="anchored" data-anchor-id="r">R</h2>
 <dl>
+<dt><strong>RAG</strong> (<em>Retrieval-Augmented Generation</em>)</dt>
+<dd>
+Système qui retrouve les documents pertinents par recherche sémantique, puis les place dans la fenêtre de contexte pour que le LLM réponde à partir de <em>vos</em> documents. <a href="./cours3.html#activité-word-embeddings">CM3 · Activité : word embeddings</a>
+</dd>
+<dt><strong>Recherche sémantique</strong> (<em>semantic search</em>)</dt>
+<dd>
+Retrouver des documents en comparant leur embedding à celui de la question, plutôt que par mots-clés : on trouve des textes de même sens, même sans mot en commun. <a href="./cours3.html#activité-word-embeddings">CM3 · Activité : word embeddings</a>
+</dd>
 <dt><strong>Régression</strong></dt>
 <dd>
 Tâche dont la sortie est un nombre réel, comme le prix d’un appartement. <a href="./cours1.html#régression-linéaire">CM1 · Régression linéaire</a>
@@ -643,6 +766,18 @@ Empilement de transformations simples inspiré du cerveau : des neurones organis
 <dd>
 Algorithme qui <strong>calcule</strong> les pentes en remontant les couches, de la sortie vers l’entrée. Elle ne modifie aucun paramètre : c’est l’optimiseur (<code>optimizer.step()</code>) qui s’en charge. <a href="./cours2.html#passe-avant-et-passe-arrière">CM2 · Passe avant et passe arrière</a>
 </dd>
+<dt><strong>Reward model</strong> (<em>modèle de récompense</em>)</dt>
+<dd>
+Modèle entraîné à prédire la note qu’un humain donnerait à une réponse. En RLHF, il note les réponses du LLM pendant l’apprentissage par renforcement. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+</dd>
+<dt><strong>RLAIF</strong> (<em>Reinforcement Learning from AI Feedback</em>)</dt>
+<dd>
+Preference finetuning où les réponses sont notées par une IA qui s’appuie sur une <strong>constitution</strong>, au lieu d’évaluateurs humains. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+</dd>
+<dt><strong>RLHF</strong> (<em>Reinforcement Learning from Human Feedback</em>)</dt>
+<dd>
+Preference finetuning à partir de notes données par des évaluateurs humains, via un <em>reward model</em>. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+</dd>
 <dt><strong>RMSE</strong> (<em>Root Mean Square Error</em>)</dt>
 <dd>
 Racine carrée du coût MSE. Elle s’exprime dans l’unité de la sortie, ce qui la rend lisible. Elle sert à <strong>lire</strong> le coût, pas à l’optimiser. <a href="./cours1.html#lire-le-coût-la-rmse">CM1 · Lire le coût : la RMSE</a>
@@ -652,9 +787,21 @@ Racine carrée du coût MSE. Elle s’exprime dans l’unité de la sortie, ce q
 <section id="s" class="level2">
 <h2 class="anchored" data-anchor-id="s">S</h2>
 <dl>
+<dt><strong>SFT</strong> (<em>Supervised FineTuning</em>)</dt>
+<dd>
+Première étape du post-training : le modèle apprend à imiter des <strong>données de démonstration</strong> <code>(prompt, réponse)</code>, pour répondre aux questions au lieu de compléter le texte. <a href="./cours3.html#supervised-finetuning">CM3 · Supervised finetuning</a>
+</dd>
 <dt><strong>Sigmoïde</strong> (<em>sigmoid</em>)</dt>
 <dd>
 Fonction d’activation à valeurs dans <span class="math inline">\(]0, 1[\)</span>, utilisée en sortie d’une classification binaire : elle se lit comme une probabilité. <a href="./cours2.html#sec-neurone-1d">CM2 · Fonction d’activation</a>
+</dd>
+<dt><strong>Similarité cosinus</strong> (<em>cosine similarity</em>)</dt>
+<dd>
+Mesure de l’angle entre deux vecteurs, sans tenir compte de leur longueur. Elle vaut entre -1 et 1 : proche de 1, les deux embeddings ont des sens proches. <a href="./cours3.html#similarité-sémantique">CM3 · Similarité sémantique</a>
+</dd>
+<dt><strong>Softmax</strong></dt>
+<dd>
+Fonction qui transforme les logits de la couche de sortie en probabilités, entre 0 et 1 et de somme 1. <a href="./cours3.html#classification">CM3 · Classification</a>
 </dd>
 <dt><strong>Sous-apprentissage</strong> (<em>underfitting</em>)</dt>
 <dd>
@@ -677,13 +824,33 @@ Fonction d’activation en S à valeurs dans <span class="math inline">\(]-1, 1[
 <dd>
 Le pas <span class="math inline">\(\alpha\)</span> de la descente de gradient (<code>lr</code> dans PyTorch). C’est de loin l’hyperparamètre le plus critique : on le cherche en puissances de 10. <a href="./cours1.html#application-sur-une-régression-linéaire">CM1 · Application sur une régression linéaire</a> · <a href="./cours2.html#comment-régler-en-pratique">CM2 · Comment régler en pratique</a>
 </dd>
+<dt><strong>Température</strong> (<em>temperature</em>)</dt>
+<dd>
+Réglage de la part de hasard dans l’échantillonnage. À 0, toujours le token le plus probable ; au-dessus de 1, les tokens peu probables sortent plus souvent. <a href="./cours3.html#échantillonnage-sampling">CM3 · Échantillonnage</a>
+</dd>
 <dt><strong>Tenseur</strong> (<em>tensor</em>)</dt>
 <dd>
 Tableau de nombres manipulé par PyTorch. Une opération sur un tenseur s’applique à tous ses éléments d’un coup, sans boucle. <a href="./cours2.html#les-tenseurs">CM2 · Les tenseurs</a>
 </dd>
+<dt><strong>Token</strong></dt>
+<dd>
+Élément du vocabulaire d’un modèle de langage : un mot courant, un morceau de mot, un signe de ponctuation. Pour un texte en anglais, 100 tokens ≈ 75 mots. Les API sont facturées au token. <a href="./cours3.html#tokens">CM3 · Tokens</a>
+</dd>
+<dt><strong>Tokenization</strong></dt>
+<dd>
+Découpage d’un texte en une liste de tokens, chacun remplacé par son identifiant dans le vocabulaire. <a href="./cours3.html#tokens">CM3 · Tokens</a>
+</dd>
+<dt><strong>Top-k</strong> et <strong>top-p</strong></dt>
+<dd>
+Réglages qui retirent les tokens trop improbables avant le tirage : top-k garde les <span class="math inline">\(k\)</span> tokens les plus probables, top-p garde les plus probables jusqu’à une probabilité totale <span class="math inline">\(p\)</span>. <a href="./cours3.html#échantillonnage-sampling">CM3 · Échantillonnage</a>
+</dd>
 <dt><strong>Transformation linéaire</strong></dt>
 <dd>
 La formule <span class="math inline">\(wx + b\)</span>, ou <span class="math inline">\(w_1 x_1 + w_2 x_2 + b\)</span> avec plusieurs caractéristiques. Dans PyTorch : <code>nn.Linear</code>. <a href="./cours1.html#transformation-linéaire">CM1 · Transformation linéaire</a>
+</dd>
+<dt><strong>Transformer</strong></dt>
+<dd>
+Architecture de réseau de neurones publiée en 2017, fondée sur le mécanisme d’attention. C’est elle qui a permis l’explosion des LLMs. <a href="./cours3.html#lattention">CM3 · L’attention</a>
 </dd>
 </dl>
 </section>
@@ -697,6 +864,10 @@ Comparaison du coût d’entraînement et du coût de validation, pour diagnosti
 <dt><strong>Vecteur de caractéristiques</strong> (<em>feature vector</em>)</dt>
 <dd>
 L’entrée <span class="math inline">\(\mathbf{x}\)</span> quand elle comporte plusieurs caractéristiques. Vecteurs et matrices sont notés <strong>en gras</strong>. <a href="./cours2.html#vecteurs">CM2 · Vecteurs</a>
+</dd>
+<dt><strong>Vocabulaire</strong> (<em>vocabulary</em>)</dt>
+<dd>
+Ensemble de tous les tokens connus d’un modèle de langage, de 32 000 à 200 000 selon les modèles. Il est construit automatiquement avec l’algorithme BPE. <a href="./cours3.html#tokens">CM3 · Tokens</a>
 </dd>
 </dl>
 
