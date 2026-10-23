@@ -330,6 +330,7 @@ window.Quarto = {
   <li><a href="#application-sur-une-régression-linéaire" id="toc-application-sur-une-régression-linéaire" class="nav-link" data-scroll-target="#application-sur-une-régression-linéaire"><span class="header-section-number">6.2</span> Application sur une régression linéaire</a></li>
   </ul></li>
   <li><a href="#tp-descente-de-gradient" id="toc-tp-descente-de-gradient" class="nav-link" data-scroll-target="#tp-descente-de-gradient"><span class="header-section-number">7</span> TP descente de gradient</a></li>
+  <li><a href="#points-à-retenir" id="toc-points-à-retenir" class="nav-link" data-scroll-target="#points-à-retenir"><span class="header-section-number">8</span> Points à retenir</a></li>
   </ul>
 </nav>
     </div>
@@ -760,43 +761,43 @@ window.Quarto = {
 Table&nbsp;1: Cinq exemples du jeu de données. Chaque ligne est une paire (entrée, cible).
 </figcaption>
 <div aria-describedby="tbl-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display" data-execution_count="97">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <style type="text/css">
 </style>
 
-<table id="T_ea487" class="cell caption-top table table-sm table-striped small">
+<table id="T_c009a" class="cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_ea487_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Exemple i</th>
-<th id="T_ea487_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Surface (m²)</th>
-<th id="T_ea487_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Prix (€)</th>
+<th id="T_c009a_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Exemple i</th>
+<th id="T_c009a_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Surface (m²)</th>
+<th id="T_c009a_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Prix (€)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_ea487_row0_col0" class="data row0 col0">1</td>
-<td id="T_ea487_row0_col1" class="data row0 col1">93</td>
-<td id="T_ea487_row0_col2" class="data row0 col2">394 000</td>
+<td id="T_c009a_row0_col0" class="data row0 col0">1</td>
+<td id="T_c009a_row0_col1" class="data row0 col1">93</td>
+<td id="T_c009a_row0_col2" class="data row0 col2">394 000</td>
 </tr>
 <tr class="even">
-<td id="T_ea487_row1_col0" class="data row1 col0">2</td>
-<td id="T_ea487_row1_col1" class="data row1 col1">61</td>
-<td id="T_ea487_row1_col2" class="data row1 col2">305 000</td>
+<td id="T_c009a_row1_col0" class="data row1 col0">2</td>
+<td id="T_c009a_row1_col1" class="data row1 col1">61</td>
+<td id="T_c009a_row1_col2" class="data row1 col2">305 000</td>
 </tr>
 <tr class="odd">
-<td id="T_ea487_row2_col0" class="data row2 col0">3</td>
-<td id="T_ea487_row2_col1" class="data row2 col1">101</td>
-<td id="T_ea487_row2_col2" class="data row2 col2">394 000</td>
+<td id="T_c009a_row2_col0" class="data row2 col0">3</td>
+<td id="T_c009a_row2_col1" class="data row2 col1">101</td>
+<td id="T_c009a_row2_col2" class="data row2 col2">394 000</td>
 </tr>
 <tr class="even">
-<td id="T_ea487_row3_col0" class="data row3 col0">4</td>
-<td id="T_ea487_row3_col1" class="data row3 col1">86</td>
-<td id="T_ea487_row3_col2" class="data row3 col2">384 000</td>
+<td id="T_c009a_row3_col0" class="data row3 col0">4</td>
+<td id="T_c009a_row3_col1" class="data row3 col1">86</td>
+<td id="T_c009a_row3_col2" class="data row3 col2">384 000</td>
 </tr>
 <tr class="odd">
-<td id="T_ea487_row4_col0" class="data row4 col0">5</td>
-<td id="T_ea487_row4_col1" class="data row4 col1">27</td>
-<td id="T_ea487_row4_col2" class="data row4 col2">126 000</td>
+<td id="T_c009a_row4_col0" class="data row4 col0">5</td>
+<td id="T_c009a_row4_col1" class="data row4 col1">27</td>
+<td id="T_c009a_row4_col2" class="data row4 col2">126 000</td>
 </tr>
 </tbody>
 </table>
@@ -1010,33 +1011,33 @@ Note
 Table&nbsp;2: Le même coût, lu de deux façons. Le coût MSE est illisible, la RMSE se compare à un prix.
 </figcaption>
 <div aria-describedby="tbl-rmse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display" data-execution_count="101">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <style type="text/css">
 </style>
 
-<table id="T_b96ba" class="cell caption-top table table-sm table-striped small">
+<table id="T_385df" class="cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_b96ba_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Modèle</th>
-<th id="T_b96ba_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Coût J MSE (€²)</th>
-<th id="T_b96ba_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">RMSE (€)</th>
+<th id="T_385df_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Modèle</th>
+<th id="T_385df_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Coût J MSE (€²)</th>
+<th id="T_385df_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">RMSE (€)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_b96ba_row0_col0" class="data row0 col0">droite ajustée (w = 4 509, b = 162)</td>
-<td id="T_b96ba_row0_col1" class="data row0 col1">4.94e+08</td>
-<td id="T_b96ba_row0_col2" class="data row0 col2">22 222</td>
+<td id="T_385df_row0_col0" class="data row0 col0">droite ajustée (w = 4 509, b = 162)</td>
+<td id="T_385df_row0_col1" class="data row0 col1">4.94e+08</td>
+<td id="T_385df_row0_col2" class="data row0 col2">22 222</td>
 </tr>
 <tr class="even">
-<td id="T_b96ba_row1_col0" class="data row1 col0">trop plat (w = 3 000, b = 0)</td>
-<td id="T_b96ba_row1_col1" class="data row1 col1">1.29e+10</td>
-<td id="T_b96ba_row1_col2" class="data row1 col2">113 512</td>
+<td id="T_385df_row1_col0" class="data row1 col0">trop plat (w = 3 000, b = 0)</td>
+<td id="T_385df_row1_col1" class="data row1 col1">1.29e+10</td>
+<td id="T_385df_row1_col2" class="data row1 col2">113 512</td>
 </tr>
 <tr class="odd">
-<td id="T_b96ba_row2_col0" class="data row2 col0">trop pentu (w = 6 000, b = 0)</td>
-<td id="T_b96ba_row2_col1" class="data row2 col1">1.25e+10</td>
-<td id="T_b96ba_row2_col2" class="data row2 col2">111 941</td>
+<td id="T_385df_row2_col0" class="data row2 col0">trop pentu (w = 6 000, b = 0)</td>
+<td id="T_385df_row2_col1" class="data row2 col1">1.25e+10</td>
+<td id="T_385df_row2_col2" class="data row2 col2">111 941</td>
 </tr>
 </tbody>
 </table>
@@ -1248,6 +1249,29 @@ Figure&nbsp;4: Descente de gradient sur le seul paramètre <span class="math inl
 <li>Dans le projet tp1_ml, ouvrez le notebook <code>tp1b_gradient_descent.ipynb</code></li>
 <li>Suivez les instructions</li>
 </ol>
+</section>
+<section id="points-à-retenir" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Points à retenir</h1>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Un <strong>modèle</strong> est une fonction <span class="math inline">\(y = f(x)\)</span>. En apprentissage automatique, on ne l’écrit pas : un algorithme d’<strong>entraînement</strong> la construit à partir d’<strong>exemples</strong>. En apprentissage <strong>supervisé</strong>, chaque exemple est une paire (entrée, <strong>cible</strong>).</li>
+<li>La vie d’un modèle a deux temps : l’<strong>entraînement</strong>, coûteux, qui ajuste les <strong>paramètres</strong>, puis l’<strong>inférence</strong>, où le modèle figé répond à des entrées nouvelles. Ce qui compte, c’est la <strong>généralisation</strong> : bien répondre sur des entrées <strong>jamais vues</strong>.</li>
+<li>Une <strong>régression linéaire</strong> cherche les meilleurs paramètres <span class="math inline">\(w\)</span> (poids) et <span class="math inline">\(b\)</span> (biais) du modèle <span class="math inline">\(f(x) = wx + b\)</span>.</li>
+<li>La <strong>perte</strong> mesure l’erreur sur <strong>un</strong> exemple, le <strong>coût</strong> <span class="math inline">\(J\)</span> sur <strong>tout</strong> le dataset. En régression, on utilise la <strong>MSE</strong> : la moyenne des carrés des écarts. Pour lire le coût dans l’unité de la sortie (en euros), on prend sa racine carrée : la <strong>RMSE</strong>.</li>
+<li>La <strong>descente de gradient</strong> ajuste les paramètres pas à pas, dans le sens où le coût descend, jusqu’à la <strong>convergence</strong>. Le <strong>taux d’apprentissage</strong> <span class="math inline">\(\alpha\)</span> règle la taille du pas : trop grand, le coût diverge ; trop petit, l’entraînement est très lent.</li>
+<li>Avant d’entraîner, on met les caractéristiques à l’échelle par <strong>standardisation</strong> (TP1b) : moyenne 0, écart-type 1. La descente converge alors en quelques dizaines d’epochs, au lieu de plusieurs dizaines de milliers.</li>
+</ol>
+</div>
+</div>
 
 
 </section>

@@ -807,6 +807,10 @@ Fonction qui transforme les logits de la couche de sortie en probabilités, entr
 <dd>
 Coût élevé à la fois en entraînement et en validation : le modèle est trop simple. <a href="./cours2.html#validation">CM2 · Validation</a>
 </dd>
+<dt><strong>Standardisation</strong> (<em>standardization</em>)</dt>
+<dd>
+Mise à l’échelle (<em>feature scaling</em>) qui ramène chaque caractéristique à une moyenne de 0 et un écart-type de 1 : <span class="math inline">\(x' = (x - \bar{x}) / \sigma_x\)</span>. La descente de gradient converge alors beaucoup plus vite. Vue au TP1b. <a href="./cours1.html#points-à-retenir">CM1 · Points à retenir</a>
+</dd>
 <dt><strong>Surapprentissage</strong> (<em>overfitting</em>)</dt>
 <dd>
 Le modèle a mémorisé les exemples d’entraînement au lieu d’apprendre : coût d’entraînement faible, coût de validation bien plus élevé. <a href="./cours2.html#surapprentissage-overfitting">CM2 · Surapprentissage</a>

@@ -382,6 +382,7 @@ window.Quarto = {
   <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test"><span class="header-section-number">8.5</span> Test</a></li>
   </ul></li>
   <li><a href="#tp2c-validation-et-surapprentissage" id="toc-tp2c-validation-et-surapprentissage" class="nav-link" data-scroll-target="#tp2c-validation-et-surapprentissage"><span class="header-section-number">9</span> TP2c — Validation et surapprentissage</a></li>
+  <li><a href="#points-à-retenir" id="toc-points-à-retenir" class="nav-link" data-scroll-target="#points-à-retenir"><span class="header-section-number">10</span> Points à retenir</a></li>
   </ul>
 </nav>
     </div>
@@ -1625,18 +1626,39 @@ Figure&nbsp;8: Seul le dataset d’entraînement alimente le modèle (en orange)
 <section id="tp2c-validation-et-surapprentissage" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> TP2c — Validation et surapprentissage</h1>
 <p>Dans le projet <code>tp2_neural_net</code>, ouvrez le notebook <code>tp2c_validation.ipynb</code> et suivez les instructions.</p>
+</section>
+<section id="points-à-retenir" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Points à retenir</h1>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>PyTorch</strong> calcule les pentes automatiquement. Les données sont des <strong>tenseurs</strong> de forme <code>(N, D)</code> : une ligne par exemple, une colonne par caractéristique. Chaque epoch enchaîne toujours 4 étapes : prédiction, coût, calcul des pentes (<code>cost.backward()</code>), mise à jour des paramètres (<code>optimizer.step()</code>).</li>
+<li>Un <strong>neurone</strong> calcule une transformation linéaire <span class="math inline">\(wx + b\)</span>, puis applique une <strong>fonction d’activation</strong> non linéaire (ReLU par défaut) : c’est elle qui permet de « courber » la fonction.</li>
+<li>Un seul neurone ne suffit pas : les neurones d’une <strong>couche cachée</strong>, placés en parallèle, apportent chacun un « pli ». Avec plusieurs caractéristiques, chaque neurone a <strong>un poids par caractéristique</strong>. En régression, la couche de sortie n’a pas de fonction d’activation.</li>
+<li>L’<strong>apprentissage profond</strong> (<em>deep learning</em>) empile plusieurs couches cachées : chaque couche réutilise les motifs trouvés par la précédente.</li>
+<li>Les shapes doivent s’enchaîner : chaque couche a autant d’entrées que la précédente a de neurones. Une couche <code>nn.Linear(D, M)</code> a <span class="math inline">\(M \times (D + 1)\)</span> paramètres : <span class="math inline">\(D\)</span> poids et un biais pour chacun des <span class="math inline">\(M\)</span> neurones.</li>
+<li>Un coût d’entraînement bas ne prouve rien : on garde environ 20 % des exemples pour la <strong>validation</strong>. Coût de validation bien plus élevé que le coût d’entraînement : <strong>surapprentissage</strong>. Si les deux sont élevés : <strong>sous-apprentissage</strong>.</li>
+<li>Les <strong>hyperparamètres</strong> (taux d’apprentissage, nombre d’epochs, largeur, profondeur, fonction d’activation) sont choisis par l’ingénieur. On en change <strong>un seul à la fois</strong>, et on juge toujours sur le coût de <strong>validation</strong>. Le plus important est le taux d’apprentissage.</li>
+</ol>
+</div>
+</div>
 <!--
 Exercice ici:
 https://developers.google.com/machine-learning/crash-course/neural-networks/interactive-exercises?hl=fr
 
-TODO activité : 
-- les curseurs ne sont pas visible
-- mettre les formules
-- utiliser w_out, b_out ? confusing pour la partie 3
+TODO 2027 
+- feedbacks enseignants
+- somme pondérée : analogie avec coefficients pour leurs notes ?
 
-feedback Nicolas
-Cours 2 : activité avec nuage de points : le fitting est trop facile. Il faudrait des nuages de points 
-qui fittent bien avec une activation mais pas l'autre.
+
 -->
 
 
