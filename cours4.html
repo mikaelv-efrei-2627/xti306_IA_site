@@ -369,7 +369,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#activité-tri-à-main-levée" id="toc-activité-tri-à-main-levée" class="nav-link" data-scroll-target="#activité-tri-à-main-levée"><span class="header-section-number">4.1</span> Activité : tri à main levée</a></li>
   <li><a href="#techniques" id="toc-techniques" class="nav-link" data-scroll-target="#techniques"><span class="header-section-number">4.2</span> Techniques</a></li>
-  <li><a href="#mesurer-un-prompt" id="toc-mesurer-un-prompt" class="nav-link" data-scroll-target="#mesurer-un-prompt"><span class="header-section-number">4.3</span> Mesurer un prompt</a></li>
+  <li><a href="#evaluer-un-prompt" id="toc-evaluer-un-prompt" class="nav-link" data-scroll-target="#evaluer-un-prompt"><span class="header-section-number">4.3</span> Evaluer un prompt</a></li>
   <li><a href="#limites" id="toc-limites" class="nav-link" data-scroll-target="#limites"><span class="header-section-number">4.4</span> Limites</a></li>
   </ul></li>
   <li><a href="#tp4-trier-des-mails-avec-un-llm" id="toc-tp4-trier-des-mails-avec-un-llm" class="nav-link" data-scroll-target="#tp4-trier-des-mails-avec-un-llm"><span class="header-section-number">5</span> TP4 — Trier des mails avec un LLM</a></li>
@@ -1274,9 +1274,9 @@ Bonjour, j'ai été prélevé deux fois de 59,99 € pour la commande CMD-511870
 <p>Pour une extraction, une température de <code>0</code>, si le modèle le permet : on veut la réponse la plus probable, et la même à chaque appel (CM3). Les modèles récents qui raisonnent (Claude, GPT) n’acceptent plus ce réglage : on règle alors la longueur du raisonnement (<code>reasoning_effort</code>).</p>
 </section>
 </section>
-<section id="mesurer-un-prompt" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="mesurer-un-prompt"><span class="header-section-number">4.3</span> Mesurer un prompt</h2>
-<p>Un prompt ne se juge pas sur 2 ou 3 essais. On le <strong>mesure</strong> sur des <strong>cas étiquetés</strong> : des entrées, avec la sortie attendue écrite à la main. On utilise la même méthode que pour régler un réseau de neurones au CM2 :</p>
+<section id="evaluer-un-prompt" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="evaluer-un-prompt"><span class="header-section-number">4.3</span> Evaluer un prompt</h2>
+<p>Un prompt ne se juge pas sur 2 ou 3 essais. On le <strong>mesure</strong> sur un dataset d’exemples <strong>étiquetés</strong> (CM1) : des entrées, avec la sortie attendue écrite à la main. C’est une <strong>évaluation (eval)</strong>. On utilise la même méthode que pour régler un réseau de neurones au CM2 :</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -1299,11 +1299,11 @@ Bonjour, j'ai été prélevé deux fois de 59,99 € pour la commande CMD-511870
 </tr>
 <tr class="odd">
 <td>Le <strong>dataset de validation</strong> sert à choisir les hyperparamètres.</td>
-<td>Des cas étiquetés servent à choisir la meilleure version du prompt.</td>
+<td>Le <strong>dataset de validation</strong> sert à choisir la meilleure version du prompt.</td>
 </tr>
 <tr class="even">
 <td>Le <strong>dataset de test</strong> donne le score final.</td>
-<td>D’autres cas étiquetés, utilisés une seule fois, à la fin.</td>
+<td>Le <strong>dataset de test</strong>, utilisé une seule fois, à la fin, donne le score final.</td>
 </tr>
 </tbody>
 </table>
