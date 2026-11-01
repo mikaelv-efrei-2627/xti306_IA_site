@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/tp3.html</loc>
-    <lastmod>2026-10-23T15:49:01.456Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/tp4.html</loc>
+    <lastmod>2026-11-01T11:49:53.949Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/tp1.html</loc>
-    <lastmod>2026-10-20T08:41:21.364Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/tp2.html</loc>
+    <lastmod>2026-11-01T12:07:20.619Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/references.html</loc>
-    <lastmod>2026-09-29T09:59:02.913Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/single-neuron.html</loc>
+    <lastmod>2026-10-16T16:38:58.800Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/playground-deep.html</loc>
-    <lastmod>2026-10-17T08:53:21.486Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/playground.html</loc>
+    <lastmod>2026-10-16T15:05:31.248Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/intro.html</loc>
-    <lastmod>2026-09-17T11:09:19.494Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/multi-neuron.html</loc>
+    <lastmod>2026-10-16T17:21:00.411Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/glossaire.html</loc>
-    <lastmod>2026-10-23T13:59:59.202Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/index.html</loc>
+    <lastmod>2026-10-27T08:33:02.504Z</lastmod>
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/cours3_temperature.html</loc>
@@ -34,11 +34,11 @@
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/cours3.html</loc>
-    <lastmod>2026-10-23T12:24:24.762Z</lastmod>
+    <lastmod>2026-10-30T11:32:56.028Z</lastmod>
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/cours2.html</loc>
-    <lastmod>2026-10-23T14:03:52.146Z</lastmod>
+    <lastmod>2026-10-31T08:15:28.785Z</lastmod>
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/cours1_gradient_descent.html</loc>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/cours1.html</loc>
-    <lastmod>2026-10-23T13:39:22.846Z</lastmod>
+    <lastmod>2026-10-31T08:15:28.845Z</lastmod>
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/cours1_linear_fit.html</loc>
@@ -66,26 +66,30 @@
   </url>
   <url>
     <loc>https://mikaelv.github.io/xti306_IA_site/cours4.html</loc>
-    <lastmod>2026-10-21T10:12:59.005Z</lastmod>
+    <lastmod>2026-11-01T11:02:29.864Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/index.html</loc>
-    <lastmod>2026-10-16T14:54:17.704Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/glossaire.html</loc>
+    <lastmod>2026-11-01T11:55:57.144Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/multi-neuron.html</loc>
-    <lastmod>2026-10-16T17:21:00.411Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/intro.html</loc>
+    <lastmod>2026-09-17T11:09:19.494Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/playground.html</loc>
-    <lastmod>2026-10-16T15:05:31.248Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/playground-deep.html</loc>
+    <lastmod>2026-10-17T08:53:21.486Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/single-neuron.html</loc>
-    <lastmod>2026-10-16T16:38:58.800Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/references.html</loc>
+    <lastmod>2026-09-29T09:59:02.913Z</lastmod>
   </url>
   <url>
-    <loc>https://mikaelv.github.io/xti306_IA_site/tp2.html</loc>
-    <lastmod>2026-10-18T10:04:51.344Z</lastmod>
+    <loc>https://mikaelv.github.io/xti306_IA_site/tp1.html</loc>
+    <lastmod>2026-10-20T08:41:21.364Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mikaelv.github.io/xti306_IA_site/tp3.html</loc>
+    <lastmod>2026-11-01T12:07:20.633Z</lastmod>
   </url>
 </urlset>

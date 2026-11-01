@@ -180,6 +180,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cours4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM4 - API et prompt engineering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./glossaire.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Glossaire</span></a>
   </div>
@@ -270,6 +276,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./tp3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">TP3 - Utiliser un LLM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tp4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TP4 - Trier des mails avec un LLM</span></a>
   </div>
 </li>
       </ul>
@@ -386,7 +398,7 @@ Les exemples n’ont pas de cible : l’algorithme cherche lui-même une structu
 </dd>
 <dt><strong>Apprentissage par renforcement</strong> (<em>reinforcement learning</em>)</dt>
 <dd>
-Pas de cible, mais une récompense obtenue après une suite d’actions. Utilisé pour le <em>preference finetuning</em> des LLMs. <a href="./cours1.html#dautres-formes-dapprentissage">CM1 · D’autres formes d’apprentissage</a> · <a href="./cours3.html#post-entraînement-post-training">CM3 · Post-entraînement</a>
+Pas de cible, mais une récompense obtenue après une suite d’actions. Utilisé pour le <em>preference fine-tuning</em> des LLMs. <a href="./cours1.html#dautres-formes-dapprentissage">CM1 · D’autres formes d’apprentissage</a> · <a href="./cours3.html#post-entraînement-post-training">CM3 · Post-entraînement</a>
 </dd>
 <dt><strong>Architecture</strong></dt>
 <dd>
@@ -436,7 +448,7 @@ Tâche dont la sortie est une <strong>classe</strong>. Le modèle donne une prob
 </dd>
 <dt><strong>Complaisance</strong> (<em>sycophancy</em>)</dt>
 <dd>
-Tendance d’un LLM à donner raison à l’utilisateur ou à le flatter. Elle vient en partie du <em>preference finetuning</em> : les évaluateurs notent mieux les réponses flatteuses. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+Tendance d’un LLM à donner raison à l’utilisateur ou à le flatter. Elle vient en partie du <em>preference fine-tuning</em> : les évaluateurs notent mieux les réponses flatteuses. <a href="./cours3.html#preference-fine-tuning">CM3 · Preference fine-tuning</a>
 </dd>
 <dt><strong>Consigne système</strong> (<em>system prompt</em>)</dt>
 <dd>
@@ -444,7 +456,7 @@ Message de rôle <code>system</code>, écrit par le développeur de l’applicat
 </dd>
 <dt><strong>Constitution</strong></dt>
 <dd>
-Document qui exprime les valeurs que doit respecter un modèle. Utilisée par l’IA notatrice en RLAIF. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+Document qui exprime les valeurs que doit respecter un modèle. Utilisée par l’IA notatrice en RLAIF. <a href="./cours3.html#preference-fine-tuning">CM3 · Preference fine-tuning</a>
 </dd>
 <dt><strong>Convergence</strong></dt>
 <dd>
@@ -497,7 +509,7 @@ Algorithme itératif qui ajuste les paramètres dans la direction opposée au gr
 </dd>
 <dt><strong>Données de démonstration</strong> (<em>demonstration data</em>)</dt>
 <dd>
-Dataset d’exemples <code>(prompt, réponse)</code> de grande qualité, écrits par des spécialistes, qui sert au <em>supervised finetuning</em>. <a href="./cours3.html#supervised-finetuning">CM3 · Supervised finetuning</a>
+Dataset d’exemples <code>(prompt, réponse)</code> de grande qualité, écrits par des spécialistes, qui sert au <em>supervised fine-tuning</em>. <a href="./cours3.html#supervised-fine-tuning">CM3 · Supervised fine-tuning</a>
 </dd>
 </dl>
 </section>
@@ -537,7 +549,7 @@ Fonction de coût de la régression : la moyenne des carrés des écarts entre p
 <dd>
 Nombre maximal de tokens que le modèle peut lire en une fois : consigne <code>system</code>, documents, historique de la conversation <strong>et</strong> réponse. <a href="./cours3.html#la-fenêtre-de-contexte">CM3 · La fenêtre de contexte</a>
 </dd>
-<dt><strong>Finetuning</strong></dt>
+<dt><strong>Fine-tuning</strong></dt>
 <dd>
 Entraînement supplémentaire qui <strong>modifie les paramètres</strong> d’un modèle déjà entraîné, pour le spécialiser. <a href="./cours3.html#post-entraînement-post-training">CM3 · Post-entraînement</a>
 </dd>
@@ -711,7 +723,7 @@ Le paramètre <span class="math inline">\(w\)</span> qui multiplie une entrée. 
 </dd>
 <dt><strong>Post-entraînement</strong> (<em>post-training</em>)</dt>
 <dd>
-Seconde phase d’entraînement d’un LLM : on spécialise le modèle de base pour qu’il converse et évite les comportements toxiques. Elle comprend le SFT puis le <em>preference finetuning</em>. <a href="./cours3.html#post-entraînement-post-training">CM3 · Post-entraînement</a>
+Seconde phase d’entraînement d’un LLM : on spécialise le modèle de base pour qu’il converse et évite les comportements toxiques. Elle comprend le SFT puis le <em>preference fine-tuning</em>. <a href="./cours3.html#post-entraînement-post-training">CM3 · Post-entraînement</a>
 </dd>
 <dt><strong>Pré-activation</strong></dt>
 <dd>
@@ -721,9 +733,9 @@ La valeur <span class="math inline">\(z = wx + b\)</span>, sortie de la transfor
 <dd>
 Première phase d’entraînement d’un LLM : prédire le token suivant sur un énorme corpus de textes (des milliers de milliards de tokens). Le modèle y acquiert ses connaissances. <a href="./cours3.html#pré-entraînement-pre-training">CM3 · Pré-entraînement</a>
 </dd>
-<dt><strong>Preference finetuning</strong></dt>
+<dt><strong>Preference fine-tuning</strong></dt>
 <dd>
-Seconde étape du post-training : on ajuste le modèle pour qu’il se comporte selon une préférence humaine, avec de l’apprentissage par renforcement. Voir <em>RLHF</em>, <em>RLAIF</em>. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+Seconde étape du post-training : on ajuste le modèle pour qu’il se comporte selon une préférence humaine, avec de l’apprentissage par renforcement. Voir <em>RLHF</em>, <em>RLAIF</em>. <a href="./cours3.html#preference-fine-tuning">CM3 · Preference fine-tuning</a>
 </dd>
 <dt><strong>Profondeur</strong> (<em>depth</em>)</dt>
 <dd>
@@ -768,15 +780,15 @@ Algorithme qui <strong>calcule</strong> les pentes en remontant les couches, de 
 </dd>
 <dt><strong>Reward model</strong> (<em>modèle de récompense</em>)</dt>
 <dd>
-Modèle entraîné à prédire la note qu’un humain donnerait à une réponse. En RLHF, il note les réponses du LLM pendant l’apprentissage par renforcement. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+Modèle entraîné à prédire la note qu’un humain donnerait à une réponse. En RLHF, il note les réponses du LLM pendant l’apprentissage par renforcement. <a href="./cours3.html#preference-fine-tuning">CM3 · Preference fine-tuning</a>
 </dd>
 <dt><strong>RLAIF</strong> (<em>Reinforcement Learning from AI Feedback</em>)</dt>
 <dd>
-Preference finetuning où les réponses sont notées par une IA qui s’appuie sur une <strong>constitution</strong>, au lieu d’évaluateurs humains. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+Preference fine-tuning où les réponses sont notées par une IA qui s’appuie sur une <strong>constitution</strong>, au lieu d’évaluateurs humains. <a href="./cours3.html#preference-fine-tuning">CM3 · Preference fine-tuning</a>
 </dd>
 <dt><strong>RLHF</strong> (<em>Reinforcement Learning from Human Feedback</em>)</dt>
 <dd>
-Preference finetuning à partir de notes données par des évaluateurs humains, via un <em>reward model</em>. <a href="./cours3.html#preference-finetuning">CM3 · Preference finetuning</a>
+Preference fine-tuning à partir de notes données par des évaluateurs humains, via un <em>reward model</em>. <a href="./cours3.html#preference-fine-tuning">CM3 · Preference fine-tuning</a>
 </dd>
 <dt><strong>RMSE</strong> (<em>Root Mean Square Error</em>)</dt>
 <dd>
@@ -787,9 +799,9 @@ Racine carrée du coût MSE. Elle s’exprime dans l’unité de la sortie, ce q
 <section id="s" class="level2">
 <h2 class="anchored" data-anchor-id="s">S</h2>
 <dl>
-<dt><strong>SFT</strong> (<em>Supervised FineTuning</em>)</dt>
+<dt><strong>SFT</strong> (<em>Supervised Fine-Tuning</em>)</dt>
 <dd>
-Première étape du post-training : le modèle apprend à imiter des <strong>données de démonstration</strong> <code>(prompt, réponse)</code>, pour répondre aux questions au lieu de compléter le texte. <a href="./cours3.html#supervised-finetuning">CM3 · Supervised finetuning</a>
+Première étape du post-training : le modèle apprend à imiter des <strong>données de démonstration</strong> <code>(prompt, réponse)</code>, pour répondre aux questions au lieu de compléter le texte. <a href="./cours3.html#supervised-fine-tuning">CM3 · Supervised fine-tuning</a>
 </dd>
 <dt><strong>Sigmoïde</strong> (<em>sigmoid</em>)</dt>
 <dd>

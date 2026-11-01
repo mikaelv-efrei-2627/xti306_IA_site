@@ -218,6 +218,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cours4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM4 - API et prompt engineering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glossaire</span></a>
   </div>
@@ -308,6 +314,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./tp3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">TP3 - Utiliser un LLM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tp4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TP4 - Trier des mails avec un LLM</span></a>
   </div>
 </li>
       </ul>
@@ -1488,7 +1500,7 @@ Je n'ai plus d'œufs. Je peux les remplacer par quoi ?&lt;|im_end|&gt;
 <h1 data-number="6"><span class="header-section-number">6</span> Phases d’entraînement</h1>
 <p>Le modèle du TP3, <code>Qwen3-1.7B</code>, est un modèle <strong>instruct</strong> (instruction tuned) : il a suivi <strong>deux phases</strong> d’entraînement. À la fin de la première, on obtient son modèle de base, publié sous le nom <code>Qwen3-1.7B-Base</code>.</p>
 <figure class="svg-figure figure">
-<svg viewbox="0 0 1000 410" role="img" aria-label="Schéma : le pre-training transforme un corpus de texte en modèle de base ; le post-training (SFT puis preference finetuning) transforme le modèle de base en modèle instruct" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
+<svg viewbox="0 0 1000 410" role="img" aria-label="Schéma : le pre-training transforme un corpus de texte en modèle de base ; le post-training (SFT puis preference fine-tuning) transforme le modèle de base en modèle instruct" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
   <defs>
     <marker id="tp-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#555"></path>
@@ -1541,12 +1553,12 @@ Je n'ai plus d'œufs. Je peux les remplacer par quoi ?&lt;|im_end|&gt;
 
     <rect x="420" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#c97a9b" stroke-width="1.8"></rect>
     <text x="500" y="240" font-size="15" font-weight="700">Supervised</text>
-    <text x="500" y="260" font-size="15" font-weight="700">finetuning (SFT)</text>
+    <text x="500" y="260" font-size="15" font-weight="700">fine-tuning (SFT)</text>
     <text x="500" y="285" font-size="13">imiter les réponses</text>
 
     <rect x="620" y="205" width="160" height="100" rx="10" fill="#fff" stroke="#c97a9b" stroke-width="1.8"></rect>
     <text x="700" y="240" font-size="15" font-weight="700">Preference</text>
-    <text x="700" y="260" font-size="15" font-weight="700">finetuning</text>
+    <text x="700" y="260" font-size="15" font-weight="700">fine-tuning</text>
     <text x="700" y="285" font-size="13">suivre les préférences</text>
   </g>
 
@@ -1591,7 +1603,7 @@ Je n'ai plus d'œufs. Je peux les remplacer par quoi ?&lt;|im_end|&gt;
 <p>Les entreprises publient souvent les deux versions d’un même modèle. On les reconnaît à leur nom : suffixe <code>-pt</code> (pre-trained) et <code>-it</code> (instruction tuned) chez Google, suffixe <code>-Instruct</code> chez Meta, suffixe <code>-Base</code> pour le modèle de base chez Qwen.</p>
 <p>Ces phases ressemblent à la façon dont un étudiant apprend :</p>
 <figure class="svg-figure figure">
-<svg viewbox="0 0 1000 380" role="img" aria-label="Analogie : lire le cours correspond au pre-training, refaire des exercices corrigés au supervised finetuning, s'entraîner et être noté au preference finetuning, passer l'examen final à l'évaluation" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
+<svg viewbox="0 0 1000 380" role="img" aria-label="Analogie : lire le cours correspond au pre-training, refaire des exercices corrigés au supervised fine-tuning, s'entraîner et être noté au preference fine-tuning, passer l'examen final à l'évaluation" style="width:100%;height:auto;font-family:var(--bs-body-font-family,sans-serif)">
   <defs>
     <marker id="st-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#555"></path>
@@ -1663,8 +1675,8 @@ Je n'ai plus d'œufs. Je peux les remplacer par quoi ?&lt;|im_end|&gt;
     </g>
     <g font-size="15" font-weight="700">
       <text x="125" y="240">Pre-training</text>
-      <text x="365" y="240">Supervised finetuning</text>
-      <text x="625" y="240">Preference finetuning</text>
+      <text x="365" y="240">Supervised fine-tuning</text>
+      <text x="625" y="240">Preference fine-tuning</text>
       <text x="870" y="240">Benchmarks</text>
     </g>
     <g font-size="13">
@@ -1733,13 +1745,13 @@ Je n'ai plus d'œufs. Je peux les remplacer par quoi ?&lt;|im_end|&gt;
 <section id="post-entraînement-post-training" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="post-entraînement-post-training"><span class="header-section-number">6.2</span> Post-entraînement (post-training)</h2>
 <p>Le <strong>post-training</strong> spécialise le modèle de base pour lui apprendre à <strong>converser</strong> et pour empêcher les comportements toxiques. Le modèle obtenu est dit <strong>instruction tuned</strong>.</p>
-<p>Cette phase <strong>modifie les paramètres</strong> du modèle : c’est ce qu’on appelle le <strong>finetuning</strong>. Elle se déroule en deux temps :</p>
+<p>Cette phase <strong>modifie les paramètres</strong> du modèle : c’est ce qu’on appelle le <strong>fine-tuning</strong>. Elle se déroule en deux temps :</p>
 <ul>
-<li><strong>supervised finetuning (SFT)</strong> : on utilise des exemples de conversations ;</li>
-<li><strong>preference finetuning</strong> : on modifie le modèle pour qu’il suive les préférences humaines, avec des techniques d’apprentissage par renforcement (reinforcement learning).</li>
+<li><strong>supervised fine-tuning (SFT)</strong> : on utilise des exemples de conversations ;</li>
+<li><strong>preference fine-tuning</strong> : on modifie le modèle pour qu’il suive les préférences humaines, avec des techniques d’apprentissage par renforcement (reinforcement learning).</li>
 </ul>
-<section id="supervised-finetuning" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="supervised-finetuning"><span class="header-section-number">6.2.1</span> Supervised finetuning</h3>
+<section id="supervised-fine-tuning" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="supervised-fine-tuning"><span class="header-section-number">6.2.1</span> Supervised fine-tuning</h3>
 <p>Un modèle de base est optimisé pour compléter du texte, pas pour converser. Si vous entrez <em>« comment faire une pizza »</em>, il va essayer de compléter la phrase, par exemple par <em>« pour une famille de quatre ? »</em>. Le modèle n’a pas de concept de conversation, et ne va pas essayer de répondre à la question.</p>
 <p>Un modèle imite ses données d’entraînement. Pour qu’il réponde aux questions, on lui fournit des exemples de questions et de réponses.</p>
 <p>Ce dataset est une collection d’exemples <code>(prompt, response)</code> de grande qualité, qu’on appelle <strong>données de démonstration</strong>. On montre au modèle comment il devrait se comporter, pour qu’il imite ce comportement. Pour construire le dataset, on recrute des spécialistes de chaque domaine : les réponses demandent souvent une pensée critique et du jugement.</p>
@@ -1781,15 +1793,15 @@ Je n'ai plus d'œufs. Je peux les remplacer par quoi ?&lt;|im_end|&gt;
 </table>
 <p>Ces datasets contiennent quelques dizaines de milliers d’exemples, beaucoup moins que le corpus de pre-training. Par exemple, <a href="https://huggingface.co/datasets/databricks/databricks-dolly-15k">databricks-dolly-15k</a> contient 15 000 exemples écrits par des employés de Databricks.</p>
 </section>
-<section id="preference-finetuning" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="preference-finetuning"><span class="header-section-number">6.2.2</span> Preference finetuning</h3>
-<p>Après le supervised finetuning, le modèle sait tenir une conversation, mais <strong>sans filtre</strong>.</p>
+<section id="preference-fine-tuning" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="preference-fine-tuning"><span class="header-section-number">6.2.2</span> Preference fine-tuning</h3>
+<p>Après le supervised fine-tuning, le modèle sait tenir une conversation, mais <strong>sans filtre</strong>.</p>
 <p>Si l’utilisateur demande au modèle d’écrire un essai sur l’infériorité d’une race, ou comment fabriquer une bombe, le modèle doit refuser. Ces exemples sont évidents, mais d’autres cas sont plus délicats. Comment le modèle doit-il répondre à des questions sur la religion, l’avortement, un conflit armé, l’immigration ?</p>
 <ul>
 <li>si le modèle répond à une question controversée, il risque de choquer les utilisateurs ;</li>
 <li>si le modèle est trop censuré, il devient inutile.</li>
 </ul>
-<p>Le but du preference finetuning est que le modèle <strong>se comporte selon une préférence humaine</strong>. Il existe deux approches principales pour lui apprendre cette préférence : RLHF et RLAIF.</p>
+<p>Le but du preference fine-tuning est que le modèle <strong>se comporte selon une préférence humaine</strong>. Il existe deux approches principales pour lui apprendre cette préférence : RLHF et RLAIF.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1884,7 +1896,7 @@ Je n'ai plus d'œufs. Je peux les remplacer par quoi ?&lt;|im_end|&gt;
 <li><strong>Supervised fine-tuning</strong> : on lui met un masque humain.</li>
 <li><strong>Preference fine-tuning (RLHF)</strong> : on ajoute un smiley, le modèle devient aimable et poli.</li>
 </ul>
-<p>Le finetuning change le comportement du modèle, mais le monstre est toujours là : c’est pourquoi on peut parfois contourner les protections d’un modèle (jailbreak).</p>
+<p>Le fine-tuning change le comportement du modèle, mais le monstre est toujours là : c’est pourquoi on peut parfois contourner les protections d’un modèle (jailbreak).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1896,7 +1908,7 @@ Je n'ai plus d'œufs. Je peux les remplacer par quoi ?&lt;|im_end|&gt;
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Pour une application qui répond à des questions ou suit des consignes, on utilise un modèle <strong>instruct</strong> (<code>-it</code>, <code>-Instruct</code>) : un modèle de base complète le texte au lieu de répondre. Certaines applications spécifiques ont cependant intérêt à utiliser le modèle de base : point de départ d’un finetuning, autocomplétion de code, génération de textes variés.</li>
+<li>Pour une application qui répond à des questions ou suit des consignes, on utilise un modèle <strong>instruct</strong> (<code>-it</code>, <code>-Instruct</code>) : un modèle de base complète le texte au lieu de répondre. Certaines applications spécifiques ont cependant intérêt à utiliser le modèle de base : point de départ d’un fine-tuning, autocomplétion de code, génération de textes variés.</li>
 <li>Respecter la consigne <code>system</code>, refuser les demandes dangereuses, mettre en forme les réponses en Markdown : tout cela vient du post-training.</li>
 <li>Ces protections sont un masque, pas une garantie : on peut parfois les contourner. Vous allez essayer dans le TP.</li>
 <li>Le modèle a tendance à vous donner raison (complaisance) : ne comptez pas sur lui pour critiquer vos idées sans le lui demander.</li>
@@ -1931,6 +1943,13 @@ Important
 </ol>
 </div>
 </div>
+<!-- 
+remarques:
+parler de la température automatique sur certains chatbots
+
+Theo : il faudrait faire des renvois du TP vers le cours
+Adrian: en fait il préfère tel quel
+-->
 
 
 </section>
