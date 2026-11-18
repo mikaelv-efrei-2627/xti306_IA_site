@@ -1,2 +1,1965 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mikaël Valot">
+
+<title>CM5 - RAG – 2627 XTI306 Introduction à l’ingénierie IA</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-88e8eab2b9e74ff2b2dcb2dc0227e102.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-35673c1328022ec05f8a1bab69fe76b7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-88e8eab2b9e74ff2b2dcb2dc0227e102.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-626bc743731229bd8adb76e0f8fa352c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-626bc743731229bd8adb76e0f8fa352c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-626bc743731229bd8adb76e0f8fa352c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cours1.html">Cours</a></li><li class="breadcrumb-item"><a href="./cours5.html">CM5 - RAG</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/logo-noir.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./figures/logo-noir.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">XTI306 Introduction à l’ingénierie IA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Cours</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM1 - Introduction à l’apprentissage automatique (<em>machine learning</em>)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Réseaux de neurones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM3 - Utiliser un LLM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM4 - API et prompt engineering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours5.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">CM5 - RAG</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossaire</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Activités</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours1_linear_fit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM1 - Ajuster une droite</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours1_gradient_descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM1 - Descente de Gradient</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./single-neuron.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Modèle à un neurone</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi-neuron.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Modèle à plusieurs neurones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./playground.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - TensorFlow Playground</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./playground-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - TensorFlow Playground : plusieurs couches</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours3_temperature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM3 - La température</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">TPs</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tp1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TP1 - Introduction à l’apprentissage automatique (<em>machine learning</em>)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tp2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TP2 - Réseaux de neurones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tp3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TP3 - Utiliser un LLM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tp4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TP4 - Trier des mails avec un LLM</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cours2_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CM2 - Annexe (facultatif) : calcul matriciel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sur cette page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#quand-utiliser-le-rag" id="toc-quand-utiliser-le-rag" class="nav-link" data-scroll-target="#quand-utiliser-le-rag"><span class="header-section-number">1.1</span> Quand utiliser le RAG ?</a></li>
+  </ul></li>
+  <li><a href="#principe-du-rag" id="toc-principe-du-rag" class="nav-link" data-scroll-target="#principe-du-rag"><span class="header-section-number">2</span> Principe du RAG</a>
+  <ul class="collapse">
+  <li><a href="#activité-vrai-ou-faux" id="toc-activité-vrai-ou-faux" class="nav-link" data-scroll-target="#activité-vrai-ou-faux"><span class="header-section-number">2.1</span> Activité : vrai ou faux</a></li>
+  <li><a href="#rechercher-puis-générer" id="toc-rechercher-puis-générer" class="nav-link" data-scroll-target="#rechercher-puis-générer"><span class="header-section-number">2.2</span> Rechercher, puis générer</a></li>
+  <li><a href="#fenêtre-de-contexte-et-rag" id="toc-fenêtre-de-contexte-et-rag" class="nav-link" data-scroll-target="#fenêtre-de-contexte-et-rag"><span class="header-section-number">2.3</span> Fenêtre de contexte et RAG</a></li>
+  </ul></li>
+  <li><a href="#chunking" id="toc-chunking" class="nav-link" data-scroll-target="#chunking"><span class="header-section-number">3</span> Chunking</a>
+  <ul class="collapse">
+  <li><a href="#méthodes-de-chunking" id="toc-méthodes-de-chunking" class="nav-link" data-scroll-target="#méthodes-de-chunking"><span class="header-section-number">3.1</span> Méthodes de chunking</a></li>
+  <li><a href="#contextualisation-des-chunks" id="toc-contextualisation-des-chunks" class="nav-link" data-scroll-target="#contextualisation-des-chunks"><span class="header-section-number">3.2</span> Contextualisation des chunks</a></li>
+  <li><a href="#taille-des-chunks" id="toc-taille-des-chunks" class="nav-link" data-scroll-target="#taille-des-chunks"><span class="header-section-number">3.3</span> Taille des chunks</a></li>
+  </ul></li>
+  <li><a href="#recherche" id="toc-recherche" class="nav-link" data-scroll-target="#recherche"><span class="header-section-number">4</span> Recherche</a>
+  <ul class="collapse">
+  <li><a href="#recherche-sémantique" id="toc-recherche-sémantique" class="nav-link" data-scroll-target="#recherche-sémantique"><span class="header-section-number">4.1</span> Recherche sémantique</a></li>
+  <li><a href="#base-de-données-vectorielle" id="toc-base-de-données-vectorielle" class="nav-link" data-scroll-target="#base-de-données-vectorielle"><span class="header-section-number">4.2</span> Base de données vectorielle</a></li>
+  <li><a href="#limites-des-embeddings" id="toc-limites-des-embeddings" class="nav-link" data-scroll-target="#limites-des-embeddings"><span class="header-section-number">4.3</span> Limites des embeddings</a></li>
+  <li><a href="#nombre-de-chunks" id="toc-nombre-de-chunks" class="nav-link" data-scroll-target="#nombre-de-chunks"><span class="header-section-number">4.4</span> Nombre de chunks</a></li>
+  <li><a href="#activité-quelle-recherche" id="toc-activité-quelle-recherche" class="nav-link" data-scroll-target="#activité-quelle-recherche"><span class="header-section-number">4.5</span> Activité : quelle recherche ?</a></li>
+  </ul></li>
+  <li><a href="#génération" id="toc-génération" class="nav-link" data-scroll-target="#génération"><span class="header-section-number">5</span> Génération</a>
+  <ul class="collapse">
+  <li><a href="#quand-les-documents-ne-contiennent-pas-la-réponse" id="toc-quand-les-documents-ne-contiennent-pas-la-réponse" class="nav-link" data-scroll-target="#quand-les-documents-ne-contiennent-pas-la-réponse"><span class="header-section-number">5.1</span> Quand les documents ne contiennent pas la réponse</a></li>
+  <li><a href="#conversation" id="toc-conversation" class="nav-link" data-scroll-target="#conversation"><span class="header-section-number">5.2</span> Conversation</a></li>
+  </ul></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation"><span class="header-section-number">6</span> Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#llm-juge" id="toc-llm-juge" class="nav-link" data-scroll-target="#llm-juge"><span class="header-section-number">6.1</span> LLM juge</a></li>
+  <li><a href="#questions-sans-réponse" id="toc-questions-sans-réponse" class="nav-link" data-scroll-target="#questions-sans-réponse"><span class="header-section-number">6.2</span> Questions sans réponse</a></li>
+  </ul></li>
+  <li><a href="#limites" id="toc-limites" class="nav-link" data-scroll-target="#limites"><span class="header-section-number">7</span> Limites</a></li>
+  <li><a href="#fine-tuning" id="toc-fine-tuning" class="nav-link" data-scroll-target="#fine-tuning"><span class="header-section-number">8</span> Fine-tuning</a></li>
+  <li><a href="#tp5-le-chatbot-delectrowl" id="toc-tp5-le-chatbot-delectrowl" class="nav-link" data-scroll-target="#tp5-le-chatbot-delectrowl"><span class="header-section-number">9</span> TP5 — Le chatbot d’Electrowl</a></li>
+  <li><a href="#points-à-retenir" id="toc-points-à-retenir" class="nav-link" data-scroll-target="#points-à-retenir"><span class="header-section-number">10</span> Points à retenir</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cours1.html">Cours</a></li><li class="breadcrumb-item"><a href="./cours5.html">CM5 - RAG</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">CM5 - RAG</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Auteur·rice</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mikaël Valot </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Au CM4, Electrowl a trié ses mails avec un prompt. L’un d’eux demandait si un réfrigérateur pouvait être raccordé à une arrivée d’eau : il était classé <code>autre</code>, et personne n’y répondait. La réponse est pourtant dans le manuel du réfrigérateur.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Electrowl veut un <strong>chatbot</strong> qui répond aux clients sur son site, 24 h sur 24, à partir de ses documents :</p>
+<ul>
+<li>les 2 000 fiches produits ;</li>
+<li>les manuels d’utilisation ;</li>
+<li>les conditions de vente : livraison, retours, garanties.</li>
+</ul>
+</div>
+</div>
+<p>Ces documents ne tiennent pas dans un prompt. Ce cours présente la solution : le <strong>RAG</strong>.</p>
+<blockquote class="blockquote">
+<p>Le RAG est une technique pour construire un contexte spécifique à chaque requête, au lieu d’utiliser le même contexte pour toutes les requêtes.</p>
+</blockquote>
+<ol type="1">
+<li><strong>découper</strong> les documents en chunks (morceaux) ;</li>
+<li><strong>rechercher (retrieval)</strong> les chunks utiles à une question ;</li>
+<li><strong>générer</strong> la réponse : on envoie au LLM un prompt qui contient la question et ces chunks ;</li>
+<li><strong>évaluer</strong> chaque étape.</li>
+</ol>
+<section id="quand-utiliser-le-rag" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="quand-utiliser-le-rag"><span class="header-section-number">1.1</span> Quand utiliser le RAG ?</h2>
+<p>On commence <strong>toujours</strong> par un prompt, et on le mesure. Si l’évaluation montre qu’il ne suffit pas, on essaie d’abord un modèle plus capable, puis une solution plus complexe. Il y en a trois, de la plus simple à la plus complexe : on ne passe au niveau suivant que si le précédent ne suffit pas.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-solution-ladder" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-solution-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-solution-ladder">flowchart LR
+  p(["&lt;b&gt;1. Prompt&lt;/b&gt;&lt;br/&gt;consignes et exemples&lt;br/&gt;dans le contexte"])
+  r(["&lt;b&gt;2. RAG&lt;/b&gt;&lt;br/&gt;+ recherche dans&lt;br/&gt;les documents"])
+  f(["&lt;b&gt;3. Fine-tuning&lt;/b&gt;&lt;br/&gt;modifier les&lt;br/&gt;paramètres"])
+  p -- "ne suffit pas" --&gt; r -- "ne suffit pas" --&gt; f
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-solution-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: On commence toujours par le prompt. Chaque niveau coûte plus cher à développer et à maintenir que le précédent.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Solution</th>
+<th>Quand l’utiliser</th>
+<th>Exemple chez Electrowl</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Prompt</strong></td>
+<td>Les consignes et les informations utiles tiennent dans la fenêtre de contexte. C’est le cas de nombreuses tâches : les modèles actuels lisent des centaines de milliers de tokens.</td>
+<td>Trier les mails : la procédure de tri tient en une page.</td>
+</tr>
+<tr class="even">
+<td><strong>RAG</strong> (<em>retrieval-augmented generation</em>)</td>
+<td>Les documents sont trop nombreux pour le contexte, ou changent souvent : on cherche les passages utiles, puis on les met dans le prompt.</td>
+<td>Un chatbot qui répond aux clients avec les 2 000 fiches produits et les conditions de vente.</td>
+</tr>
+<tr class="odd">
+<td><strong>Fine-tuning</strong></td>
+<td>On veut changer le <strong>format</strong> ou le <strong>style</strong> des réponses de façon constante, ou qu’un petit modèle fasse aussi bien qu’un gros sur une tâche précise. <strong>Pas</strong> pour ajouter des connaissances.</td>
+<td>Trier 1 million de mails par jour avec un petit modèle, entraîné sur 10 000 tickets déjà remplis.</td>
+</tr>
+</tbody>
+</table>
+<p>Les <strong>agents</strong> ne sont pas un 4e niveau : c’est une autre façon d’utiliser un LLM, qui appelle des outils en boucle (chercher une commande, envoyer un mail, …). Ils seront vus à la séance 6.</p>
+<p>Le fine-tuning est présenté à la <a href="#fine-tuning">fin de ce cours</a>. Le reste du cours porte sur le RAG.</p>
+</section>
+</section>
+<section id="principe-du-rag" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Principe du RAG</h1>
+<section id="activité-vrai-ou-faux" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="activité-vrai-ou-faux"><span class="header-section-number">2.1</span> Activité : vrai ou faux</h2>
+<p>Voici trois réponses de <code>gpt-oss-20b</code>, le modèle du TP4, à des questions de clients d’Electrowl. Il n’a reçu aucun document. Pour chaque réponse, répondez à main levée : est-elle <strong>juste</strong> ?</p>
+<blockquote class="blockquote">
+<p><strong>Question A.</strong> Est-ce que je peux mettre du sel de cuisine dans mon lave-vaisselle Aquaris DW14 ?</p>
+<p>« Oui, vous pouvez utiliser du sel de cuisine dans votre lave-vaisselle Aquaris DW14, mais il faut le faire avec précaution. »</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Question B.</strong> Est-ce que vous livrez en Guadeloupe ?</p>
+<p>« Oui, nous livrons en Guadeloupe. Délais : généralement 3 à 5 jours ouvrés après expédition. »</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Question C.</strong> J’ai changé d’avis sur mon achat. Combien de temps ai-je pour le renvoyer ?</p>
+<p>« Sur Electrowl, vous disposez de 14 jours calendaires à compter de la réception de votre colis. »</p>
+</blockquote>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponses
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Les trois réponses sont <strong>fausses</strong> :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Document d’Electrowl</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>Le manuel interdit le sel de cuisine : ses additifs abîment l’adoucisseur.</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>Electrowl ne livre pas dans les départements d’outre-mer.</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>Electrowl donne 30 jours, et non les 14 jours prévus par la loi.</td>
+</tr>
+</tbody>
+</table>
+<p>Vous ne pouviez pas le savoir, et le modèle non plus : ces informations ne sont pas dans ses données d’entraînement. Il répond quand même, avec assurance : ce sont des <strong>hallucinations</strong> (CM3).</p>
+</div>
+</div>
+</div>
+<p>Un LLM ne connaît que ses données d’entraînement. Il lui manque :</p>
+<ul>
+<li>les documents <strong>internes</strong> d’une entreprise, qui ne sont pas publiés sur Internet ;</li>
+<li>les informations <strong>récentes</strong> : ses données s’arrêtent à une date, souvent plusieurs mois avant sa sortie ;</li>
+<li>les informations qui <strong>changent</strong> : un prix, un stock, une procédure.</li>
+</ul>
+</section>
+<section id="rechercher-puis-générer" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="rechercher-puis-générer"><span class="header-section-number">2.2</span> Rechercher, puis générer</h2>
+<p>Le <strong>RAG (retrieval-augmented generation)</strong>, ou génération augmentée par la recherche, fonctionne en deux temps :</p>
+<ol type="1">
+<li>on <strong>recherche</strong> les passages des documents qui répondent à la question ;</li>
+<li>on les place dans le prompt, et le LLM <strong>génère</strong> la réponse à partir d’eux.</li>
+</ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-rag" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-rag">flowchart LR
+  subgraph prep ["Préparation"]
+    direction LR
+    d(["documents"]) --&gt; c(["chunks"]) --&gt; e(["embeddings"])
+  end
+  db[("base de données&lt;br/&gt;vectorielle")]
+  subgraph ask ["À chaque question"]
+    direction LR
+    q(["question"]) --&gt; s(["recherche"]) --&gt; p(["prompt :&lt;br/&gt;consigne, chunks&lt;br/&gt;trouvés, question"]) --&gt; l(["LLM"]) --&gt; r(["réponse"])
+  end
+  e --&gt; db
+  s -- "requête" --&gt; db
+  db -- "chunks trouvés" --&gt; s
+
+  classDef neutral fill:#f3f1ec,stroke:#6d6c66,stroke-width:1.5px,color:#2c2c2a;
+  classDef search fill:#e3edf8,stroke:#2f6fb0,stroke-width:2px,color:#2c2c2a;
+  classDef generate fill:#fbeae2,stroke:#c4562c,stroke-width:2px,color:#2c2c2a;
+  classDef result fill:#e0f0e9,stroke:#12805f,stroke-width:2px,color:#2c2c2a;
+  class d,c,e,db,q neutral;
+  class s search;
+  class p,l generate;
+  class r result;
+
+  style prep fill:none,stroke:#d8d6cd,stroke-dasharray:4 4,color:#2c2c2a;
+  style ask fill:none,stroke:#d8d6cd,stroke-dasharray:4 4,color:#2c2c2a;
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Les deux phases d’un RAG. La préparation est faite une fois, puis à chaque modification d’un document. La recherche et la génération sont faites à chaque question.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Le modèle <strong>lit</strong> les documents dans son prompt, au moment de répondre.</p>
+<ul>
+<li>Les paramètres W du modèle ne changent pas : le RAG n’est pas un entraînement.</li>
+<li>Si Electrowl corrige un document, la réponse change dès la question suivante.</li>
+<li>La réponse peut citer sa <strong>source</strong> : le client, ou un conseiller, peut la vérifier.</li>
+</ul>
+</section>
+<section id="fenêtre-de-contexte-et-rag" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="fenêtre-de-contexte-et-rag"><span class="header-section-number">2.3</span> Fenêtre de contexte et RAG</h2>
+<p>Les modèles récents lisent 1 million de tokens. Pourquoi ne pas placer tous les documents dans le prompt ?</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Critère</th>
+<th>Tous les documents dans le prompt</th>
+<th>RAG</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Taille</strong></td>
+<td>Les 2 000 fiches font plus de 400 000 tokens : elles dépassent les 131 000 tokens de <code>gpt-oss-20b</code>.</td>
+<td>Moins de 1 000 tokens par question, quelle que soit la taille du corpus.</td>
+</tr>
+<tr class="even">
+<td><strong>Coût</strong></td>
+<td>Tous les tokens sont payés à <strong>chaque</strong> question.</td>
+<td>Au TP5 : 670 tokens par question au lieu de 40 000, soit 40 fois moins cher.</td>
+</tr>
+<tr class="odd">
+<td><strong>Rapidité</strong></td>
+<td>Plus le prompt est long, plus la réponse est lente.</td>
+<td>Une recherche de quelques dizaines de millisecondes, puis un prompt court.</td>
+</tr>
+<tr class="even">
+<td><strong>Qualité</strong></td>
+<td>Dans un contexte très rempli, le modèle retrouve moins bien l’information (CM3).</td>
+<td>Le modèle ne lit que les passages utiles, s’ils ont été trouvés.</td>
+</tr>
+</tbody>
+</table>
+<p>Le RAG a un prix : il faut découper, indexer, chercher, et <strong>mesurer</strong> que la recherche trouve les bons passages.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Si tous les documents tiennent dans le prompt, pour un coût acceptable, <strong>n’utilisez pas de RAG</strong> : mettez-les dans le prompt (niveau 1).</li>
+<li>Le RAG ajoute des connaissances au modèle sans l’entraîner : il convient aux informations internes, récentes ou qui changent.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="chunking" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Chunking</h1>
+<p>On ne cherche pas un document entier, mais un <strong>chunk (morceau)</strong> de document. Le <strong>chunking (découpage)</strong> sépare chaque document en chunks.</p>
+<ul>
+<li>Un manuel parle de 10 sujets : installation, entretien, codes d’erreur, … La réponse à une question tient dans un paragraphe.</li>
+<li>Un modèle d’embedding ne lit qu’un nombre limité de tokens : 128 pour celui du TP3, 512 pour celui du TP5. Le reste du texte est ignoré.</li>
+<li>Moins on envoie de texte au LLM, moins la réponse coûte cher.</li>
+</ul>
+<section id="méthodes-de-chunking" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="méthodes-de-chunking"><span class="header-section-number">3.1</span> Méthodes de chunking</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Méthode</th>
+<th>Principe</th>
+<th>Limite</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Taille fixe</strong></td>
+<td>Couper tous les 500 caractères, par exemple.</td>
+<td>Coupe au milieu d’une phrase ou d’un tableau.</td>
+</tr>
+<tr class="even">
+<td><strong>Taille fixe avec overlap (recouvrement)</strong></td>
+<td>Chaque chunk reprend la fin du précédent : une phrase coupée se retrouve entière dans l’un des deux.</td>
+<td>Du texte en double, donc plus de chunks.</td>
+</tr>
+<tr class="odd">
+<td><strong>Structure du document</strong></td>
+<td>Un chunk par section, par paragraphe, ou par article d’un contrat.</td>
+<td>Demande des documents structurés. Les sections ont des tailles très différentes.</td>
+</tr>
+</tbody>
+</table>
+<div id="fig-chunking-methods" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chunking-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="chunk-methods">
+  <div class="cm-label">Document</div>
+  <div class="cm-track">
+    <div class="cm-sec" style="left:0%;width:14%">Sécurité</div>
+    <div class="cm-sec" style="left:14%;width:18%">Installation</div>
+    <div class="cm-sec" style="left:32%;width:30%">Raccordement à l'eau</div>
+    <div class="cm-sec" style="left:62%;width:21%">Entretien</div>
+    <div class="cm-sec" style="left:83%;width:17%">Dépannage</div>
+  </div>
+  <div class="cm-label">Taille fixe</div>
+  <div class="cm-track">
+    <div class="cm-cut" style="left:14%"></div>
+    <div class="cm-cut" style="left:32%"></div>
+    <div class="cm-cut" style="left:62%"></div>
+    <div class="cm-cut" style="left:83%"></div>
+    <div class="cm-chunk cm-a" style="left:0%;width:20%">1</div>
+    <div class="cm-chunk cm-b" style="left:20%;width:20%">2</div>
+    <div class="cm-chunk cm-a" style="left:40%;width:20%">3</div>
+    <div class="cm-chunk cm-b" style="left:60%;width:20%">4</div>
+    <div class="cm-chunk cm-a" style="left:80%;width:20%">5</div>
+  </div>
+  <div class="cm-label">Taille fixe<br>avec overlap</div>
+  <div class="cm-track cm-two-lanes">
+    <div class="cm-cut" style="left:14%"></div>
+    <div class="cm-cut" style="left:32%"></div>
+    <div class="cm-cut" style="left:62%"></div>
+    <div class="cm-cut" style="left:83%"></div>
+    <div class="cm-chunk cm-a cm-lane1" style="left:0%;width:20%">1</div>
+    <div class="cm-chunk cm-b cm-lane2" style="left:16%;width:20%">2</div>
+    <div class="cm-chunk cm-a cm-lane1" style="left:32%;width:20%">3</div>
+    <div class="cm-chunk cm-b cm-lane2" style="left:48%;width:20%">4</div>
+    <div class="cm-chunk cm-a cm-lane1" style="left:64%;width:20%">5</div>
+    <div class="cm-chunk cm-b cm-lane2" style="left:80%;width:20%">6</div>
+  </div>
+  <div class="cm-label">Par section</div>
+  <div class="cm-track">
+    <div class="cm-cut" style="left:14%"></div>
+    <div class="cm-cut" style="left:32%"></div>
+    <div class="cm-cut" style="left:62%"></div>
+    <div class="cm-cut" style="left:83%"></div>
+    <div class="cm-chunk cm-a" style="left:0%;width:14%">1</div>
+    <div class="cm-chunk cm-b" style="left:14%;width:18%">2</div>
+    <div class="cm-chunk cm-a" style="left:32%;width:30%">3</div>
+    <div class="cm-chunk cm-b" style="left:62%;width:21%">4</div>
+    <div class="cm-chunk cm-a" style="left:83%;width:17%">5</div>
+  </div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chunking-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Trois façons de découper un manuel de cinq sections (schéma simplifié). Les pointillés marquent les limites des sections. En taille fixe, la section « Raccordement à l’eau » est répartie entre les chunks 2, 3 et 4. Avec l’overlap, deux chunks voisins ont une partie commune. Par section, chaque chunk correspond à une section, et les chunks ont des tailles différentes.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="contextualisation-des-chunks" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="contextualisation-des-chunks"><span class="header-section-number">3.2</span> Contextualisation des chunks</h2>
+<p>Voici la section « Caractéristiques » d’une fiche produit, découpée par section :</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Chunk : fiche du Polaris RS68, section Caractéristiques</strong></pre>
+</div>
+<pre class="text chunk" data-filename="Chunk : fiche du Polaris RS68, section Caractéristiques"><code>## Caractéristiques
+
+- Volume total : 634 litres, dont 225 litres pour le congélateur
+- Niveau sonore : 36 dB
+- Distributeur d'eau : oui, avec raccordement à une arrivée d'eau</code></pre>
+</div>
+<p>De quel produit parle ce chunk ? Rien ne le dit, et les 2 000 fiches ont toutes une section semblable. <strong>Un chunk doit être compréhensible seul.</strong> On ajoute donc à chaque chunk le titre de son document :</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Le même chunk, avec le titre du document en première ligne</strong></pre>
+</div>
+<pre class="text chunk" data-filename="Le même chunk, avec le titre du document en première ligne"><code>Polaris RS68 : Réfrigérateur américain
+## Caractéristiques
+
+- Volume total : 634 litres, dont 225 litres pour le congélateur
+...</code></pre>
+</div>
+<p>Résultats mesurés au TP5, sur les 25 questions qui ont une réponse dans le corpus : la proportion de questions dont le bon passage est parmi les 3 premiers chunks trouvés.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Chunking</th>
+<th>Sans le titre</th>
+<th>Avec le titre du document</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Taille fixe, 500 caractères, overlap de 100</td>
+<td>68 %</td>
+<td>96 %</td>
+</tr>
+<tr class="even">
+<td>Par section</td>
+<td>56 %</td>
+<td>100 %</td>
+</tr>
+</tbody>
+</table>
+<p>Le chunking par section, mal appliqué, fait pire que la taille fixe : seule la mesure le montre.</p>
+<section id="métadonnées" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="métadonnées"><span class="header-section-number">3.2.1</span> Métadonnées</h3>
+<p>Une technique encore plus efficace est d’associer chaque chunk avec ses <strong>métadonnées</strong> : la source et le titre de son document, la section, la catégorie du produit, la date de mise à jour, des mots-clés. Elles peuvent être utilisées de deux façons :</p>
+<ul>
+<li><strong>dans le texte du chunk</strong> : on les ajoute au texte dont on calcule l’embedding, comme le titre au TP5 ;</li>
+<li><strong>comme filtre</strong> : la recherche compare la question aux seuls chunks qui ont la bonne métadonnée. Pour « Comment détartrer la Baristo E11 ? », elle ne cherche que dans les documents de l’E11, et ne peut plus renvoyer le manuel de l’E3.</li>
+</ul>
+<p>Pour filtrer, il faut savoir de quel produit parle la question : une recherche par mots-clés sur la référence, ou un appel au LLM qui l’extrait.</p>
+</section>
+<section id="contexte-généré-par-un-llm" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="contexte-généré-par-un-llm"><span class="header-section-number">3.2.2</span> Contexte généré par un LLM</h3>
+<p>Le titre du document ne suffit pas toujours. En taille fixe, un chunk du manuel du Roomy S7 peut commencer au milieu d’un tableau :</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Chunk de taille fixe : manuel du Roomy S7</strong></pre>
+</div>
+<pre class="text chunk" data-filename="Chunk de taille fixe : manuel du Roomy S7"><code>| Brosse principale | à démêler chaque semaine | tous les 6 mois |
+| Brosse latérale | à nettoyer chaque mois | tous les 3 mois |</code></pre>
+</div>
+<p>L’en-tête du tableau est dans le chunk précédent : « tous les 6 mois » désigne le remplacement de la brosse, mais le chunk ne le dit pas.</p>
+<p>Le <strong>contextual retrieval</strong> demande à un LLM d’écrire, pour chaque chunk, une ou deux phrases qui le situent dans son document. Le LLM reçoit le document entier et le chunk. Son texte est ajouté au début du chunk, avant le calcul de l’embedding :</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Le même chunk, avec le contexte généré en première ligne</strong></pre>
+</div>
+<pre class="text chunk" data-filename="Le même chunk, avec le contexte généré en première ligne"><code>Manuel du Roomy S7, section Entretien : tableau de l'entretien des pièces. La dernière colonne donne la fréquence de remplacement.
+| Brosse principale | à démêler chaque semaine | tous les 6 mois |
+| Brosse latérale | à nettoyer chaque mois | tous les 3 mois |</code></pre>
+</div>
+<ul>
+<li>Anthropic, qui a publié la méthode, mesure 35 % d’échecs de recherche en moins sur ses jeux de test (<a href="https://www.anthropic.com/news/contextual-retrieval">Contextual Retrieval</a>, 2024).</li>
+<li>Le coût est payé à l’indexation : un appel au LLM par chunk, avec le document entier dans le prompt. Il faut refaire ces appels quand le document change.</li>
+</ul>
+</section>
+</section>
+<section id="taille-des-chunks" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="taille-des-chunks"><span class="header-section-number">3.3</span> Taille des chunks</h2>
+<ul>
+<li><strong>Trop petit</strong> : le chunk perd son contexte. « Remplacez-le tous les 6 mois » ne dit plus de quelle pièce il s’agit.</li>
+<li><strong>Trop grand</strong> : le chunk parle de plusieurs sujets, son embedding représente mal chacun d’eux, et il coûte plus de tokens.</li>
+</ul>
+<p>Il n’y a pas de taille idéale : elle dépend des documents et des questions. On en essaie plusieurs, et on mesure.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Documents réels : PDF, tableaux, images
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Les documents d’Electrowl sont déjà du texte structuré. En entreprise, ce sont des PDF, des fichiers Word, des pages web, des scans.</p>
+<ul>
+<li>Il faut d’abord en <strong>extraire le texte</strong> : les colonnes, les en-têtes et les pieds de page se mélangent, les tableaux perdent leur structure.</li>
+<li>Les schémas et les photos ne sont pas lus. Un LLM multimodal peut les décrire, pour un coût plus élevé.</li>
+<li>Cette étape prend souvent plus de temps que le reste du RAG : un texte mal extrait donne de mauvais chunks, quelle que soit la suite.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Découpez selon la <strong>structure</strong> du document quand il en a une, et ajoutez à chaque chunk le <strong>titre</strong> du document.</li>
+<li>Gardez les métadonnées de chaque chunk (source, titre, produit, date) : elles servent à filtrer la recherche et à citer la source.</li>
+<li>Si la mesure montre des chunks ambigus malgré le titre, essayez le contextual retrieval.</li>
+<li>Lisez quelques chunks avant de continuer : si vous ne comprenez pas un chunk sans le reste du document, le modèle non plus.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="recherche" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Recherche</h1>
+<p>La <strong>recherche (retrieval)</strong> trouve les chunks utiles à une question.</p>
+<section id="recherche-sémantique" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="recherche-sémantique"><span class="header-section-number">4.1</span> Recherche sémantique</h2>
+<p>C’est la recherche du CM3 et du TP3 :</p>
+<ol type="1">
+<li>un modèle d’embedding transforme chaque chunk en vecteur : des sens proches donnent des vecteurs proches ;</li>
+<li>il transforme la question en vecteur, de la même façon ;</li>
+<li>on calcule la <strong>similarité cosinus</strong> entre la question et chaque chunk ;</li>
+<li>on garde les <span class="math inline">\(k\)</span> chunks les plus proches.</li>
+</ol>
+<p>La recherche compare le <strong>sens</strong> : « enlever le calcaire » retrouve la section « Détartrage », alors que les mots sont différents.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>question_embedding <span class="op">=</span> embedder.encode_query(question, convert_to_tensor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>similarities <span class="op">=</span> util.cos_sim(question_embedding, chunk_embeddings)[<span class="dv">0</span>]  <span class="co"># un score par chunk</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>scores, positions <span class="op">=</span> torch.topk(similarities, k<span class="op">=</span><span class="dv">5</span>)                     <span class="co"># les 5 meilleurs</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Le modèle d’embedding se choisit comme un LLM : on le mesure sur ses propres questions. Sur le corpus du TP5, découpé par section avec le titre, le modèle du TP3 (2020) trouve le bon passage pour 80 % des questions. Le modèle du TP5, de même taille, mais plus récent (2023) et entraîné pour la recherche, le trouve pour 100 % des questions.</p>
+</section>
+<section id="base-de-données-vectorielle" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="base-de-données-vectorielle"><span class="header-section-number">4.2</span> Base de données vectorielle</h2>
+<p>Dans le TP5, les embeddings sont rangés dans un tenseur PyTorch : comparer une question à 750 chunks prend quelques millisecondes. Pour des millions de chunks, on utilise une <strong>base de données vectorielle (vector database)</strong>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Besoin</th>
+<th>Tenseur PyTorch</th>
+<th>Base de données vectorielle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Conservation</td>
+<td>en mémoire : tout est recalculé au redémarrage</td>
+<td>sur disque</td>
+</tr>
+<tr class="even">
+<td>Mise à jour</td>
+<td>recalculer le tenseur</td>
+<td>ajouter, modifier ou supprimer un chunk</td>
+</tr>
+<tr class="odd">
+<td>Filtres</td>
+<td>à écrire soi-même</td>
+<td>par métadonnées : catégorie, date, langue, droits d’accès</td>
+</tr>
+<tr class="even">
+<td>Millions de chunks</td>
+<td>lent : la question est comparée à tous les chunks</td>
+<td>rapide : un index évite de tout comparer</td>
+</tr>
+</tbody>
+</table>
+<p>Exemples : <a href="https://www.trychroma.com/">Chroma</a> et <a href="https://qdrant.tech/">Qdrant</a>, ou l’extension <a href="https://github.com/pgvector/pgvector">pgvector</a>, qui ajoute les vecteurs à une base PostgreSQL existante.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Recherche approchée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Comparer la question à 100 millions de vecteurs prendrait plusieurs secondes. Une base vectorielle construit un <strong>index</strong> : elle regroupe les vecteurs proches, et ne compare la question qu’à une petite partie d’entre eux.</p>
+<p>C’est une <strong>recherche approchée des plus proches voisins (approximate nearest neighbors, ANN)</strong> : beaucoup plus rapide, mais elle peut manquer un bon chunk de temps en temps. C’est un compromis entre vitesse et qualité, qui se règle.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="limites-des-embeddings" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="limites-des-embeddings"><span class="header-section-number">4.3</span> Limites des embeddings</h2>
+<p>Les embeddings représentent le sens, et distinguent mal deux textes presque identiques :</p>
+<ul>
+<li>deux références de produits : <code>RS68</code> et <code>RS86</code> ;</li>
+<li>deux numéros de commande : <code>CMD-481207</code> et <code>CMD-481270</code> ;</li>
+<li>un code d’erreur, un nom propre, un sigle rare.</li>
+</ul>
+<p>Pour ces recherches, les <strong>mots-clés</strong> sont plus fiables : c’est la recherche plein texte d’un moteur de recherche classique. La <strong>recherche hybride (hybrid search)</strong> combine les deux : elle lance une recherche sémantique et une recherche par mots-clés, puis fusionne les résultats.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reranking
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Le <strong>reranking (reclassement)</strong> ajoute une étape : la recherche renvoie 50 chunks, puis un second modèle, plus lent et plus précis, lit la question avec chaque chunk et les reclasse. On garde les 5 premiers.</p>
+<p>Cela améliore la qualité, pour un temps de réponse un peu plus long.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="nombre-de-chunks" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="nombre-de-chunks"><span class="header-section-number">4.4</span> Nombre de chunks</h2>
+<p><span class="math inline">\(k\)</span> est le nombre de chunks envoyés au LLM.</p>
+<ul>
+<li><strong><span class="math inline">\(k\)</span> trop petit</strong> : le bon passage risque de ne pas être dans les résultats.</li>
+<li><strong><span class="math inline">\(k\)</span> trop grand</strong> : le prompt est plus long, donc plus cher et plus lent, et les chunks hors sujet peuvent tromper le modèle.</li>
+</ul>
+<p>On cherche le plus petit <span class="math inline">\(k\)</span> qui donne un bon taux de réussite.</p>
+</section>
+<section id="activité-quelle-recherche" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="activité-quelle-recherche"><span class="header-section-number">4.5</span> Activité : quelle recherche ?</h2>
+<p>Pour chaque question d’un client, quelle méthode choisir : recherche <strong>sémantique</strong>, recherche par <strong>mots-clés</strong>, ou <strong>aucune</strong> recherche dans les documents ?</p>
+<ol type="1">
+<li>« Ma machine à café fait un café sans goût, que faire ? »</li>
+<li>« Avez-vous encore la référence EW-87545 ? »</li>
+<li>« Où en est ma commande CMD-481207 ? »</li>
+<li>« Pouvez-vous reformuler votre réponse plus simplement ? »</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponses
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Sémantique</strong> : la question n’emploie pas les mots du manuel (« mouture », « réglage du broyeur »), mais elle en a le sens.</li>
+<li><strong>Mots-clés</strong> : une référence exacte. Les embeddings confondraient <code>EW-87545</code> avec une référence proche.</li>
+<li><strong>Aucune</strong> recherche dans les documents : le statut d’une commande est dans la base de données des commandes. Il faut un <strong>agent</strong>, qui décide de consulter la base avec un outil (séance 6).</li>
+<li><strong>Aucune</strong> : la réponse à reformuler est déjà dans la conversation. Chercher des documents n’apporterait que du bruit.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Commencez par une recherche sémantique simple, et mesurez-la. Ajoutez les mots-clés ou le reranking seulement si la mesure le demande.</li>
+<li>Un tableau en mémoire suffit jusqu’à quelques centaines de milliers de chunks. Au-delà, ou si les documents changent souvent, prenez une base vectorielle.</li>
+<li>Changer de modèle d’embedding oblige à recalculer <strong>tous</strong> les embeddings : ceux de deux modèles différents ne se comparent pas.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="génération" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Génération</h1>
+<p>La génération est un prompt, comme au CM4 : une consigne, puis les chunks trouvés, puis la question.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: prompt},</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="ss">f"""&lt;documents&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;document source="manuels/aquaris_dw14.md"&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ss">Manuel d'utilisation : lave-vaisselle Aquaris DW14</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ss">## Sel régénérant et dureté de l'eau</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ss">... N'utilisez jamais de sel de cuisine : il contient des additifs qui abîment l'adoucisseur.</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;/document&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;/documents&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ss">Question du client : </span><span class="sc">{</span>question<span class="sc">}</span><span class="ss">"""</span>},</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Les techniques du CM4 s’appliquent. Quatre consignes sont propres au RAG :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Consigne</th>
+<th>Raison</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>« Réponds <strong>uniquement</strong> à partir des documents fournis. »</td>
+<td>Sans elle, le modèle complète avec ses connaissances générales, qui ne sont pas celles d’Electrowl.</td>
+</tr>
+<tr class="even">
+<td>« Si les documents ne contiennent pas la réponse, dis que tu n’as pas trouvé l’information. »</td>
+<td>Sans elle, le modèle invente quand la recherche a échoué.</td>
+</tr>
+<tr class="odd">
+<td>« Vérifie que les documents parlent du produit demandé. »</td>
+<td>La recherche renvoie toujours les chunks les plus proches, parfois ceux d’un produit au nom voisin.</td>
+</tr>
+<tr class="even">
+<td>« Si tu as trouvé la réponse, termine par la source utilisée. »</td>
+<td>Le client ou un conseiller peut vérifier la réponse dans le document.</td>
+</tr>
+</tbody>
+</table>
+<section id="quand-les-documents-ne-contiennent-pas-la-réponse" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="quand-les-documents-ne-contiennent-pas-la-réponse"><span class="header-section-number">5.1</span> Quand les documents ne contiennent pas la réponse</h2>
+<p>Quand les documents trouvés ne contiennent pas la réponse, le prompt décide de ce qui se passe. Exemple mesuré au TP5, pour la question « Comment détartrer la machine à café Baristo E11 ? ». Le corpus ne contient pas le manuel de l’E11 : la recherche trouve celui de la Baristo E3, une machine à grains.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Prompt</th>
+<th>Réponse du chatbot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sans consigne</td>
+<td>« Détartrage de la Baristo E11 : 1. Videz le bac à marc… 3. Maintenez la touche « Calc » pendant 5 secondes… » La procédure est celle de l’E3, une machine à grains. L’E11 est une machine à capsules.</td>
+</tr>
+<tr class="even">
+<td>Avec les consignes</td>
+<td>« Je n’ai pas trouvé d’instructions pour le détartrage de la Baristo E11. Pour obtenir la procédure, contactez notre service client. »</td>
+</tr>
+</tbody>
+</table>
+<p>La seconde réponse oriente le client vers le service client, qui lui donnera la bonne procédure. <strong>Pour un service client, mieux vaut « je ne sais pas » qu’une réponse inventée.</strong></p>
+</section>
+<section id="conversation" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="conversation"><span class="header-section-number">5.2</span> Conversation</h2>
+<p>Un chatbot reçoit des questions qui dépendent des messages précédents :</p>
+<blockquote class="blockquote">
+<p><strong>Client :</strong> Le réfrigérateur Polaris RS68 peut-il être raccordé à une arrivée d’eau ?</p>
+<p><strong>Chatbot :</strong> Oui, le tuyau et le raccord sont fournis.</p>
+<p><strong>Client :</strong> Et il pèse combien ?</p>
+</blockquote>
+<ul>
+<li>Le LLM n’a pas de mémoire (CM3) : on lui renvoie l’<strong>historique</strong> à chaque message.</li>
+<li>La recherche, elle, ne voit que le dernier message : « il » ne nomme aucun produit, et elle renvoie des fiches sans rapport.</li>
+<li>La solution est la <strong>reformulation de la question (query rewriting)</strong> : un premier appel au LLM réécrit la question à partir de l’historique, « Combien pèse le réfrigérateur Polaris RS68 ? », et c’est cette question qu’on recherche.</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-query-rewriting" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-query-rewriting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-query-rewriting">flowchart TB
+  subgraph without ["Sans reformulation"]
+    direction LR
+    m1(["« Et il pèse combien ? »"]) --&gt; s1(["recherche"]) --&gt; r1(["fiches de&lt;br/&gt;robots pâtissiers"])
+  end
+  subgraph with ["Avec reformulation"]
+    direction LR
+    h(["historique"]) --&gt; rw(["LLM :&lt;br/&gt;reformulation"])
+    m2(["« Et il pèse combien ? »"]) --&gt; rw
+    rw --&gt; q2(["« Combien pèse le&lt;br/&gt;Polaris RS68 ? »"]) --&gt; s2(["recherche"]) --&gt; r2(["fiche&lt;br/&gt;du Polaris RS68"])
+  end
+  without ~~~ with
+
+  classDef neutral fill:#f3f1ec,stroke:#6d6c66,stroke-width:1.5px,color:#2c2c2a;
+  classDef search fill:#e3edf8,stroke:#2f6fb0,stroke-width:2px,color:#2c2c2a;
+  classDef generate fill:#fbeae2,stroke:#c4562c,stroke-width:2px,color:#2c2c2a;
+  classDef wrong fill:#f8e1e1,stroke:#b3261e,stroke-width:2px,color:#2c2c2a;
+  classDef result fill:#e0f0e9,stroke:#12805f,stroke-width:2px,color:#2c2c2a;
+  class m1,m2,h,q2 neutral;
+  class s1,s2 search;
+  class rw generate;
+  class r1 wrong;
+  class r2 result;
+  style without fill:none,stroke:#d8d6cd,stroke-dasharray:4 4,color:#2c2c2a;
+  style with fill:none,stroke:#d8d6cd,stroke-dasharray:4 4,color:#2c2c2a;
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-query-rewriting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: La recherche ne voit que le texte qu’on lui donne. Sans reformulation, elle cherche « Et il pèse combien ? », qui ne nomme aucun produit. Avec reformulation, un premier appel au LLM écrit une question compréhensible seule.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Délimitez les documents avec des balises, et indiquez la <strong>source</strong> de chacun.</li>
+<li>Écrivez toujours ce que le modèle doit faire quand les documents ne contiennent pas la réponse.</li>
+<li>Dans un chatbot, reformulez la question avant de chercher.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="evaluation" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Evaluation</h1>
+<p>Un RAG a deux étapes, qui peuvent échouer chacune : on les évalue <strong>séparément</strong>, sur un dataset de questions étiquetées (CM4). Pour chaque question, on écrit à la main le passage qui contient la réponse, et la réponse attendue.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-rag-eval" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rag-eval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-rag-eval">flowchart LR
+  subgraph data ["Dataset étiqueté"]
+    direction TB
+    q(["question"])
+    pa(["passage attendu"])
+    ra(["réponse attendue"])
+  end
+  q --&gt; s(["recherche"]) --&gt; ch(["k chunks&lt;br/&gt;trouvés"]) --&gt; llm(["LLM"]) --&gt; rep(["réponse"])
+  ch --&gt; h("passage attendu&lt;br/&gt;dans les chunks ?")
+  pa --&gt; h
+  h --&gt; m1(["taux de réussite"])
+  rep --&gt; j("réponse juste ?&lt;br/&gt;expert ou LLM juge")
+  ra --&gt; j
+  j --&gt; m2(["réponses&lt;br/&gt;correctes"])
+
+  classDef neutral fill:#f3f1ec,stroke:#6d6c66,stroke-width:1.5px,color:#2c2c2a;
+  classDef search fill:#e3edf8,stroke:#2f6fb0,stroke-width:2px,color:#2c2c2a;
+  classDef generate fill:#fbeae2,stroke:#c4562c,stroke-width:2px,color:#2c2c2a;
+  classDef check fill:#e7e3f7,stroke:#5b52c4,stroke-width:2px,color:#2c2c2a;
+  classDef result fill:#e0f0e9,stroke:#12805f,stroke-width:2px,color:#2c2c2a;
+  class q,pa,ra,ch,rep neutral;
+  class s search;
+  class llm generate;
+  class h,j check;
+  class m1,m2 result;
+  style data fill:none,stroke:#d8d6cd,stroke-dasharray:4 4,color:#2c2c2a;
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rag-eval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Évaluation d’un RAG, pour chaque question du dataset. La recherche est mesurée sans appel au LLM. La réponse est jugée par un expert ou par un LLM juge.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Étape</th>
+<th>Question posée</th>
+<th>Mesure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Recherche</strong></td>
+<td>Le bon passage est-il parmi les <span class="math inline">\(k\)</span> chunks trouvés ?</td>
+<td>le <strong>taux de réussite (hit rate)</strong> : la proportion de questions pour lesquelles c’est le cas</td>
+</tr>
+<tr class="even">
+<td><strong>Génération</strong></td>
+<td>La réponse est-elle juste ?</td>
+<td>la proportion de réponses correctes</td>
+</tr>
+</tbody>
+</table>
+<p>Le taux de réussite est aussi appelé <strong>rappel à k (recall@k)</strong>. Les outils d’évaluation de RAG mesurent aussi la <strong>précision du contexte (context precision)</strong> : la proportion des chunks envoyés au LLM qui sont utiles.</p>
+<p>Les deux mesures ensemble disent où chercher l’erreur :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bon passage trouvé</th>
+<th>Réponse juste</th>
+<th>Diagnostic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>oui</td>
+<td>oui</td>
+<td>Tout va bien.</td>
+</tr>
+<tr class="even">
+<td>oui</td>
+<td>non</td>
+<td>Pb de <strong>génération</strong> : le prompt, ou un modèle trop faible.</td>
+</tr>
+<tr class="odd">
+<td>non</td>
+<td>non</td>
+<td>Pb de <strong>recherche</strong> : le chunking, le modèle d’embedding, ou <span class="math inline">\(k\)</span>.</td>
+</tr>
+<tr class="even">
+<td>non</td>
+<td>oui</td>
+<td>Un coup de chance, ou une réponse que le modèle connaissait déjà.</td>
+</tr>
+</tbody>
+</table>
+<p>Un score global ne suffit pas : si 20 % des réponses sont fausses, il ne dit pas s’il faut réécrire le prompt ou changer le chunking.</p>
+<p>On mesure aussi le <strong>coût</strong> et la <strong>durée</strong> de chaque réponse : un client n’attend pas 30 secondes devant un chatbot.</p>
+<section id="llm-juge" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="llm-juge"><span class="header-section-number">6.1</span> LLM juge</h2>
+<p>Au CM4, on comparait un ticket à un ticket attendu avec <code>==</code>. Ici, la réponse est une phrase : « Vous avez 30 jours » et « Le délai de retour est d’un mois » sont deux bonnes réponses.</p>
+<p>Au début d’un projet, l’évaluation est <strong>manuelle</strong> : un expert du métier lit les réponses. Quand le dataset grandit et qu’on réévalue souvent, on utilise un <strong>LLM juge (LLM-as-a-judge)</strong> : un second appel à un LLM, qui reçoit la question, la réponse attendue et la réponse du chatbot, et qui dit si elle est correcte. Sa sortie est structurée (CM4) : une justification, puis <code>correct</code>.</p>
+<ul>
+<li>Un juge se trompe aussi : avant de l’utiliser, on mesure son accord avec l’expert sur un échantillon. Ensuite, on <strong>relit</strong> régulièrement une partie de ses verdicts.</li>
+<li>Chaque évaluation coûte un appel de plus par question.</li>
+</ul>
+</section>
+<section id="questions-sans-réponse" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="questions-sans-réponse"><span class="header-section-number">6.2</span> Questions sans réponse</h2>
+<p>Le dataset doit contenir des questions dont la réponse <strong>n’est pas</strong> dans les documents : « Vendez-vous des trottinettes électriques ? ». La bonne réponse est « je n’ai pas trouvé cette information ». Sans ces questions, on ne mesure pas si le chatbot invente.</p>
+<p>Les plus utiles portent sur un <strong>produit voisin</strong> : « Que signifie le code E21 sur le lave-linge Aquaris WM31 ? ». Le corpus ne contient pas le manuel du WM31, mais la recherche trouve celui du WM9, un autre lave-linge. Un prompt qui ne demande pas de vérifier le produit présente la réponse du WM9 comme valable pour le WM31.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Évaluez la <strong>recherche</strong> avant la génération : elle ne demande aucun appel au LLM, et une réponse ne peut pas être juste si le passage manque.</li>
+<li>Lisez les erreurs une par une, avec les chunks trouvés : c’est là qu’on voit ce qu’il faut corriger.</li>
+<li>Après chaque modification (chunking, modèle, <span class="math inline">\(k\)</span>, prompt), réévaluez <strong>tout</strong> le dataset, comme au CM4.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="limites" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Limites</h1>
+<p><strong>Données structurées.</strong> « Où en est ma commande CMD-481207 ? » n’a de réponse dans aucun document : elle est dans la base de données des commandes. Il faut une requête exacte, et non une recherche par le sens. Un RAG cherche à <strong>chaque</strong> question ; ici, il faut d’abord <strong>décider</strong> de consulter la base, puis vérifier que la commande appartient bien au client. C’est le rôle d’un <strong>agent</strong>, qui appelle un outil (séance 6).</p>
+<p><strong>Documents non fiables.</strong> Au CM4, le mail d’un client pouvait contenir une fausse consigne. Dans un RAG, c’est un <strong>document</strong> qui peut en contenir une : un avis de client, une page web, une fiche modifiée. Le modèle la lit dans son prompt, au milieu des autres chunks. C’est une <strong>injection de prompt indirecte</strong> : l’attaquant n’a même pas besoin de parler au chatbot.</p>
+<p><strong>Droits d’accès.</strong> Si le corpus contient des documents internes (marges, procédures, données de clients), le chatbot peut les citer à n’importe qui. Le filtre se fait <strong>à la recherche</strong>, par le programme, et non par une consigne dans le prompt : un chunk qui n’est pas dans le prompt ne peut pas fuiter.</p>
+<p><strong>Mise à jour.</strong> Un document modifié doit être redécoupé, et ses embeddings recalculés. Sinon, le chatbot répond avec l’ancienne version.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>N’indexez que les documents que <strong>tous</strong> les utilisateurs du chatbot ont le droit de lire, ou filtrez la recherche selon l’utilisateur.</li>
+<li>Un document est une donnée non fiable, comme un mail : <strong>le LLM propose, le programme vérifie</strong> (CM4).</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="fine-tuning" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Fine-tuning</h1>
+<p>Le <strong>fine-tuning</strong> est le 3e niveau. Il continue l’entraînement d’un modèle sur un petit dataset spécialisé : quelques centaines à quelques milliers d’exemples <code>(prompt, réponse)</code>. Il <strong>modifie les paramètres</strong>, comme le post-training du CM3.</p>
+<p>Dans quels cas faut-il fine-tuner ?</p>
+<ul>
+<li><strong>Utile</strong> si :
+<ul>
+<li>on souhaite un <strong>format</strong> ou un <strong>style</strong> constant ;</li>
+<li>on veut qu’un petit modèle, rapide et bon marché, fasse aussi bien qu’un gros sur une tâche précise.</li>
+</ul></li>
+<li><strong>Inutile</strong> pour ajouter des connaissances qui changent (prix, stocks, procédures) : c’est le rôle du prompt ou du RAG.</li>
+<li><strong>Coûteux</strong> : il faut constituer le dataset, entraîner, puis tout recommencer quand une meilleure version du modèle de base sort.</li>
+</ul>
+<p>Le fine-tuning n’est pas proposé pour tous les modèles propriétaires : si on sait dès le départ qu’on en aura besoin, cela oriente le choix vers un modèle open weights.</p>
+<p>Electrowl essaiera le fine-tuning seulement si le volume de mails rend le prompt trop cher, et quand il aura des milliers de tickets déjà remplis pour entraîner le modèle.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>En pratique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Commencez <strong>toujours</strong> par un prompt. Beaucoup de projets n’ont pas besoin d’aller plus loin.</li>
+<li>Le fine-tuning n’apprend pas de nouvelles connaissances au modèle de manière fiable : pour des informations, utilisez le prompt ou le RAG.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="tp5-le-chatbot-delectrowl" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> TP5 — Le chatbot d’Electrowl</h1>
+<p>Suivez la page du TP5 pour récupérer le TP, puis ouvrez le notebook <code>tp5_rag.ipynb</code>.</p>
+</section>
+<section id="points-à-retenir" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Points à retenir</h1>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Un LLM ne connaît pas les documents d’une entreprise : sans eux, il <strong>invente</strong>. Le <strong>RAG</strong> cherche les passages utiles, puis les place dans le prompt. Le modèle n’apprend rien : il lit.</li>
+<li>Si les documents tiennent dans le prompt pour un coût acceptable, on n’a pas besoin de RAG.</li>
+<li>Le <strong>chunking</strong> compte autant que le modèle : un chunk doit être <strong>compréhensible seul</strong>.</li>
+<li>La recherche sémantique compare le sens avec des <strong>embeddings</strong>. Elle distingue mal les références exactes : on la complète par des <strong>mots-clés</strong>.</li>
+<li>On évalue <strong>chaque étape</strong> : la recherche (le bon passage est-il trouvé ?), puis la réponse (est-elle juste ?).</li>
+<li>Le prompt dit quoi faire quand l’information manque : mieux vaut « je ne sais pas » qu’une réponse inventée.</li>
+<li>Un document est une donnée <strong>non fiable</strong>, et le chatbot peut citer tout ce qui est indexé.</li>
+</ol>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+// Presentation mode. Turning it on:
+//   - collapses every collapsible callout, each one staying clickable so it
+//     can be opened on demand during the lecture
+//   - scales the document up for projection (see styles.css)
+//   - hides the left navigation sidebar (see styles.css)
+// Turning it off restores the reading view, where each callout gets back the
+// state written in the .qmd: collapse="true" collapsed, collapse="false"
+// expanded.
+// The choice is stored in localStorage so it survives page navigation.
+(function () {
+  const STORAGE_KEY = "xti306-presentation-mode";
+  const root = document.documentElement;
+
+  // Quarto renders a callout carrying a collapse attribute with the Bootstrap
+  // collapse markup: a .callout-header holding aria-expanded, and a
+  // .callout-collapse holding the body. The chevron is rotated by CSS from
+  // aria-expanded alone, and Bootstrap reads the "show" class back from the
+  // DOM on every click, so setting both by hand keeps later manual clicks
+  // consistent.
+  //
+  // Callouts written without a collapse attribute lack this markup and are
+  // left alone: they stay visible in both modes.
+  function collapsibleCallouts() {
+    const found = [];
+    document.querySelectorAll(".callout").forEach(function (callout) {
+      const header = callout.querySelector(".callout-header[aria-expanded]");
+      const body = callout.querySelector(".callout-collapse");
+      if (header && body) found.push({ callout: callout, header: header, body: body });
+    });
+    return found;
+  }
+
+  // Quarto renders collapse="true" without the "show" class. The authored
+  // state is read once, before this script changes anything, and kept on the
+  // callout so the reading view can restore it.
+  function rememberAuthoredState() {
+    collapsibleCallouts().forEach(function (c) {
+      c.callout.dataset.authoredCollapsed = String(!c.body.classList.contains("show"));
+    });
+  }
+
+  // forceCollapsed: true collapses every callout (presentation mode),
+  // false restores the authored state (reading view).
+  function setCalloutsCollapsed(forceCollapsed) {
+    collapsibleCallouts().forEach(function (c) {
+      const collapsed = forceCollapsed || c.callout.dataset.authoredCollapsed === "true";
+      c.body.classList.toggle("show", !collapsed);
+      c.header.setAttribute("aria-expanded", String(!collapsed));
+    });
+  }
+
+  // A page opts out of the reading view by declaring
+  // `body-classes: collapsed-by-default` in its front matter. Its callouts hold
+  // answers the reader is meant to look for first, so they stay closed in both
+  // modes and open only on click.
+  function alwaysCollapsed() {
+    return document.body.classList.contains("collapsed-by-default");
+  }
+
+  function render(button, enabled) {
+    root.classList.toggle("presentation-mode", enabled);
+    setCalloutsCollapsed(enabled || alwaysCollapsed());
+
+    button.setAttribute("aria-pressed", String(enabled));
+    button.title = enabled
+      ? "Revenir à la vue lecture"
+      : "Replier tous les encadrés et agrandir le texte pour la projection";
+  }
+
+  function init() {
+    const button = document.createElement("button");
+    button.id = "presentation-toggle";
+    button.type = "button";
+    button.innerHTML = '<span class="status-dot"></span>Mode présentation';
+
+    rememberAuthoredState();
+    let enabled = localStorage.getItem(STORAGE_KEY) === "true";
+    render(button, enabled);
+
+    button.addEventListener("click", function () {
+      enabled = !enabled;
+      localStorage.setItem(STORAGE_KEY, String(enabled));
+      render(button, enabled);
+    });
+
+    document.body.appendChild(button);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/mikaelv\.github\.io\/xti306_IA_site\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

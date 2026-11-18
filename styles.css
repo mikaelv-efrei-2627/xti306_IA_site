@@ -333,3 +333,138 @@
     45deg, #f3f1ec, #f3f1ec 4px, #e9e7e0 4px, #e9e7e0 8px
   );
 }
+
+/* --------------------------------------------------------------------------
+   8. Chunk excerpts (CM5)
+   --------------------------------------------------------------------------
+   A chunk is shown as a labelled card, so that it stands apart from the
+   surrounding text:
+
+     ```{.text .chunk filename="Chunk : fiche du Polaris RS68"}
+     ## Caractéristiques
+     ```
+
+   Quarto wraps a code block that has a filename in div.code-with-filename,
+   with the label in div.code-with-filename-file. Long lines wrap instead of
+   scrolling: a chunk is text to read, not code to copy.
+   -------------------------------------------------------------------------- */
+
+.code-with-filename:has(pre.chunk) {
+  margin: 1rem 0 1.25rem;
+  border: 1px solid #c9d6e3;
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.code-with-filename:has(pre.chunk) .code-with-filename-file {
+  background: #e3edf8;
+  border: none;
+  border-radius: 0;
+  padding: 0.3rem 0.8rem;
+}
+
+.code-with-filename:has(pre.chunk) .code-with-filename-file pre {
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: #2c2c2a;
+  background: none;
+}
+
+pre.chunk {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border: none;
+  border-radius: 0;
+  background: #fbfaf7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* The theme sets white-space: pre on the inner <code>: wrap it too. */
+pre.chunk code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------------------
+   9. Chunking methods figure (CM5)
+   --------------------------------------------------------------------------
+   One row per method: a label, then a track where each chunk is an absolute
+   box placed with left/width in percent of the document length. Dashed lines
+   (.cm-cut) mark the section boundaries on every row, so that the cuts of
+   each method can be compared with the structure of the document. With
+   overlap, consecutive chunks alternate between two lanes, so that the shared
+   part of two neighbours stays visible.
+   -------------------------------------------------------------------------- */
+
+.chunk-methods {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  row-gap: 0.6rem;
+  column-gap: 0.8rem;
+  align-items: center;
+  margin: 1rem 0 0.5rem;
+  font-size: 0.8rem;
+  color: #2c2c2a;
+}
+
+.chunk-methods .cm-label {
+  text-align: right;
+  line-height: 1.2;
+}
+
+.chunk-methods .cm-track {
+  position: relative;
+  height: 1.8rem;
+}
+
+.chunk-methods .cm-track.cm-two-lanes {
+  height: 3.8rem;
+}
+
+.chunk-methods .cm-sec,
+.chunk-methods .cm-chunk {
+  position: absolute;
+  top: 0;
+  height: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.chunk-methods .cm-sec {
+  background: #f3f1ec;
+  border: 1.5px solid #6d6c66;
+}
+
+.chunk-methods .cm-chunk {
+  font-weight: 600;
+}
+
+.chunk-methods .cm-a {
+  background: #e3edf8;
+  border: 2px solid #2f6fb0;
+}
+
+.chunk-methods .cm-b {
+  background: #fbeae2;
+  border: 2px solid #c4562c;
+}
+
+.chunk-methods .cm-lane2 {
+  top: 2rem;
+}
+
+.chunk-methods .cm-cut {
+  position: absolute;
+  top: -0.3rem;
+  bottom: -0.3rem;
+  border-left: 2px dashed #6d6c66;
+  z-index: 1;
+}
