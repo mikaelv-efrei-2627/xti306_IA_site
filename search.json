@@ -1742,5 +1742,16 @@
       "TPs",
       "TP3 - Utiliser un LLM"
     ]
+  },
+  {
+    "objectID": "tp5.html",
+    "href": "tp5.html",
+    "title": "TP5 - Le chatbot d’Electrowl",
+    "section": "",
+    "text": "Le TP5 construit un RAG : un chatbot qui répond aux clients d’Electrowl à partir de ses documents. Le LLM est appelé par API, chez Groq, comme au TP4. Le modèle d’embedding tourne sur votre ordinateur, sans GPU ni Kaggle.\n\n1 Récupérer le TP\n\nCliquez sur ce lien d’invitation Classroom50\nCliquez sur “Accept assignment” puis “Open repository”\nCopiez l’URL de votre nouveau repository GitHub, et ouvrez-le dans PyCharm (File -&gt; Project From Version Control)\nOuvrez requirements.txt, et cliquez sur “pip update from requirements.txt”, comme au TP1. L’installation est plus longue que d’habitude (PyTorch, Gradio) : lancez-la dès le début de la séance.\n\n\n\n2 Clé API Groq\nLe TP utilise la même clé qu’au TP4.\n\nCopiez le fichier .env de votre repository du TP4 à la racine de celui du TP5.\nSi vous n’avez plus ce fichier, copiez .env.example en .env, puis collez votre clé après le signe = : GROQ_API_KEY=gsk_...\n\n\n\n\n\n\n\nAvertissementLa clé est un secret\n\n\n\nLe fichier .env est dans le .gitignore : il n’est pas envoyé sur GitHub avec vos commits. Vérifiez-le : dans PyCharm, .env ne doit pas apparaître dans la fenêtre de commit.\n\n\n\n\n3 Téléchargement du modèle d’embedding\nLe notebook télécharge le modèle d’embedding au début du TP (environ 470 Mo). Il n’est téléchargé qu’une fois, puis gardé sur le disque.\n\n\n\n\n\n\nAstuce\n\n\n\nExécutez les premières cellules du notebook, jusqu’au chargement du modèle d’embedding, dès que l’installation est terminée.\n\n\n\n\n4 Limites du compte gratuit\nComme au TP4, le compte gratuit limite le nombre de requêtes et de tokens, par minute et par jour.\n\nChaque évaluation envoie 70 requêtes : elle prend 3 à 4 minutes.\nLe quota de tokens par jour permet environ 7 évaluations : ne modifiez pas un prompt déjà évalué sans raison. Une fois le quota épuisé, il faut attendre plusieurs heures.\nChaque étudiant utilise sa propre clé. Une clé partagée épuise son quota avant la fin du TP, et ralentit les évaluations de chacun.\nLe notebook garde les réponses du modèle dans le fichier llm_cache.json : une cellule relancée sans modification ne refait pas les appels.\nSi vous envoyez trop de requêtes, l’API répond par une erreur 429 (Too Many Requests). Le notebook attend et réessaie automatiquement.\n\n\n\n5 Chatbot\nÀ la fin du TP, le chatbot s’affiche dans le notebook. Si ce n’est pas le cas, ouvrez dans votre navigateur l’adresse indiquée sous la cellule : http://127.0.0.1:7860.\n\n\n\n\n\n\nAvertissementNe publiez pas le chatbot\n\n\n\nN’ajoutez jamais share=True à demo.launch() : cette option publie le chatbot sur Internet, avec une adresse publique. N’importe qui pourrait l’utiliser, avec votre clé API.",
+    "crumbs": [
+      "TPs",
+      "TP5 - Le chatbot d'Electrowl"
+    ]
   }
 ]
